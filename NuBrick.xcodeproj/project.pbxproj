@@ -22,6 +22,7 @@
 		280092661DFF90F100EC0C7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		280092691DFF90F100EC0C7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2800926B1DFF90F100EC0C7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		280092741DFF946E00EC0C7E /* NuBrick-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NuBrick-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +55,40 @@
 		2800925E1DFF90F100EC0C7E /* NuBrick */ = {
 			isa = PBXGroup;
 			children = (
+				280092741DFF946E00EC0C7E /* NuBrick-Bridging-Header.h */,
 				2800925F1DFF90F100EC0C7E /* AppDelegate.swift */,
 				280092611DFF90F100EC0C7E /* ViewController.swift */,
+				280092711DFF936E00EC0C7E /* Model */,
+				280092721DFF938100EC0C7E /* View */,
+				280092731DFF938800EC0C7E /* Controller */,
 				280092631DFF90F100EC0C7E /* Main.storyboard */,
 				280092661DFF90F100EC0C7E /* Assets.xcassets */,
 				280092681DFF90F100EC0C7E /* LaunchScreen.storyboard */,
 				2800926B1DFF90F100EC0C7E /* Info.plist */,
 			);
 			path = NuBrick;
+			sourceTree = "<group>";
+		};
+		280092711DFF936E00EC0C7E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		280092721DFF938100EC0C7E /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		280092731DFF938800EC0C7E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,6 +291,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nuvoton.NuBrick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "NuBrick/NuBrick-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -277,6 +305,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nuvoton.NuBrick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "NuBrick/NuBrick-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -300,6 +329,7 @@
 				280092701DFF90F100EC0C7E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
