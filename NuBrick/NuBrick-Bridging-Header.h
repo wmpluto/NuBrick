@@ -9,6 +9,6 @@
 #ifndef NuBrick_Bridging_Header_h
 #define NuBrick_Bridging_Header_h
 
-#import <CoreBluetooth/CoreBluetooth.h>
+//#import <CoreBluetooth/CoreBluetooth.h>
 
 #endif /* NuBrick_Bridging_Header_h */

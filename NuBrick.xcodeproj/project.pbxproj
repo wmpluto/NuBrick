@@ -8,21 +8,31 @@
 
 /* Begin PBXBuildFile section */
 		280092601DFF90F100EC0C7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2800925F1DFF90F100EC0C7E /* AppDelegate.swift */; };
-		280092621DFF90F100EC0C7E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280092611DFF90F100EC0C7E /* ViewController.swift */; };
 		280092651DFF90F100EC0C7E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 280092631DFF90F100EC0C7E /* Main.storyboard */; };
 		280092671DFF90F100EC0C7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 280092661DFF90F100EC0C7E /* Assets.xcassets */; };
 		2800926A1DFF90F100EC0C7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 280092681DFF90F100EC0C7E /* LaunchScreen.storyboard */; };
+		2879181E1E0264EA0091C740 /* BaseNavigationControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */; };
+		287918221E02678D0091C740 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287918211E02678D0091C740 /* Util.swift */; };
+		287918241E027F710091C740 /* DetectBluetoothTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287918231E027F710091C740 /* DetectBluetoothTableViewController.swift */; };
+		28BA2C1B1DFFDEB7007C8ADA /* NuBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BA2C1A1DFFDEB7007C8ADA /* NuBrick.swift */; };
+		3330BFB665C85FAA15CBB422 /* Pods_NuBrick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA07D273A2AAD25E01BFC59 /* Pods_NuBrick.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2800925C1DFF90F100EC0C7E /* NuBrick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NuBrick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2800925F1DFF90F100EC0C7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		280092611DFF90F100EC0C7E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		280092641DFF90F100EC0C7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		280092661DFF90F100EC0C7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		280092691DFF90F100EC0C7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2800926B1DFF90F100EC0C7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		280092741DFF946E00EC0C7E /* NuBrick-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NuBrick-Bridging-Header.h"; sourceTree = "<group>"; };
+		2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNavigationControllerViewController.swift; sourceTree = "<group>"; };
+		287918211E02678D0091C740 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		287918231E027F710091C740 /* DetectBluetoothTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectBluetoothTableViewController.swift; sourceTree = "<group>"; };
+		28BA2C1A1DFFDEB7007C8ADA /* NuBrick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NuBrick.swift; path = NuBrick/NuBrick.swift; sourceTree = "<group>"; };
+		304F5E8CB4781BD0790000E7 /* Pods-NuBrick.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NuBrick.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NuBrick/Pods-NuBrick.debug.xcconfig"; sourceTree = "<group>"; };
+		3EA07D273A2AAD25E01BFC59 /* Pods_NuBrick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NuBrick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F3D0A84D225F7F0481E91707 /* Pods-NuBrick.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NuBrick.release.xcconfig"; path = "Pods/Target Support Files/Pods-NuBrick/Pods-NuBrick.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3330BFB665C85FAA15CBB422 /* Pods_NuBrick.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +52,8 @@
 			children = (
 				2800925E1DFF90F100EC0C7E /* NuBrick */,
 				2800925D1DFF90F100EC0C7E /* Products */,
+				3FCFCE47752766F22C93D030 /* Pods */,
+				30D700A9BE2285A7878548F4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,7 +70,6 @@
 			children = (
 				280092741DFF946E00EC0C7E /* NuBrick-Bridging-Header.h */,
 				2800925F1DFF90F100EC0C7E /* AppDelegate.swift */,
-				280092611DFF90F100EC0C7E /* ViewController.swift */,
 				280092711DFF936E00EC0C7E /* Model */,
 				280092721DFF938100EC0C7E /* View */,
 				280092731DFF938800EC0C7E /* Controller */,
@@ -72,6 +84,7 @@
 		280092711DFF936E00EC0C7E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				28BA2C1A1DFFDEB7007C8ADA /* NuBrick.swift */,
 			);
 			name = Model;
 			path = ..;
@@ -87,8 +100,28 @@
 		280092731DFF938800EC0C7E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */,
+				287918231E027F710091C740 /* DetectBluetoothTableViewController.swift */,
+				287918211E02678D0091C740 /* Util.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		30D700A9BE2285A7878548F4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3EA07D273A2AAD25E01BFC59 /* Pods_NuBrick.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3FCFCE47752766F22C93D030 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				304F5E8CB4781BD0790000E7 /* Pods-NuBrick.debug.xcconfig */,
+				F3D0A84D225F7F0481E91707 /* Pods-NuBrick.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -98,9 +131,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2800926E1DFF90F100EC0C7E /* Build configuration list for PBXNativeTarget "NuBrick" */;
 			buildPhases = (
+				5EEFE6CD9142AA57F0BC3F4A /* [CP] Check Pods Manifest.lock */,
 				280092581DFF90F100EC0C7E /* Sources */,
 				280092591DFF90F100EC0C7E /* Frameworks */,
 				2800925A1DFF90F100EC0C7E /* Resources */,
+				DDC84CDADF3298ED168469F5 /* [CP] Embed Pods Frameworks */,
+				11F0769AE910BA3634B20D7F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -118,7 +154,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = nuvoton;
 				TargetAttributes = {
 					2800925B1DFF90F100EC0C7E = {
@@ -159,13 +195,64 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		11F0769AE910BA3634B20D7F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NuBrick/Pods-NuBrick-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5EEFE6CD9142AA57F0BC3F4A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DDC84CDADF3298ED168469F5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NuBrick/Pods-NuBrick-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		280092581DFF90F100EC0C7E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				280092621DFF90F100EC0C7E /* ViewController.swift in Sources */,
+				2879181E1E0264EA0091C740 /* BaseNavigationControllerViewController.swift in Sources */,
+				287918221E02678D0091C740 /* Util.swift in Sources */,
 				280092601DFF90F100EC0C7E /* AppDelegate.swift in Sources */,
+				28BA2C1B1DFFDEB7007C8ADA /* NuBrick.swift in Sources */,
+				287918241E027F710091C740 /* DetectBluetoothTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +296,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -258,6 +346,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -284,6 +373,7 @@
 		};
 		2800926F1DFF90F100EC0C7E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 304F5E8CB4781BD0790000E7 /* Pods-NuBrick.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = RXB9WS547Y;
@@ -298,6 +388,7 @@
 		};
 		280092701DFF90F100EC0C7E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F3D0A84D225F7F0481E91707 /* Pods-NuBrick.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = RXB9WS547Y;
