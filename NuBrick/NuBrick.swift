@@ -64,4 +64,9 @@ struct TIDFeature {
     
 }
 
+class BLEStatus: NSObject {
+    dynamic var status: NSNumber = NSNumber(integerLiteral: 0)
+    
+    
+}
 
