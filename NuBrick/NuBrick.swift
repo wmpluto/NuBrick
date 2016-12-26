@@ -25,6 +25,15 @@ let BTDeviceNameUUID = CBUUID(string: "FF00")
 let BTWriteUUID      = CBUUID(string: "FF01")
 let BTReadUUID       = CBUUID(string: "FF02")
 
+// Initial Command
+let HOOKCMD        = "@h00".data(using: String.Encoding.ascii)
+let SPCMD          = "@sp".data(using: String.Encoding.ascii)
+let FBCMD          = "@fb".data(using: String.Encoding.ascii)
+let VFCMD          = "@vf".data(using: String.Encoding.ascii)
+
+// Reponse to Command
+let rHOOKCMD       = "@HOOK00".data(using: String.Encoding.ascii)
+let rVFCMD         = "@d".data(using: String.Encoding.ascii)
 
 // Device Descriptor, the data in 1st stage
 struct DeviceDescriptor {
@@ -69,4 +78,6 @@ class BLEStatus: NSObject {
     
     
 }
+
+
 

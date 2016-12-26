@@ -29,6 +29,7 @@ class DetectBluetoothTableViewController: UITableViewController {
     var peripherals: [BLEPeripheral] = []
     var selectedPeripheral: CBPeripheral!
     var writeCharacteristic: CBCharacteristic!
+    var readCharacteristic: CBCharacteristic!
     
     var refreshCont: UIRefreshControl!
     
@@ -153,7 +154,6 @@ class DetectBluetoothTableViewController: UITableViewController {
         progressHUD?.show(in: self.view, animated: true)
         
         centralManager.connect(selectedPeripheral, options: nil)
-        
     }
 
     /*
@@ -200,6 +200,11 @@ class DetectBluetoothTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
         print("prepare segue")
         //progressHUD?.dismiss()
+        if segue.identifier == "toNuBrickSensorsTable" {
+            if segue.destination is AllSensorsTableViewController {
+                centralManager.stopScan()
+            }
+        }
     }
     
 
@@ -276,12 +281,15 @@ extension DetectBluetoothTableViewController: CBPeripheralDelegate {
             if c.uuid == BTWriteUUID {
                 print(c.uuid.uuidString)
                 self.writeCharacteristic = c
+                self.selectedPeripheral.writeValue(HOOKCMD!, for: self.writeCharacteristic, type: .withResponse)
             }
             
             if c.uuid == BTReadUUID {
                 print(c.uuid.uuidString)
-                //selectedPeripheral.setNotifyValue(true, for: c)
+                selectedPeripheral.readValue(for: c)
+                selectedPeripheral.setNotifyValue(true, for: c)
                 self.pStatus = NSNumber(booleanLiteral: true)
+                self.readCharacteristic = c
             }
         }
     }
@@ -307,14 +315,30 @@ extension DetectBluetoothTableViewController: CBPeripheralDelegate {
         
         if  characteristic.uuid == BTReadUUID  {
             let data:Data = characteristic.value!
-            print(String(data: data, encoding: String.Encoding.utf8) ?? "None")
+            //let  d  = Array(UnsafeBufferPointer(start: (data as NSData).bytes.bindMemory(to: UInt8.self, capacity: data.count), count: data.count))
+            print(String(data: data, encoding: .ascii))
             
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.0) {/*
-                self.showLog = self.showLog + String(data: data, encoding: String.Encoding.utf8)!
-                self.gettingText.text = self.showLog;
-                if self.showLog.lengthOfBytes(using: String.Encoding.utf8) > 4096 {
-                    self.showLog = "\n"
-                }*/
+            if(data == rHOOKCMD) {
+                print("get hook cmd")
+                progressHUD?.textLabel.text = "Connecting to \(DeviceName)"
+                self.selectedPeripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
+                let when = DispatchTime.now() + 2 // change 2 to desired number of seconds
+                DispatchQueue.main.asyncAfter(deadline: when) {
+                    // Your code with delay
+                }
+                self.selectedPeripheral.writeValue(FBCMD!, for: self.writeCharacteristic, type: .withResponse)
+                DispatchQueue.main.asyncAfter(deadline: when) {
+                    // Your code with delay
+                }
+                self.selectedPeripheral.writeValue(VFCMD!, for: self.writeCharacteristic, type: .withResponse)
+                DispatchQueue.main.asyncAfter(deadline: when) {
+                    // Your code with delay
+                }
+            }
+            
+            if(data == rVFCMD) {
+                print("check NuBrick OK")
+                
             }
             
             
