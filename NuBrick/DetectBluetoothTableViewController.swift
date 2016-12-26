@@ -199,9 +199,13 @@ class DetectBluetoothTableViewController: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         print("prepare segue")
-        //progressHUD?.dismiss()
+        progressHUD?.dismiss()
         if segue.identifier == "toNuBrickSensorsTable" {
-            if segue.destination is AllSensorsTableViewController {
+            
+            if  let vc = segue.destination as? AllSensorsTableViewController {
+                vc.peripheral  = self.selectedPeripheral
+                vc.writeCharacteristic = self.writeCharacteristic
+                vc.readCharacteristic = self.readCharacteristic
                 centralManager.stopScan()
             }
         }
@@ -316,7 +320,7 @@ extension DetectBluetoothTableViewController: CBPeripheralDelegate {
         if  characteristic.uuid == BTReadUUID  {
             let data:Data = characteristic.value!
             //let  d  = Array(UnsafeBufferPointer(start: (data as NSData).bytes.bindMemory(to: UInt8.self, capacity: data.count), count: data.count))
-            print(String(data: data, encoding: .ascii))
+            print(String(data: data, encoding: .ascii) as Any)
             
             if(data == rHOOKCMD) {
                 print("get hook cmd")
@@ -338,7 +342,7 @@ extension DetectBluetoothTableViewController: CBPeripheralDelegate {
             
             if(data == rVFCMD) {
                 print("check NuBrick OK")
-                
+                performSegue(withIdentifier: "toNuBrickSensorsTable", sender: self)
             }
             
             

@@ -27,9 +27,11 @@ let BTReadUUID       = CBUUID(string: "FF02")
 
 // Initial Command
 let HOOKCMD        = "@h00".data(using: String.Encoding.ascii)
+let SSCMD          = "@ss".data(using: String.Encoding.ascii)
 let SPCMD          = "@sp".data(using: String.Encoding.ascii)
 let FBCMD          = "@fb".data(using: String.Encoding.ascii)
 let VFCMD          = "@vf".data(using: String.Encoding.ascii)
+let TXCMD          = "@tx".data(using: String.Encoding.ascii)
 
 // Reponse to Command
 let rHOOKCMD       = "@HOOK00".data(using: String.Encoding.ascii)

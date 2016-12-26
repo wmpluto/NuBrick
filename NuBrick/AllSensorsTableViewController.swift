@@ -7,8 +7,16 @@
 //
 
 import UIKit
+import CoreBluetooth
+import JGProgressHUD
+
 
 class AllSensorsTableViewController: UITableViewController {
+    var peripheral: CBPeripheral!
+    var writeCharacteristic: CBCharacteristic!
+    var readCharacteristic: CBCharacteristic!
+    
+    let progressHUD = JGProgressHUD(style: .dark)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +27,19 @@ class AllSensorsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         print("AllSensorsTableview")
+        
+        self.peripheral.delegate = self
+        
+        let when = DispatchTime.now() + 2 // change 2 to desired number of seconds
+
+        self.peripheral.writeValue(TXCMD!, for: self.writeCharacteristic, type: .withResponse)
+        DispatchQueue.main.asyncAfter(deadline: when) {
+            // Your code with delay
+        }
+        self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
+        DispatchQueue.main.asyncAfter(deadline: when) {
+            // Your code with delay
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -93,4 +114,37 @@ class AllSensorsTableViewController: UITableViewController {
     }
     */
 
+}
+
+extension AllSensorsTableViewController: CBPeripheralDelegate {
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        print("did discover services")
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        print("did discover characteristics for service")
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
+        print("didWriteValueForCharacteristic")
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
+        print("did update notification state for characteristic")
+        if (error != nil) {
+            print("error")
+        }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        print("did update value for characteristic")
+        
+        if  characteristic.uuid == BTReadUUID  {
+            let data:Data = characteristic.value!
+            let  d  = Array(UnsafeBufferPointer(start: (data as NSData).bytes.bindMemory(to: UInt8.self, capacity: data.count), count: data.count))
+            //print(String(data: data, encoding: .ascii) as Any)
+            print(d)
+            
+        }
+    }
 }
