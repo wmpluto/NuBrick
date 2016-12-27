@@ -15,6 +15,7 @@ class AllSensorsTableViewController: UITableViewController {
     var peripheral: CBPeripheral!
     var writeCharacteristic: CBCharacteristic!
     var readCharacteristic: CBCharacteristic!
+    var indexReport = IndexReport()
     
     let progressHUD = JGProgressHUD(style: .dark)
 
@@ -37,7 +38,7 @@ class AllSensorsTableViewController: UITableViewController {
             // Your code with delay
         }
         self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
-        DispatchQueue.main.asyncAfter(deadline: when) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
             // Your code with delay
         }
     }
@@ -138,13 +139,16 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         print("did update value for characteristic")
+        guard characteristic.uuid == BTReadUUID else { return }
         
-        if  characteristic.uuid == BTReadUUID  {
-            let data:Data = characteristic.value!
-            let  d  = Array(UnsafeBufferPointer(start: (data as NSData).bytes.bindMemory(to: UInt8.self, capacity: data.count), count: data.count))
-            //print(String(data: data, encoding: .ascii) as Any)
-            print(d)
-            
+        let data:Data = characteristic.value!
+        let bytesArrary:[UInt8] = [UInt8](data)
+        
+        // get 1st stage
+        if bytesArrary[0] == StartFlag  && bytesArrary[1] == StartFlag {
+            self.indexReport.setReportLeng(head: bytesArrary[2], tail: bytesArrary[3])
+            self.indexReport.setDevNum(head: bytesArrary[4], tail: bytesArrary[5])
         }
+            
     }
 }

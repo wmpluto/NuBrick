@@ -285,7 +285,10 @@ extension DetectBluetoothTableViewController: CBPeripheralDelegate {
             if c.uuid == BTWriteUUID {
                 print(c.uuid.uuidString)
                 self.writeCharacteristic = c
-                self.selectedPeripheral.writeValue(HOOKCMD!, for: self.writeCharacteristic, type: .withResponse)
+                self.selectedPeripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                    self.selectedPeripheral.writeValue(HOOKCMD!, for: self.writeCharacteristic, type: .withResponse)
+                }
             }
             
             if c.uuid == BTReadUUID {
@@ -316,36 +319,18 @@ extension DetectBluetoothTableViewController: CBPeripheralDelegate {
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         print("----didUpdateValueForCharacteristic---")
+        guard characteristic.uuid == BTReadUUID else { return }
+        let data:Data = characteristic.value!
+        //let  d  = Array(UnsafeBufferPointer(start: (data as NSData).bytes.bindMemory(to: UInt8.self, capacity: data.count), count: data.count))
+        print(String(data: data, encoding: .ascii) as Any)
         
-        if  characteristic.uuid == BTReadUUID  {
-            let data:Data = characteristic.value!
-            //let  d  = Array(UnsafeBufferPointer(start: (data as NSData).bytes.bindMemory(to: UInt8.self, capacity: data.count), count: data.count))
-            print(String(data: data, encoding: .ascii) as Any)
-            
-            if(data == rHOOKCMD) {
-                print("get hook cmd")
-                progressHUD?.textLabel.text = "Connecting to \(DeviceName)"
-                self.selectedPeripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
-                let when = DispatchTime.now() + 2 // change 2 to desired number of seconds
-                DispatchQueue.main.asyncAfter(deadline: when) {
-                    // Your code with delay
-                }
-                self.selectedPeripheral.writeValue(FBCMD!, for: self.writeCharacteristic, type: .withResponse)
-                DispatchQueue.main.asyncAfter(deadline: when) {
-                    // Your code with delay
-                }
-                self.selectedPeripheral.writeValue(VFCMD!, for: self.writeCharacteristic, type: .withResponse)
-                DispatchQueue.main.asyncAfter(deadline: when) {
-                    // Your code with delay
-                }
+        if(data == rHOOKCMD) {
+            print("get hook cmd")
+            progressHUD?.textLabel.text = "Connecting to \(DeviceName)"
+            self.selectedPeripheral.writeValue(FBCMD!, for: self.writeCharacteristic, type: .withResponse)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                self.performSegue(withIdentifier: "toNuBrickSensorsTable", sender: self)
             }
-            
-            if(data == rVFCMD) {
-                print("check NuBrick OK")
-                performSegue(withIdentifier: "toNuBrickSensorsTable", sender: self)
-            }
-            
-            
         }
     }
 }

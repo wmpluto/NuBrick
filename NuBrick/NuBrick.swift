@@ -37,6 +37,37 @@ let TXCMD          = "@tx".data(using: String.Encoding.ascii)
 let rHOOKCMD       = "@HOOK00".data(using: String.Encoding.ascii)
 let rVFCMD         = "@d".data(using: String.Encoding.ascii)
 
+// Communication Start Flag
+let StartFlag:UInt8    = 0x55
+
+// Index Report 1st stage 
+struct IndexReport {
+    var reportLeng: UInt16 = 0
+    var devNum         : UInt16 = 0
+    var devConnected   : UInt16 = 0
+    var dataLeng  : UInt16 = 0
+    
+    mutating func setReportLeng(head:UInt8, tail:UInt8) {
+        self.reportLeng = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setDevNum(head:UInt8, tail:UInt8) {
+        self.devNum = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setDevConnected(head:UInt8, tail:UInt8) {
+        self.devConnected = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setDataLeng(head:UInt8, tail:UInt8) {
+        self.dataLeng = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    func bytesToWord(head:UInt8, tail:UInt8) -> UInt16 {
+        return UInt16(tail) << 8 | UInt16(head)
+    }
+}
+
 // Device Descriptor, the data in 1st stage
 struct DeviceDescriptor {
     var devDescLeng:    UInt16 = 0
