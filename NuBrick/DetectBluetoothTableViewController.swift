@@ -286,7 +286,9 @@ extension DetectBluetoothTableViewController: CBPeripheralDelegate {
                 print(c.uuid.uuidString)
                 self.writeCharacteristic = c
                 self.selectedPeripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
+                print("stop it before check device")
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                    print("hookcmd")
                     self.selectedPeripheral.writeValue(HOOKCMD!, for: self.writeCharacteristic, type: .withResponse)
                 }
             }

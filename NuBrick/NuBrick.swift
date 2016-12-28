@@ -40,7 +40,17 @@ let rVFCMD         = "@d".data(using: String.Encoding.ascii)
 // Communication Start Flag
 let StartFlag:UInt8    = 0x55
 
-// Index Report 1st stage 
+
+// Sensor
+struct Sensor {
+    let name:String
+    let alarm:Bool
+    let status:UInt16
+    
+    
+}
+
+// Index Report 1st stage
 struct IndexReport {
     var reportLeng: UInt16 = 0
     var devNum         : UInt16 = 0
@@ -61,6 +71,84 @@ struct IndexReport {
     
     mutating func setDataLeng(head:UInt8, tail:UInt8) {
         self.dataLeng = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    func bytesToWord(head:UInt8, tail:UInt8) -> UInt16 {
+        return UInt16(tail) << 8 | UInt16(head)
+    }
+}
+
+//Index Data 2nd stage
+struct IndexData {
+    var batteryStatus:    UInt16 = 0
+    var batteryAlarm:     UInt16 = 0
+    var beepStatus:       UInt16 = 0
+    var ledStatus:        UInt16 = 0
+    var attitudeStatus:   UInt16 = 0
+    var attitudeAlarm:    UInt16 = 0
+    var sonarStatus:      UInt16 = 0
+    var sonarAlarm:       UInt16 = 0
+    var temperStatus:     UInt16 = 0
+    var humidityStatus:   UInt16 = 0
+    var temperAlarm:      UInt16 = 0
+    var humidityAlarm:    UInt16 = 0
+    var gasStatus:        UInt16 = 0
+    var gasAlarm:         UInt16 = 0
+
+    mutating func setBatteryStatus(head:UInt8, tail:UInt8) {
+        self.batteryStatus = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setBatteryAlarm(head:UInt8, tail:UInt8) {
+        self.batteryAlarm = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setBeepStatus(head:UInt8, tail:UInt8) {
+        self.beepStatus = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setLedStatus(head:UInt8, tail:UInt8) {
+        self.ledStatus = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setAttitudeStatus(head:UInt8, tail:UInt8) {
+        self.attitudeStatus = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setAttitudeAlarm(head:UInt8, tail:UInt8) {
+        self.attitudeAlarm = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setSonarStatus(head:UInt8, tail:UInt8) {
+        self.sonarStatus = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setSonarAlarm(head:UInt8, tail:UInt8) {
+        self.sonarAlarm = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setTemperStatus(head:UInt8, tail:UInt8) {
+        self.temperStatus = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setHumidityStatus(head:UInt8, tail:UInt8) {
+        self.humidityStatus = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setTemperAlarm(head:UInt8, tail:UInt8) {
+        self.temperAlarm = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setHumidityAlarm(head:UInt8, tail:UInt8) {
+        self.humidityAlarm = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setGasStatus(head:UInt8, tail:UInt8) {
+        self.gasStatus = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setGasAlarm(head:UInt8, tail:UInt8) {
+        self.gasAlarm = self.bytesToWord(head: head, tail: tail)
     }
     
     func bytesToWord(head:UInt8, tail:UInt8) -> UInt16 {
