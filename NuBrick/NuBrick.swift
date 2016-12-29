@@ -44,10 +44,14 @@ let StartFlag:UInt8    = 0x55
 // Sensor
 struct Sensor {
     let name:String
+    let status:Int
     let alarm:Bool
-    let status:UInt16
     
-    
+    init(name:String, status: UInt16,alarm: UInt16) {
+        self.name = name
+        self.status = Int(status)
+        self.alarm = alarm > 0 ? true : false
+    }
 }
 
 // Index Report 1st stage

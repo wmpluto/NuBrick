@@ -11,6 +11,7 @@
 		280092651DFF90F100EC0C7E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 280092631DFF90F100EC0C7E /* Main.storyboard */; };
 		280092671DFF90F100EC0C7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 280092661DFF90F100EC0C7E /* Assets.xcassets */; };
 		2800926A1DFF90F100EC0C7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 280092681DFF90F100EC0C7E /* LaunchScreen.storyboard */; };
+		2851F7841E1503CB00CEAA06 /* TemperatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2851F7831E1503CB00CEAA06 /* TemperatureViewController.swift */; };
 		2879181E1E0264EA0091C740 /* BaseNavigationControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */; };
 		287918221E02678D0091C740 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287918211E02678D0091C740 /* Util.swift */; };
 		287918241E027F710091C740 /* DetectBluetoothTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287918231E027F710091C740 /* DetectBluetoothTableViewController.swift */; };
@@ -27,6 +28,7 @@
 		280092691DFF90F100EC0C7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2800926B1DFF90F100EC0C7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		280092741DFF946E00EC0C7E /* NuBrick-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NuBrick-Bridging-Header.h"; sourceTree = "<group>"; };
+		2851F7831E1503CB00CEAA06 /* TemperatureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemperatureViewController.swift; sourceTree = "<group>"; };
 		2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNavigationControllerViewController.swift; sourceTree = "<group>"; };
 		287918211E02678D0091C740 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		287918231E027F710091C740 /* DetectBluetoothTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectBluetoothTableViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */,
 				287918231E027F710091C740 /* DetectBluetoothTableViewController.swift */,
 				2892DF171E03943900D76231 /* AllSensorsTableViewController.swift */,
+				2851F7831E1503CB00CEAA06 /* TemperatureViewController.swift */,
 				287918211E02678D0091C740 /* Util.swift */,
 			);
 			name = Controller;
@@ -256,6 +259,7 @@
 				280092601DFF90F100EC0C7E /* AppDelegate.swift in Sources */,
 				2892DF181E03943900D76231 /* AllSensorsTableViewController.swift in Sources */,
 				28BA2C1B1DFFDEB7007C8ADA /* NuBrick.swift in Sources */,
+				2851F7841E1503CB00CEAA06 /* TemperatureViewController.swift in Sources */,
 				287918241E027F710091C740 /* DetectBluetoothTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
