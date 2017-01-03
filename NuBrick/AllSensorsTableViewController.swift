@@ -79,7 +79,19 @@ class AllSensorsTableViewController: UITableViewController {
         return cell
     }
     
-
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let s = sensors[indexPath.row]
+        print("Did SelectRowAt\(s.name)")
+        switch s.name {
+        case "Temper":
+            self.performSegue(withIdentifier: "toTemperatureView", sender: self)
+            break
+        default:
+            break
+        }
+        
+        
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -115,7 +127,7 @@ class AllSensorsTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -123,7 +135,7 @@ class AllSensorsTableViewController: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
+    
 
 }
 
