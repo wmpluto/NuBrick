@@ -23,7 +23,7 @@ class DetectBluetoothTableViewController: UITableViewController {
     // peripheral status
     dynamic var pStatus: NSNumber = NSNumber(booleanLiteral: false)
     var myContext = 0
-    
+    let tempForUI:[Int] = Array(repeating: 0, count: 10)
     // Blutetooth
     var centralManager: CBCentralManager!
     var peripherals: [BLEPeripheral] = []
@@ -131,22 +131,25 @@ class DetectBluetoothTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return peripherals.count
+        return tempForUI.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BLEPeripheral", for: indexPath)
-        let blePeripheral:BLEPeripheral = peripherals[indexPath.row]
+/*        let blePeripheral:BLEPeripheral = peripherals[indexPath.row]
 
         cell.textLabel?.text = blePeripheral.name
         cell.detailTextLabel?.text = blePeripheral.uuid
         cell.imageView?.image = UIImage(named: getRSSILevel(rssi: blePeripheral.rssi!))
-
+*/
+        cell.textLabel?.text = "test"
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Did SelectRowAt")
+        self.performSegue(withIdentifier: "toNuBrickSensorsTable", sender: self)
+        /*
         let blePeripheral:BLEPeripheral = peripherals[indexPath.row]
         
         selectedPeripheral = blePeripheral.peripheral
@@ -154,6 +157,7 @@ class DetectBluetoothTableViewController: UITableViewController {
         progressHUD?.show(in: self.view, animated: true)
         
         centralManager.connect(selectedPeripheral, options: nil)
+ */
     }
 
     /*

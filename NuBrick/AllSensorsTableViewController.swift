@@ -21,6 +21,7 @@ class AllSensorsTableViewController: UITableViewController {
     var tmpBuffer:[UInt8] = []
     var sensors:[Sensor] = []
     let dataQueue = DispatchQueue(label:"com.nuvoton.dataQueue")
+    let tempForUI:[Int] = Array(repeating: 0, count: 10)
 
     let progressHUD = JGProgressHUD(style: .dark)
 
@@ -34,15 +35,15 @@ class AllSensorsTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         print("AllSensorsTableview")
         
-        self.peripheral.delegate = self
+        //self.peripheral.delegate = self
         
         let when = DispatchTime.now() + 2 // change 2 to desired number of seconds
 
-        self.peripheral.writeValue(TXCMD!, for: self.writeCharacteristic, type: .withResponse)
+        //self.peripheral.writeValue(TXCMD!, for: self.writeCharacteristic, type: .withResponse)
         DispatchQueue.main.asyncAfter(deadline: when) {
             // Your code with delay
         }
-        self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
+        //self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
             // Your code with delay
         }
@@ -62,12 +63,13 @@ class AllSensorsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return sensors.count
+        return tempForUI.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ConnectedSensor", for: indexPath)
+        /*
         if indexPath.row > sensors.count {
             print("wrong")
             return cell
@@ -76,7 +78,20 @@ class AllSensorsTableViewController: UITableViewController {
         // Configure the cell...
         cell.textLabel?.text = s.name
         cell.detailTextLabel?.text = String(s.status)
+ */
+        cell.textLabel?.text = "test"
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Did SelectRowAt")
+        switch indexPath.row {
+        case 0:
+            self.performSegue(withIdentifier: "toTemperatureSensorsTable", sender: self)
+            break
+        default:
+            break
+        }
     }
     
 

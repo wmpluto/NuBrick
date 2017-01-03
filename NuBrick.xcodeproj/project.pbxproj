@@ -17,6 +17,9 @@
 		287918241E027F710091C740 /* DetectBluetoothTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287918231E027F710091C740 /* DetectBluetoothTableViewController.swift */; };
 		2892DF181E03943900D76231 /* AllSensorsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2892DF171E03943900D76231 /* AllSensorsTableViewController.swift */; };
 		28BA2C1B1DFFDEB7007C8ADA /* NuBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BA2C1A1DFFDEB7007C8ADA /* NuBrick.swift */; };
+		28DC16921E1B8CBC00E15E09 /* BatteryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DC16911E1B8CBC00E15E09 /* BatteryViewController.swift */; };
+		28DC16941E1B8CED00E15E09 /* GasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DC16931E1B8CED00E15E09 /* GasViewController.swift */; };
+		28DC16961E1B8D1A00E15E09 /* AttitudeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DC16951E1B8D1A00E15E09 /* AttitudeViewController.swift */; };
 		3330BFB665C85FAA15CBB422 /* Pods_NuBrick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA07D273A2AAD25E01BFC59 /* Pods_NuBrick.framework */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +37,9 @@
 		287918231E027F710091C740 /* DetectBluetoothTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectBluetoothTableViewController.swift; sourceTree = "<group>"; };
 		2892DF171E03943900D76231 /* AllSensorsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllSensorsTableViewController.swift; sourceTree = "<group>"; };
 		28BA2C1A1DFFDEB7007C8ADA /* NuBrick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NuBrick.swift; path = NuBrick/NuBrick.swift; sourceTree = "<group>"; };
+		28DC16911E1B8CBC00E15E09 /* BatteryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryViewController.swift; sourceTree = "<group>"; };
+		28DC16931E1B8CED00E15E09 /* GasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GasViewController.swift; sourceTree = "<group>"; };
+		28DC16951E1B8D1A00E15E09 /* AttitudeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttitudeViewController.swift; sourceTree = "<group>"; };
 		304F5E8CB4781BD0790000E7 /* Pods-NuBrick.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NuBrick.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NuBrick/Pods-NuBrick.debug.xcconfig"; sourceTree = "<group>"; };
 		3EA07D273A2AAD25E01BFC59 /* Pods_NuBrick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NuBrick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3D0A84D225F7F0481E91707 /* Pods-NuBrick.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NuBrick.release.xcconfig"; path = "Pods/Target Support Files/Pods-NuBrick/Pods-NuBrick.release.xcconfig"; sourceTree = "<group>"; };
@@ -105,6 +111,9 @@
 			isa = PBXGroup;
 			children = (
 				2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */,
+				28DC16951E1B8D1A00E15E09 /* AttitudeViewController.swift */,
+				28DC16911E1B8CBC00E15E09 /* BatteryViewController.swift */,
+				28DC16931E1B8CED00E15E09 /* GasViewController.swift */,
 				287918231E027F710091C740 /* DetectBluetoothTableViewController.swift */,
 				2892DF171E03943900D76231 /* AllSensorsTableViewController.swift */,
 				2851F7831E1503CB00CEAA06 /* TemperatureViewController.swift */,
@@ -254,8 +263,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28DC16921E1B8CBC00E15E09 /* BatteryViewController.swift in Sources */,
 				2879181E1E0264EA0091C740 /* BaseNavigationControllerViewController.swift in Sources */,
 				287918221E02678D0091C740 /* Util.swift in Sources */,
+				28DC16941E1B8CED00E15E09 /* GasViewController.swift in Sources */,
+				28DC16961E1B8D1A00E15E09 /* AttitudeViewController.swift in Sources */,
 				280092601DFF90F100EC0C7E /* AppDelegate.swift in Sources */,
 				2892DF181E03943900D76231 /* AllSensorsTableViewController.swift in Sources */,
 				28BA2C1B1DFFDEB7007C8ADA /* NuBrick.swift in Sources */,
@@ -383,6 +395,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 304F5E8CB4781BD0790000E7 /* Pods-NuBrick.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = RXB9WS547Y;
 				INFOPLIST_FILE = NuBrick/Info.plist;
@@ -398,6 +411,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F3D0A84D225F7F0481E91707 /* Pods-NuBrick.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = RXB9WS547Y;
 				INFOPLIST_FILE = NuBrick/Info.plist;

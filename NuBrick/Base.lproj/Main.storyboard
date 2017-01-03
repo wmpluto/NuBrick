@@ -103,12 +103,50 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <segue destination="SFA-W1-DwO" kind="show" id="Ieu-CG-7iF"/>
+                        <segue destination="SFA-W1-DwO" kind="show" identifier="toTemperatureSensorsTable" id="Ieu-CG-7iF"/>
+                        <segue destination="mbs-WM-tGQ" kind="show" id="PWt-gF-qTM"/>
+                        <segue destination="O0U-zk-qxE" kind="show" id="UCs-Ng-WXH"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gac-qd-RmH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1690" y="124"/>
+            <point key="canvasLocation" x="1751" y="124"/>
+        </scene>
+        <!--Attitude View Controller-->
+        <scene sceneID="K1g-UI-UjV">
+            <objects>
+                <viewController id="mbs-WM-tGQ" customClass="AttitudeViewController" customModule="NuBrick" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="25k-hx-bGS"/>
+                        <viewControllerLayoutGuide type="bottom" id="1IU-7k-NW6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cRy-ie-kdr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attitude Sensor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="83P-q5-fzR">
+                                <rect key="frame" x="128" y="72" width="119" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oh4-Ri-WME">
+                                <rect key="frame" x="16" y="101" width="343" height="343"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="83P-q5-fzR" secondAttribute="trailing" constant="112" id="2ba-Ub-gCm"/>
+                            <constraint firstItem="83P-q5-fzR" firstAttribute="top" secondItem="25k-hx-bGS" secondAttribute="bottom" constant="8" id="wT0-AN-l6I"/>
+                            <constraint firstItem="83P-q5-fzR" firstAttribute="leading" secondItem="cRy-ie-kdr" secondAttribute="leadingMargin" constant="112" id="xae-P1-M2x"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZdC-qV-78p" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2533.5999999999999" y="923.38830584707648"/>
         </scene>
         <!--Temperature View Controller-->
         <scene sceneID="QJe-LC-6GY">
@@ -171,6 +209,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tci-fU-bk3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="220" y="124"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="pvV-zF-Jas">
+            <objects>
+                <viewController id="O0U-zk-qxE" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0C4-9r-21H"/>
+                        <viewControllerLayoutGuide type="bottom" id="9SE-16-CJb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PQe-Mk-sLJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wd2-Mn-g4v" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2524" y="243"/>
         </scene>
     </scenes>
 </document>
