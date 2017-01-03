@@ -6,6 +6,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -119,12 +121,38 @@
                     <view key="view" contentMode="scaleToFill" id="bnj-Dr-AKt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Temperature&amp;Humitiy Sensor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mHt-cG-cHH">
+                                <rect key="frame" x="74" y="72" width="226" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nm3-zz-Bbz" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="16" y="101" width="343" height="343"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Nm3-zz-Bbz" secondAttribute="height" multiplier="1:1" id="dU3-AY-V0V"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mHt-cG-cHH" firstAttribute="top" secondItem="PYv-p3-fzC" secondAttribute="bottom" constant="8" id="4Bp-4b-BnZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Nm3-zz-Bbz" secondAttribute="trailing" id="Dhj-xA-dfS"/>
+                            <constraint firstItem="Nm3-zz-Bbz" firstAttribute="top" secondItem="mHt-cG-cHH" secondAttribute="bottom" constant="8" id="FTM-Cb-IAe"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mHt-cG-cHH" secondAttribute="trailing" constant="59" id="WLf-xz-RFq"/>
+                            <constraint firstItem="mHt-cG-cHH" firstAttribute="leading" secondItem="bnj-Dr-AKt" secondAttribute="leadingMargin" constant="58" id="eIT-g4-ISM"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="Nm3-zz-Bbz" secondAttribute="leading" id="mnk-Dy-eLK"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="lineChartView" destination="Nm3-zz-Bbz" id="bkB-zw-FHd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SAC-w2-hXG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2535" y="-396"/>
+            <point key="canvasLocation" x="2533.5999999999999" y="-396.25187406296857"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="LJo-qW-FLe">
