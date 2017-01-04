@@ -20,7 +20,6 @@ class AllSensorsTableViewController: UITableViewController {
     //var buffer:[UInt8] = []
     var tmpBuffer:[UInt8] = []
     var sensors:[Sensor] = []
-    let dataQueue = DispatchQueue(label:"com.nuvoton.dataQueue")
 
     let progressHUD = JGProgressHUD(style: .dark)
 
@@ -46,6 +45,11 @@ class AllSensorsTableViewController: UITableViewController {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
             // Your code with delay
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //self.peripheral.delegate = nil
     }
 
     override func didReceiveMemoryWarning() {
@@ -82,15 +86,23 @@ class AllSensorsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let s = sensors[indexPath.row]
         print("Did SelectRowAt\(s.name)")
-        switch s.name {
-        case "Temper":
-            self.performSegue(withIdentifier: "toTemperatureView", sender: self)
-            break
-        default:
-            break
+        
+        progressHUD?.textLabel.text = "Showing \(s.name)"
+        progressHUD?.show(in: self.view, animated: true)
+        
+        self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+            // Your code with delay
+            switch s.name {
+            case "Temper":
+                
+                self.performSegue(withIdentifier: "toTemperatureView", sender: self)
+                break
+                
+            default:
+                break
+            }
         }
-        
-        
     }
     /*
     // Override to support conditional editing of the table view.
@@ -134,6 +146,11 @@ class AllSensorsTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if  let vc = segue.destination as? TemperatureViewController {
+            vc.peripheral  = self.peripheral
+            vc.writeCharacteristic = self.writeCharacteristic
+            vc.readCharacteristic = self.readCharacteristic
+        }
     }
     
 
@@ -170,7 +187,7 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
             tmpBuffer += bytesArrary
             guard tmpBuffer.count > 512 else {return}
             
-            self.dataQueue.sync {
+            dataQueue.sync {
                 var buffer = self.tmpBuffer
                 self.tmpBuffer = []
                 //do something with buffer
@@ -178,21 +195,17 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
                 //find head 
                 var i = 0
                 while (i+(Int)(self.indexReport.dataLeng)+1) < buffer.count {
-                    print("1")
                     let flagBefore = self.indexData.bytesToWord(head: buffer[i], tail: buffer[i+1])
                     let flagNext = self.indexData.bytesToWord(head: buffer[i+(Int)(self.indexReport.dataLeng)], tail: buffer[i+(Int)(self.indexReport.dataLeng)+1])
-                    print("2")
                     if flagBefore == self.indexReport.dataLeng && flagNext == self.indexReport.dataLeng{
                         //get 2nd stage data
                         self.sensors = []
-                        print("3")
                         self.processIndexData(da: Array(buffer[i+2..<(i+(Int)(self.indexReport.dataLeng))]))
                         //convert 2nd stage data to 
                         //print(self.indexData)
                         if self.indexReport.dataLeng > 28 {
                             //print("here is custome sensor")
                         }
-                        print("4")
                         
                         i += (Int)(self.indexReport.dataLeng)-1
                         DispatchQueue.main.async {
@@ -227,8 +240,8 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
         self.indexData.setBatteryAlarm(head: da[2], tail: da[3])
         self.sensors.append(Sensor(name: "battery", status: self.indexData.batteryStatus, alarm: self.indexData.batteryAlarm))
         
-        self.indexData.setBeepStatus(head: da[4], tail: da[5])
-        self.sensors.append(Sensor(name: "beep", status: self.indexData.beepStatus, alarm: 0))
+        self.indexData.setBuzzerStatus(head: da[4], tail: da[5])
+        self.sensors.append(Sensor(name: "buzzer", status: self.indexData.buzzerStatus, alarm: 0))
         
         self.indexData.setLedStatus(head: da[6], tail: da[7])
         self.sensors.append(Sensor(name: "led", status: self.indexData.ledStatus, alarm: 0))

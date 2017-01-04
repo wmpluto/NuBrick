@@ -26,20 +26,31 @@ let BTWriteUUID      = CBUUID(string: "FF01")
 let BTReadUUID       = CBUUID(string: "FF02")
 
 // Initial Command
-let HOOKCMD        = "@h00".data(using: String.Encoding.ascii)
-let SSCMD          = "@ss".data(using: String.Encoding.ascii)
-let SPCMD          = "@sp".data(using: String.Encoding.ascii)
-let FBCMD          = "@fb".data(using: String.Encoding.ascii)
-let VFCMD          = "@vf".data(using: String.Encoding.ascii)
-let TXCMD          = "@tx".data(using: String.Encoding.ascii)
+let HOOKCMD        = "@h00".data(using: .ascii)
+let SSCMD          = "@ss".data(using: .ascii)
+let SPCMD          = "@sp".data(using: .ascii)
+let FBCMD          = "@fb".data(using: .ascii)
+let VFCMD          = "@vf".data(using: .ascii)
+let TXCMD          = "@tx".data(using: .ascii)
 
 // Reponse to Command
-let rHOOKCMD       = "@HOOK00".data(using: String.Encoding.ascii)
-let rVFCMD         = "@d".data(using: String.Encoding.ascii)
+let rHOOKCMD       = "@HOOK00".data(using: .ascii)
+let rVFCMD         = "@d".data(using: .ascii)
+
+// Device Transport Command
+let BATTERYCMD     = "@tb".data(using: .ascii)
+let BUZZERCMD      = "@tz".data(using: .ascii)
+let LEDCMD         = "@tl".data(using: .ascii)
+let ATTITUDECMD    = "@ta".data(using: .ascii)
+let SONARCMD       = "@ts".data(using: .ascii)
+let TEMPHUMCMD     = "@tt".data(using: .ascii)
+let GASCMD         = "@tg".data(using: .ascii)
 
 // Communication Start Flag
 let StartFlag:UInt8    = 0x55
 
+// Queue
+let dataQueue = DispatchQueue(label:"com.nuvoton.dataQueue")
 
 // Sensor
 struct Sensor {
@@ -86,7 +97,7 @@ struct IndexReport {
 struct IndexData {
     var batteryStatus:    UInt16 = 0
     var batteryAlarm:     UInt16 = 0
-    var beepStatus:       UInt16 = 0
+    var buzzerStatus:       UInt16 = 0
     var ledStatus:        UInt16 = 0
     var attitudeStatus:   UInt16 = 0
     var attitudeAlarm:    UInt16 = 0
@@ -107,8 +118,8 @@ struct IndexData {
         self.batteryAlarm = self.bytesToWord(head: head, tail: tail)
     }
     
-    mutating func setBeepStatus(head:UInt8, tail:UInt8) {
-        self.beepStatus = self.bytesToWord(head: head, tail: tail)
+    mutating func setBuzzerStatus(head:UInt8, tail:UInt8) {
+        self.buzzerStatus = self.bytesToWord(head: head, tail: tail)
     }
     
     mutating func setLedStatus(head:UInt8, tail:UInt8) {
@@ -163,9 +174,9 @@ struct IndexData {
 // Device Descriptor, the data in 1st stage
 struct DeviceDescriptor {
     var devDescLeng:    UInt16 = 0
-    var rptDescLent:    UInt16 = 0
+    var rptDescLeng:    UInt16 = 0
     var inRptLeng:      UInt16 = 0
-    var outRptLent:     UInt16 = 0
+    var outRptLeng:     UInt16 = 0
     var getFeatLeng:    UInt16 = 0
     var setFeatLeng:    UInt16 = 0
     var cid:            UInt16 = 0
@@ -175,34 +186,86 @@ struct DeviceDescriptor {
     var ucid:           UInt16 = 0
     var reserveOne:     UInt16 = 0
     var reserveTwo:     UInt16 = 0
+    
+    mutating func setDevDescLeng(head:UInt8, tail:UInt8) {
+        self.devDescLeng = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setRptDescLeng(head:UInt8, tail:UInt8) {
+        self.rptDescLeng = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setInRptLeng(head:UInt8, tail:UInt8) {
+        self.inRptLeng = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setOutRptLeng(head:UInt8, tail:UInt8) {
+        self.outRptLeng = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setGetFeatLeng(head:UInt8, tail:UInt8) {
+        self.getFeatLeng = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setSetFeatLeng(head:UInt8, tail:UInt8) {
+        self.setFeatLeng = self.bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setDeviceDescriptor(arrary:[UInt8]) {
+        guard arrary.count == Int(self.devDescLeng) else { return }
+        
+        self.setDevDescLeng(head: arrary[0], tail: arrary[1])
+        self.setRptDescLeng(head: arrary[2], tail: arrary[3])
+        self.setInRptLeng(head: arrary[4], tail: arrary[5])
+        self.setOutRptLeng(head: arrary[6], tail: arrary[7])
+        self.setGetFeatLeng(head: arrary[8], tail: arrary[9])
+        self.setSetFeatLeng(head: arrary[10], tail: arrary[12])
+        //Others set 0
+    }
+    
+    func bytesToWord(head:UInt8, tail:UInt8) -> UInt16 {
+        return UInt16(tail) << 8 | UInt16(head)
+    }
 }
 
-// 
-struct TIDData {
-    var value:          UInt16 = 0
-    var minium:         UInt16 = 0
-    var maximum:        UInt16 = 0
+// Device Data, the Data in 2nd Stage
+struct DeviceData {
+    var devDescLeng:     UInt16 = 0
+    var parameter:       [DeviceParameter] = []
+    
+    let types:            Set<UInt16> = [257, 258, 259]
+    let addresses:        Set<UInt8>  = [5, 17, 29, 41, 53, 65, 77, 89, 101, 113]
+    let minFlags:         Set<UInt8>  = [9, 10]
+    let maxFlags:         Set<UInt8>  = [13, 14]
+    
+    func setDeviceData(arrary: [UInt8]) {
+        guard arrary.count == Int(self.devDescLeng) else { return }
+        
+        var i = -1
+        while i < arrary.count {
+            i += 1
+            guard types.contains(bytesToWord(head: arrary[i], tail: arrary[i+1])) && addresses.contains(arrary[i+2]) else { continue }
+            var tmpDeviceParameter = DeviceParameter()
+            
+            
+            
+        }
+    }
+    
+    func bytesToWord(head:UInt8, tail:UInt8) -> UInt16 {
+        return UInt16(tail) << 8 | UInt16(head)
+    }
 }
 
-struct TIDFeature {
-    var data1:          TIDData
-    var data2:          TIDData
-    var data3:          TIDData
-    var data4:          TIDData
-    var data5:          TIDData
-    var data6:          TIDData
-    var data7:          TIDData
-    var data8:          TIDData
-    var data9:          TIDData
-    var data10:         TIDData
+struct  DeviceParameter {
+    var type:           UInt16 = 0
+    var address:        UInt8  = 0
+    var length:         UInt16 = 0
+    var minFlag:        UInt8  = 0
+    var min:            UInt16 = 0
+    var maxFlag:        UInt16 = 0
+    var max:            UInt16 = 0
+    
     
 }
-
-class BLEStatus: NSObject {
-    dynamic var status: NSNumber = NSNumber(integerLiteral: 0)
-    
-    
-}
-
-
 
