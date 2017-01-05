@@ -179,12 +179,12 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         print("did update value for characteristic")
         guard characteristic.uuid == BTReadUUID else { return }
-        let bytesArrary:[UInt8] = [UInt8](characteristic.value!)
+        let bytesArray:[UInt8] = [UInt8](characteristic.value!)
 
         // process 2nd stage
         if self.indexReport.dataLeng > 0 {
-           // save bytes arrary to buffer
-            tmpBuffer += bytesArrary
+           // save bytes array to buffer
+            tmpBuffer += bytesArray
             guard tmpBuffer.count > 512 else {return}
             
             dataQueue.sync {
@@ -195,8 +195,8 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
                 //find head 
                 var i = 0
                 while (i+(Int)(self.indexReport.dataLeng)+1) < buffer.count {
-                    let flagBefore = self.indexData.bytesToWord(head: buffer[i], tail: buffer[i+1])
-                    let flagNext = self.indexData.bytesToWord(head: buffer[i+(Int)(self.indexReport.dataLeng)], tail: buffer[i+(Int)(self.indexReport.dataLeng)+1])
+                    let flagBefore = bytesToWord(head: buffer[i], tail: buffer[i+1])
+                    let flagNext = bytesToWord(head: buffer[i+(Int)(self.indexReport.dataLeng)], tail: buffer[i+(Int)(self.indexReport.dataLeng)+1])
                     if flagBefore == self.indexReport.dataLeng && flagNext == self.indexReport.dataLeng{
                         //get 2nd stage data
                         self.sensors = []
@@ -222,11 +222,11 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
         
         
         // get 1st stage
-        if bytesArrary[0] == StartFlag  && bytesArrary[1] == StartFlag {
-            self.indexReport.setReportLeng(head: bytesArrary[2], tail: bytesArrary[3])
-            self.indexReport.setDevNum(head: bytesArrary[4], tail: bytesArrary[5])
-            self.indexReport.setDevConnected(head: bytesArrary[6], tail: bytesArrary[7])
-            self.indexReport.setDataLeng(head: bytesArrary[8], tail: bytesArrary[9])
+        if bytesArray[0] == StartFlag  && bytesArray[1] == StartFlag {
+            self.indexReport.setReportLeng(head: bytesArray[2], tail: bytesArray[3])
+            self.indexReport.setDevNum(head: bytesArray[4], tail: bytesArray[5])
+            self.indexReport.setDevConnected(head: bytesArray[6], tail: bytesArray[7])
+            self.indexReport.setDataLeng(head: bytesArray[8], tail: bytesArray[9])
         }
     }
     

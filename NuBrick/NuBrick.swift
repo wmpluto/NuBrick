@@ -49,6 +49,19 @@ let GASCMD         = "@tg".data(using: .ascii)
 // Communication Start Flag
 let StartFlag:UInt8    = 0x55
 
+// TID Set
+let TYPEF:            UInt16      = 257
+let TYPEI:            UInt16      = 258
+let TYPEO:            UInt16      = 259
+let types:            Set<UInt16> = [TYPEF, TYPEI, TYPEO]
+let addresses:        Set<UInt8>  = [5, 17, 29, 41, 53, 65, 77, 89, 101, 113]
+let MINBYTES:         UInt8       = 9
+let MINWORD:          UInt8       = 10
+let minFlags:         Set<UInt8>  = [MINBYTES, MINWORD]
+let MAXBYTES:         UInt8       = 13
+let MAXWORD:          UInt8       = 14
+let maxFlags:         Set<UInt8>  = [MAXBYTES, MAXWORD]
+
 // Queue
 let dataQueue = DispatchQueue(label:"com.nuvoton.dataQueue")
 
@@ -73,23 +86,19 @@ struct IndexReport {
     var dataLeng  : UInt16 = 0
     
     mutating func setReportLeng(head:UInt8, tail:UInt8) {
-        self.reportLeng = self.bytesToWord(head: head, tail: tail)
+        self.reportLeng = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setDevNum(head:UInt8, tail:UInt8) {
-        self.devNum = self.bytesToWord(head: head, tail: tail)
+        self.devNum = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setDevConnected(head:UInt8, tail:UInt8) {
-        self.devConnected = self.bytesToWord(head: head, tail: tail)
+        self.devConnected = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setDataLeng(head:UInt8, tail:UInt8) {
-        self.dataLeng = self.bytesToWord(head: head, tail: tail)
-    }
-    
-    func bytesToWord(head:UInt8, tail:UInt8) -> UInt16 {
-        return UInt16(tail) << 8 | UInt16(head)
+        self.dataLeng = bytesToWord(head: head, tail: tail)
     }
 }
 
@@ -111,63 +120,59 @@ struct IndexData {
     var gasAlarm:         UInt16 = 0
 
     mutating func setBatteryStatus(head:UInt8, tail:UInt8) {
-        self.batteryStatus = self.bytesToWord(head: head, tail: tail)
+        self.batteryStatus = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setBatteryAlarm(head:UInt8, tail:UInt8) {
-        self.batteryAlarm = self.bytesToWord(head: head, tail: tail)
+        self.batteryAlarm = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setBuzzerStatus(head:UInt8, tail:UInt8) {
-        self.buzzerStatus = self.bytesToWord(head: head, tail: tail)
+        self.buzzerStatus = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setLedStatus(head:UInt8, tail:UInt8) {
-        self.ledStatus = self.bytesToWord(head: head, tail: tail)
+        self.ledStatus = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setAttitudeStatus(head:UInt8, tail:UInt8) {
-        self.attitudeStatus = self.bytesToWord(head: head, tail: tail)
+        self.attitudeStatus = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setAttitudeAlarm(head:UInt8, tail:UInt8) {
-        self.attitudeAlarm = self.bytesToWord(head: head, tail: tail)
+        self.attitudeAlarm = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setSonarStatus(head:UInt8, tail:UInt8) {
-        self.sonarStatus = self.bytesToWord(head: head, tail: tail)
+        self.sonarStatus = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setSonarAlarm(head:UInt8, tail:UInt8) {
-        self.sonarAlarm = self.bytesToWord(head: head, tail: tail)
+        self.sonarAlarm = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setTemperStatus(head:UInt8, tail:UInt8) {
-        self.temperStatus = self.bytesToWord(head: head, tail: tail)
+        self.temperStatus = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setHumidityStatus(head:UInt8, tail:UInt8) {
-        self.humidityStatus = self.bytesToWord(head: head, tail: tail)
+        self.humidityStatus = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setTemperAlarm(head:UInt8, tail:UInt8) {
-        self.temperAlarm = self.bytesToWord(head: head, tail: tail)
+        self.temperAlarm = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setHumidityAlarm(head:UInt8, tail:UInt8) {
-        self.humidityAlarm = self.bytesToWord(head: head, tail: tail)
+        self.humidityAlarm = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setGasStatus(head:UInt8, tail:UInt8) {
-        self.gasStatus = self.bytesToWord(head: head, tail: tail)
+        self.gasStatus = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setGasAlarm(head:UInt8, tail:UInt8) {
-        self.gasAlarm = self.bytesToWord(head: head, tail: tail)
-    }
-    
-    func bytesToWord(head:UInt8, tail:UInt8) -> UInt16 {
-        return UInt16(tail) << 8 | UInt16(head)
+        self.gasAlarm = bytesToWord(head: head, tail: tail)
     }
 }
 
@@ -188,43 +193,39 @@ struct DeviceDescriptor {
     var reserveTwo:     UInt16 = 0
     
     mutating func setDevDescLeng(head:UInt8, tail:UInt8) {
-        self.devDescLeng = self.bytesToWord(head: head, tail: tail)
+        self.devDescLeng = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setRptDescLeng(head:UInt8, tail:UInt8) {
-        self.rptDescLeng = self.bytesToWord(head: head, tail: tail)
+        self.rptDescLeng = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setInRptLeng(head:UInt8, tail:UInt8) {
-        self.inRptLeng = self.bytesToWord(head: head, tail: tail)
+        self.inRptLeng = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setOutRptLeng(head:UInt8, tail:UInt8) {
-        self.outRptLeng = self.bytesToWord(head: head, tail: tail)
+        self.outRptLeng = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setGetFeatLeng(head:UInt8, tail:UInt8) {
-        self.getFeatLeng = self.bytesToWord(head: head, tail: tail)
+        self.getFeatLeng = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setSetFeatLeng(head:UInt8, tail:UInt8) {
-        self.setFeatLeng = self.bytesToWord(head: head, tail: tail)
+        self.setFeatLeng = bytesToWord(head: head, tail: tail)
     }
     
-    mutating func setDeviceDescriptor(arrary:[UInt8]) {
-        guard arrary.count == Int(self.devDescLeng) else { return }
+    mutating func setDeviceDescriptor(array:[UInt8]) {
+        guard array.count == Int(self.devDescLeng) else { return }
         
-        self.setDevDescLeng(head: arrary[0], tail: arrary[1])
-        self.setRptDescLeng(head: arrary[2], tail: arrary[3])
-        self.setInRptLeng(head: arrary[4], tail: arrary[5])
-        self.setOutRptLeng(head: arrary[6], tail: arrary[7])
-        self.setGetFeatLeng(head: arrary[8], tail: arrary[9])
-        self.setSetFeatLeng(head: arrary[10], tail: arrary[12])
+        self.setDevDescLeng(head: array[0], tail: array[1])
+        self.setRptDescLeng(head: array[2], tail: array[3])
+        self.setInRptLeng(head: array[4], tail: array[5])
+        self.setOutRptLeng(head: array[6], tail: array[7])
+        self.setGetFeatLeng(head: array[8], tail: array[9])
+        self.setSetFeatLeng(head: array[10], tail: array[12])
         //Others set 0
-    }
-    
-    func bytesToWord(head:UInt8, tail:UInt8) -> UInt16 {
-        return UInt16(tail) << 8 | UInt16(head)
     }
 }
 
@@ -233,39 +234,127 @@ struct DeviceData {
     var devDescLeng:     UInt16 = 0
     var parameter:       [DeviceParameter] = []
     
-    let types:            Set<UInt16> = [257, 258, 259]
-    let addresses:        Set<UInt8>  = [5, 17, 29, 41, 53, 65, 77, 89, 101, 113]
-    let minFlags:         Set<UInt8>  = [9, 10]
-    let maxFlags:         Set<UInt8>  = [13, 14]
-    
-    func setDeviceData(arrary: [UInt8]) {
-        guard arrary.count == Int(self.devDescLeng) else { return }
+    mutating func setDeviceData(array: [UInt8]) {
+        self.devDescLeng = bytesToWord(head: array[0], tail: array[1])
+        guard array.count > Int(self.devDescLeng) else { return }
         
-        var i = -1
-        while i < arrary.count {
+        var i = 1
+        while i < array.count-3 {
             i += 1
-            guard types.contains(bytesToWord(head: arrary[i], tail: arrary[i+1])) && addresses.contains(arrary[i+2]) else { continue }
+            guard types.contains(bytesToWord(head: array[i], tail: array[i+1])) && addresses.contains(array[i+2]) else { continue }
             var tmpDeviceParameter = DeviceParameter()
             
-            
-            
+            tmpDeviceParameter.setDeviceParameter(array: Array(array[i..<array.count]))
+            parameter.append(tmpDeviceParameter)
         }
-    }
-    
-    func bytesToWord(head:UInt8, tail:UInt8) -> UInt16 {
-        return UInt16(tail) << 8 | UInt16(head)
     }
 }
 
 struct  DeviceParameter {
     var type:           UInt16 = 0
     var address:        UInt8  = 0
-    var length:         UInt16 = 0
+    var length:         UInt8  = 0
     var minFlag:        UInt8  = 0
     var min:            UInt16 = 0
-    var maxFlag:        UInt16 = 0
+    var maxFlag:        UInt8  = 0
     var max:            UInt16 = 0
     
+    mutating func setType(head: UInt8, tail: UInt8) {
+        self.type = bytesToWord(head: head, tail: tail)
+    }
     
+    mutating func setAddress(bytes: UInt8) {
+        self.address = bytes
+    }
+    
+    mutating func setLength(bytes: UInt8) {
+        self.length = bytes
+    }
+    
+    mutating func setMinFlag(bytes: UInt8) {
+        self.minFlag = bytes
+    }
+    
+    mutating func setMin(bytes: UInt8) {
+        self.min = UInt16(bytes)
+    }
+    
+    mutating func setMin(head: UInt8, tail: UInt8) {
+        self.min = bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setExtreme(array: [UInt8]) {
+        //only one extreme value
+        if self.length == 1 {
+            if minFlags.contains(array[0]) {
+                self.min = (array[0] == MINBYTES) ? UInt16(array[0]) : bytesToWord(head: array[1], tail: array[2])
+            } else if maxFlags.contains(array[0]) {
+                self.max = (array[0] == MAXBYTES) ? UInt16(array[0]) : bytesToWord(head: array[1], tail: array[2])
+            }
+        } else if self.length == 2 {
+            var i = 0
+            if minFlags.contains(array[0]) {
+                self.min = (array[0] == MINBYTES) ? UInt16(array[0]) : bytesToWord(head: array[1], tail: array[2])
+                i = (array[0] == MINBYTES) ? 2 : 3
+            } else if maxFlags.contains(array[0]) {
+                self.max = (array[0] == MAXBYTES) ? UInt16(array[0]) : bytesToWord(head: array[1], tail: array[2])
+                i = (array[0] == MAXBYTES) ? 2 : 3
+            }
+            let tmp = array[i]
+            if minFlags.contains(tmp) {
+                self.min = (tmp == MINBYTES) ? UInt16(array[++i]) : bytesToWord(head: array[++i], tail: array[++i])
+            } else if maxFlags.contains(tmp) {
+                self.max = (tmp == MAXBYTES) ? UInt16(array[++i]) : bytesToWord(head: array[++i], tail: array[++i])
+            }
+        }
+    }
+    
+    mutating func setDeviceParameter(array:[UInt8]) {
+        var i = 0
+        setType(head: array[i++], tail: array[i++])
+        setAddress(bytes: array[i++])
+        setLength(bytes: array[i++])
+        setExtreme(array: Array(array[i..<(array.count-1)]))
+    }
 }
 
+struct TIDDATA {
+    var address:        UInt8  = 0
+    var length:         UInt8  = 0
+    var minFlag:        UInt8  = 0
+    var min:            UInt16 = 0
+    var maxFlag:        UInt8  = 0
+    var max:            UInt16 = 0
+    
+    mutating func setTIDDATA(array: [UInt8]) {
+        var i = -1
+        while i < array.count && !types.contains(bytesToWord(head: array[i], tail: array[i+1])) {
+            i+=1
+            
+        }
+    }
+}
+
+func bytesToWord(head:UInt8, tail:UInt8) -> UInt16 {
+    return UInt16(tail) << 8 | UInt16(head)
+}
+
+prefix operator ++
+postfix operator ++
+
+
+// Increment
+prefix func ++( x: inout Int) -> Int {
+    x += 1
+    return x
+}
+
+postfix func ++( x: inout Int) -> Int {
+    x += 1
+    return (x - 1)
+}
+
+prefix func ++( x: inout UInt) -> UInt {
+    x += 1
+    return x
+}
