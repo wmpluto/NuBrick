@@ -67,6 +67,12 @@ class TemperatureViewController: UIViewController {
         self.lineChartView.setVisibleYRange(minYRange: -50, maxYRange: 50, axis: .left)
         self.lineChartView.setVisibleYRange(minYRange: 0, maxYRange: 100, axis: .right)
         //self.lineChartView.data = LineChartData(dataSet: LineChartDataSet(values: [ChartDataEntry](), label: "Temp"))
+        for i in 0..<lineBuffer.count {
+            let dataEntry = ChartDataEntry(x: Double(i), y: Double(0))
+            dataEntries.append(dataEntry)
+        }
+        
+        lineChartView.data = LineChartData(dataSet: LineChartDataSet(values: dataEntries, label: "default"))
         
     }
 
@@ -148,11 +154,19 @@ extension TemperatureViewController: CBPeripheralDelegate {
                 tempHumiValue.setTempHumi(array: Array(buffer[i..<i+14]))
                 print(tempHumiValue)
                 DispatchQueue.main.async {
-                    self.chartNum = self.chartNum % 50 + 1
-                    self.lineChartView.data?.addEntry(ChartDataEntry(x: Double(self.chartNum), y: Double(self.tempHumiValue.tempValue)), dataSetIndex: 0)
+                    //self.chartNum = self.chartNum % 50 + 1
+                    //self.lineChartView.data?.addEntry(ChartDataEntry(x: Double(self.chartNum), y: Double(self.tempHumiValue.tempValue)), dataSetIndex: 0)
                     //self.lineChartView.data?.addXValue(String(chartNum))
+                    self.lineBuffer.append(Double(self.tempHumiValue.tempValue))
+                    self.lineBuffer.removeFirst()
+                    for i in 0..<self.lineBuffer.count {
+                        let dataEntry = ChartDataEntry(x: Double(i), y: Double(0))
+                        self.dataEntries.append(dataEntry)
+                    }
+                    
+                    self.lineChartView.data = LineChartData(dataSet: LineChartDataSet(values: self.dataEntries, label: "default"))
                     self.lineChartView.notifyDataSetChanged()
-                    self.lineChartView.moveViewToX(Double(CGFloat(self.chartNum)))
+                    //self.lineChartView.moveViewToX(Double(CGFloat(self.chartNum)))
                 }
             }
         }
