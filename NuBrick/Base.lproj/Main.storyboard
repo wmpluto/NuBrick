@@ -24,18 +24,18 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="u5W-ZE-uac" id="WGQ-Ti-JZb">
-                                    <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0kt-Xf-axe">
-                                            <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
+                                            <rect key="frame" x="15" y="4" width="34" height="21"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="72k-Ij-EAa">
-                                            <rect key="frame" x="15" y="25.5" width="33" height="14.5"/>
+                                            <rect key="frame" x="15" y="25" width="33" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
@@ -76,18 +76,18 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V0b-8r-957" id="4hj-dp-FGT">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GUz-fT-jCm">
-                                            <rect key="frame" x="15" y="12" width="33.5" height="20.5"/>
+                                            <rect key="frame" x="15" y="11" width="34" height="21"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sbd-xM-ANG">
-                                            <rect key="frame" x="316" y="12" width="44" height="20.5"/>
+                                            <rect key="frame" x="316" y="11" width="44" height="21"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -104,11 +104,163 @@
                     </tableView>
                     <connections>
                         <segue destination="SFA-W1-DwO" kind="show" identifier="toTemperatureView" id="Ieu-CG-7iF"/>
+                        <segue destination="eZA-Ld-4Lu" kind="show" id="oaJ-P5-Uyp"/>
+                        <segue destination="0h1-jx-Ej9" kind="show" id="78m-zs-MWE"/>
+                        <segue destination="rfL-jE-YP0" kind="showDetail" id="tbv-Hv-pbv"/>
+                        <segue destination="j2N-1K-FDf" kind="show" id="9HB-n1-6YZ"/>
+                        <segue destination="AP7-gN-iVU" kind="show" id="twA-oz-pDT"/>
+                        <segue destination="NGm-JZ-RoR" kind="show" id="ooT-w9-BEH"/>
+                        <segue destination="EWK-vG-fhC" kind="show" id="j1C-Kt-zoA"/>
+                        <segue destination="MB8-W2-w03" kind="show" id="O3h-gq-Ob2"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gac-qd-RmH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1690" y="124"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Dnf-08-c50">
+            <objects>
+                <viewController id="MB8-W2-w03" customClass="AHRSViewController" customModule="NuBrick" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ay9-V9-DLJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="kJA-JV-Kou"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0Zm-r2-W3n">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L70-MO-xU8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2534" y="-1111"/>
+        </scene>
+        <!--Battery View Controller-->
+        <scene sceneID="0tY-13-jJ8">
+            <objects>
+                <viewController id="eZA-Ld-4Lu" customClass="BatteryViewController" customModule="NuBrick" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bpL-J8-N3k"/>
+                        <viewControllerLayoutGuide type="bottom" id="zTg-cG-iKY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JvP-2p-25l">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fru-xq-oxg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2534" y="-383"/>
+        </scene>
+        <!--Gas View Controller-->
+        <scene sceneID="Jxw-1t-7sl">
+            <objects>
+                <viewController id="0h1-jx-Ej9" customClass="GasViewController" customModule="NuBrick" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sqe-8U-wn6"/>
+                        <viewControllerLayoutGuide type="bottom" id="0L4-RD-OwW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="oqE-DH-woO">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ycb-cO-tgX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2534" y="973"/>
+        </scene>
+        <!--Buzzer View Controller-->
+        <scene sceneID="qD1-js-zcy">
+            <objects>
+                <viewController id="EWK-vG-fhC" customClass="BuzzerViewController" customModule="NuBrick" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tss-NN-0B0"/>
+                        <viewControllerLayoutGuide type="bottom" id="dee-gJ-saE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dG9-zY-Kbn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cfl-fV-LO0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1745" y="907"/>
+        </scene>
+        <!--Led View Controller-->
+        <scene sceneID="kIE-OP-vSc">
+            <objects>
+                <viewController id="rfL-jE-YP0" customClass="LedViewController" customModule="NuBrick" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rRi-Ej-rvN"/>
+                        <viewControllerLayoutGuide type="bottom" id="Xoh-iN-Zsa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SH2-Ps-8GT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UP7-Z1-54S" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3246" y="973"/>
+        </scene>
+        <!--Buzzer View Controller-->
+        <scene sceneID="cJB-jQ-2hI">
+            <objects>
+                <viewController id="j2N-1K-FDf" customClass="BuzzerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xJS-7E-fef"/>
+                        <viewControllerLayoutGuide type="bottom" id="baT-4w-g20"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Z5a-n3-xCa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wr1-hl-tmX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2534" y="296"/>
+        </scene>
+        <!--Key View Controller-->
+        <scene sceneID="wOc-R2-Kxj">
+            <objects>
+                <viewController id="NGm-JZ-RoR" customClass="KeyViewController" customModule="NuBrick" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VTY-SO-utv"/>
+                        <viewControllerLayoutGuide type="bottom" id="Xrl-dO-9i6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KQC-Oz-81F">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0bG-BL-mY2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3230" y="296"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Qvv-KK-2oA">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iyQ-mT-qMx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="AP7-gN-iVU" customClass="IRViewController" customModule="NuBrick" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3ti-if-6uS"/>
+                        <viewControllerLayoutGuide type="bottom" id="D1y-dk-rnN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JbO-km-xxK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="3230" y="-367"/>
         </scene>
         <!--Temperature View Controller-->
         <scene sceneID="QJe-LC-6GY">
@@ -152,7 +304,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SAC-w2-hXG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2533.5999999999999" y="-396.25187406296857"/>
+            <point key="canvasLocation" x="3217" y="-1111"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="LJo-qW-FLe">

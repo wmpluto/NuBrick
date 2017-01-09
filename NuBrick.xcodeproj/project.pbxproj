@@ -11,6 +11,14 @@
 		280092651DFF90F100EC0C7E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 280092631DFF90F100EC0C7E /* Main.storyboard */; };
 		280092671DFF90F100EC0C7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 280092661DFF90F100EC0C7E /* Assets.xcassets */; };
 		2800926A1DFF90F100EC0C7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 280092681DFF90F100EC0C7E /* LaunchScreen.storyboard */; };
+		2821BF321E2332080077861A /* BatteryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2821BF311E2332080077861A /* BatteryViewController.swift */; };
+		2821BF341E23325D0077861A /* AHRSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2821BF331E23325D0077861A /* AHRSViewController.swift */; };
+		2821BF361E23327A0077861A /* GasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2821BF351E23327A0077861A /* GasViewController.swift */; };
+		2821BF381E2332950077861A /* IRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2821BF371E2332950077861A /* IRViewController.swift */; };
+		2821BF3A1E2332D30077861A /* KeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2821BF391E2332D30077861A /* KeyViewController.swift */; };
+		2821BF3C1E2332EA0077861A /* LedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2821BF3B1E2332EA0077861A /* LedViewController.swift */; };
+		2821BF3E1E2332FC0077861A /* SonarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2821BF3D1E2332FC0077861A /* SonarViewController.swift */; };
+		2821BF401E2335E80077861A /* BuzzerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2821BF3F1E2335E80077861A /* BuzzerViewController.swift */; };
 		2851F7841E1503CB00CEAA06 /* TemperatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2851F7831E1503CB00CEAA06 /* TemperatureViewController.swift */; };
 		2879181E1E0264EA0091C740 /* BaseNavigationControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */; };
 		287918221E02678D0091C740 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287918211E02678D0091C740 /* Util.swift */; };
@@ -28,6 +36,14 @@
 		280092691DFF90F100EC0C7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2800926B1DFF90F100EC0C7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		280092741DFF946E00EC0C7E /* NuBrick-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NuBrick-Bridging-Header.h"; sourceTree = "<group>"; };
+		2821BF311E2332080077861A /* BatteryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryViewController.swift; sourceTree = "<group>"; };
+		2821BF331E23325D0077861A /* AHRSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AHRSViewController.swift; sourceTree = "<group>"; };
+		2821BF351E23327A0077861A /* GasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GasViewController.swift; sourceTree = "<group>"; };
+		2821BF371E2332950077861A /* IRViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IRViewController.swift; sourceTree = "<group>"; };
+		2821BF391E2332D30077861A /* KeyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyViewController.swift; sourceTree = "<group>"; };
+		2821BF3B1E2332EA0077861A /* LedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LedViewController.swift; sourceTree = "<group>"; };
+		2821BF3D1E2332FC0077861A /* SonarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SonarViewController.swift; sourceTree = "<group>"; };
+		2821BF3F1E2335E80077861A /* BuzzerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuzzerViewController.swift; sourceTree = "<group>"; };
 		2851F7831E1503CB00CEAA06 /* TemperatureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemperatureViewController.swift; sourceTree = "<group>"; };
 		2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNavigationControllerViewController.swift; sourceTree = "<group>"; };
 		287918211E02678D0091C740 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
@@ -104,9 +120,17 @@
 		280092731DFF938800EC0C7E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */,
-				287918231E027F710091C740 /* DetectBluetoothTableViewController.swift */,
+				2821BF331E23325D0077861A /* AHRSViewController.swift */,
 				2892DF171E03943900D76231 /* AllSensorsTableViewController.swift */,
+				2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */,
+				2821BF311E2332080077861A /* BatteryViewController.swift */,
+				2821BF3F1E2335E80077861A /* BuzzerViewController.swift */,
+				287918231E027F710091C740 /* DetectBluetoothTableViewController.swift */,
+				2821BF351E23327A0077861A /* GasViewController.swift */,
+				2821BF371E2332950077861A /* IRViewController.swift */,
+				2821BF391E2332D30077861A /* KeyViewController.swift */,
+				2821BF3B1E2332EA0077861A /* LedViewController.swift */,
+				2821BF3D1E2332FC0077861A /* SonarViewController.swift */,
 				2851F7831E1503CB00CEAA06 /* TemperatureViewController.swift */,
 				287918211E02678D0091C740 /* Util.swift */,
 			);
@@ -254,12 +278,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2821BF361E23327A0077861A /* GasViewController.swift in Sources */,
+				2821BF3C1E2332EA0077861A /* LedViewController.swift in Sources */,
+				2821BF3E1E2332FC0077861A /* SonarViewController.swift in Sources */,
+				2821BF321E2332080077861A /* BatteryViewController.swift in Sources */,
+				2821BF381E2332950077861A /* IRViewController.swift in Sources */,
 				2879181E1E0264EA0091C740 /* BaseNavigationControllerViewController.swift in Sources */,
 				287918221E02678D0091C740 /* Util.swift in Sources */,
 				280092601DFF90F100EC0C7E /* AppDelegate.swift in Sources */,
 				2892DF181E03943900D76231 /* AllSensorsTableViewController.swift in Sources */,
 				28BA2C1B1DFFDEB7007C8ADA /* NuBrick.swift in Sources */,
+				2821BF401E2335E80077861A /* BuzzerViewController.swift in Sources */,
 				2851F7841E1503CB00CEAA06 /* TemperatureViewController.swift in Sources */,
+				2821BF341E23325D0077861A /* AHRSViewController.swift in Sources */,
+				2821BF3A1E2332D30077861A /* KeyViewController.swift in Sources */,
 				287918241E027F710091C740 /* DetectBluetoothTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
