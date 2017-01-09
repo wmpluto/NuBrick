@@ -50,6 +50,7 @@ class AllSensorsTableViewController: UITableViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //self.peripheral.delegate = nil
+        progressHUD?.dismiss()
     }
 
     override func didReceiveMemoryWarning() {
@@ -94,11 +95,27 @@ class AllSensorsTableViewController: UITableViewController {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
             // Your code with delay
             switch s.name {
-            case "Temper":
-                
+            case "ahrs":
+                self.performSegue(withIdentifier: "toAHRSView", sender: self)
+                break
+            case "battery":
+                self.performSegue(withIdentifier: "toBatteryView", sender: self)
+                break
+            case "buzzer" :
+                self.performSegue(withIdentifier: "toBuzzerView", sender: self)
+                break
+            case "led":
+                self.performSegue(withIdentifier: "toLedView", sender: self)
+                break
+            case "humidity":
                 self.performSegue(withIdentifier: "toTemperatureView", sender: self)
                 break
-                
+            case "gas":
+                self.performSegue(withIdentifier: "toGasView", sender: self)
+                break
+            case "temper":
+                self.performSegue(withIdentifier: "toTemperatureView", sender: self)
+                break
             default:
                 break
             }
@@ -246,9 +263,9 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
         self.indexData.setLedStatus(head: da[6], tail: da[7])
         self.sensors.append(Sensor(name: "led", status: self.indexData.ledStatus, alarm: 0))
         
-        self.indexData.setAttitudeStatus(head: da[8], tail: da[9])
-        self.indexData.setAttitudeAlarm(head: da[10], tail: da[11])
-        self.sensors.append(Sensor(name: "attitude", status: self.indexData.attitudeStatus, alarm: self.indexData.attitudeAlarm))
+        self.indexData.setAHRSStatus(head: da[8], tail: da[9])
+        self.indexData.setAHRSAlarm(head: da[10], tail: da[11])
+        self.sensors.append(Sensor(name: "ahrs", status: self.indexData.ahrsStatus, alarm: self.indexData.ahrsAlarm))
         
         self.indexData.setSonarStatus(head: da[12], tail: da[13])
         self.indexData.setSonarAlarm(head: da[14], tail: da[15])
@@ -258,7 +275,7 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
         self.indexData.setHumidityStatus(head: da[18], tail: da[19])
         self.indexData.setTemperAlarm(head: da[20], tail: da[21])
         self.indexData.setHumidityAlarm(head: da[22], tail: da[23])
-        self.sensors.append(Sensor(name: "Temper", status: self.indexData.temperStatus, alarm: self.indexData.temperAlarm))
+        self.sensors.append(Sensor(name: "temper", status: self.indexData.temperStatus, alarm: self.indexData.temperAlarm))
         self.sensors.append(Sensor(name: "humidity", status: self.indexData.humidityStatus, alarm: self.indexData.humidityStatus))
         
         self.indexData.setGasStatus(head: da[24], tail: da[25])

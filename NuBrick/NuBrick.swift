@@ -41,7 +41,7 @@ let rVFCMD         = "@d".data(using: .ascii)
 let BATTERYCMD     = "@tb".data(using: .ascii)
 let BUZZERCMD      = "@tz".data(using: .ascii)
 let LEDCMD         = "@tl".data(using: .ascii)
-let ATTITUDECMD    = "@ta".data(using: .ascii)
+let AHRSCMD    = "@ta".data(using: .ascii)
 let SONARCMD       = "@ts".data(using: .ascii)
 let TEMPHUMCMD     = "@tt".data(using: .ascii)
 let GASCMD         = "@tg".data(using: .ascii)
@@ -108,8 +108,8 @@ struct IndexData {
     var batteryAlarm:     UInt16 = 0
     var buzzerStatus:       UInt16 = 0
     var ledStatus:        UInt16 = 0
-    var attitudeStatus:   UInt16 = 0
-    var attitudeAlarm:    UInt16 = 0
+    var ahrsStatus:   UInt16 = 0
+    var ahrsAlarm:    UInt16 = 0
     var sonarStatus:      UInt16 = 0
     var sonarAlarm:       UInt16 = 0
     var temperStatus:     UInt16 = 0
@@ -135,12 +135,12 @@ struct IndexData {
         self.ledStatus = bytesToWord(head: head, tail: tail)
     }
     
-    mutating func setAttitudeStatus(head:UInt8, tail:UInt8) {
-        self.attitudeStatus = bytesToWord(head: head, tail: tail)
+    mutating func setAHRSStatus(head:UInt8, tail:UInt8) {
+        self.ahrsStatus = bytesToWord(head: head, tail: tail)
     }
     
-    mutating func setAttitudeAlarm(head:UInt8, tail:UInt8) {
-        self.attitudeAlarm = bytesToWord(head: head, tail: tail)
+    mutating func setAHRSAlarm(head:UInt8, tail:UInt8) {
+        self.ahrsAlarm = bytesToWord(head: head, tail: tail)
     }
     
     mutating func setSonarStatus(head:UInt8, tail:UInt8) {
