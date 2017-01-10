@@ -265,8 +265,9 @@ struct DeviceDescriptor {
         while i < array.count {
             //Try to Get 1st Stage
             guard array.count - i > 4 else {return 0}
-            if(array[i++] == StartFlag && array[i++] == StartFlag) {
+            if(array[i] == StartFlag && array[i+1] == StartFlag) {
                 //Get 1st Stage
+                i += 2
                 self.setDevDescLeng(head: array[i++], tail: array[i++])
                 guard array.count - i > Int(self.devDescLeng) else {return 0}
                 self.setRptDescLeng(head: array[i++], tail: array[i++])
@@ -289,6 +290,7 @@ struct DeviceDescriptor {
                     return 0
                 }
             }
+            i+=1
         }
         
         return 0
