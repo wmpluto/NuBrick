@@ -45,10 +45,10 @@ class TemperatureViewController: UIViewController {
     var deviceData = DeviceData()
     var tempHumiValue = TempHumiValue()
     
-    var lineBuffer:[Double] = Array(repeating: 0, count: 100)
     var dataEntries: [ChartDataEntry] = []
-    
     var chartNum: Int = 0
+    var set_a: LineChartDataSet = LineChartDataSet(values: [ChartDataEntry](), label: "temp")
+    var set_b: LineChartDataSet = LineChartDataSet(values: [ChartDataEntry](), label: "humidity")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,17 +63,6 @@ class TemperatureViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
             self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
         }
-        
-        self.lineChartView.setVisibleYRange(minYRange: -50, maxYRange: 50, axis: .left)
-        self.lineChartView.setVisibleYRange(minYRange: 0, maxYRange: 100, axis: .right)
-        //self.lineChartView.data = LineChartData(dataSet: LineChartDataSet(values: [ChartDataEntry](), label: "Temp"))
-        for i in 0..<lineBuffer.count {
-            let dataEntry = ChartDataEntry(x: Double(i), y: Double(0))
-            dataEntries.append(dataEntry)
-        }
-        
-        lineChartView.data = LineChartData(dataSet: LineChartDataSet(values: dataEntries, label: "default"))
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -91,7 +80,15 @@ class TemperatureViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    func updateCounter() {
+        self.lineChartView.data?.addEntry(ChartDataEntry(x: Double(self.chartNum), y: Double(self.tempHumiValue.tempValue)), dataSetIndex: 0)
+        self.lineChartView.data?.addEntry(ChartDataEntry(x: Double(self.chartNum), y: Double(self.tempHumiValue.humiValue)), dataSetIndex: 1)
+        self.lineChartView.setVisibleXRange(minXRange: 1, maxXRange: 50)
+        self.lineChartView.notifyDataSetChanged()
+        self.lineChartView.moveViewToX(Double(self.chartNum))
+        self.chartNum = self.chartNum + 1
+    }
 }
 
 
@@ -154,19 +151,29 @@ extension TemperatureViewController: CBPeripheralDelegate {
                 tempHumiValue.setTempHumi(array: Array(buffer[i..<i+14]))
                 print(tempHumiValue)
                 DispatchQueue.main.async {
-                    //self.chartNum = self.chartNum % 50 + 1
-                    //self.lineChartView.data?.addEntry(ChartDataEntry(x: Double(self.chartNum), y: Double(self.tempHumiValue.tempValue)), dataSetIndex: 0)
-                    //self.lineChartView.data?.addXValue(String(chartNum))
-                    self.lineBuffer.append(Double(self.tempHumiValue.tempValue))
-                    self.lineBuffer.removeFirst()
-                    for i in 0..<self.lineBuffer.count {
-                        let dataEntry = ChartDataEntry(x: Double(i), y: Double(0))
-                        self.dataEntries.append(dataEntry)
+                    if self.lineChartView.data == nil {
+                        self.set_a = LineChartDataSet(values: [ChartDataEntry(x: Double(0), y: Double(self.tempHumiValue.tempValue))], label: "temp")
+                        self.set_a.drawCirclesEnabled = false
+                        self.set_a.setColor(UIColor.red)
+                        self.set_a.axisDependency = .left
+                        
+                        self.set_b = LineChartDataSet(values: [ChartDataEntry(x: Double(0), y: Double(self.tempHumiValue.humiValue))], label: "humidity")
+                        self.set_b.drawCirclesEnabled = false
+                        self.set_b.setColor(UIColor.blue)
+                        self.set_b.axisDependency = .right
+                        
+                        self.lineChartView.data = LineChartData(dataSets: [self.set_a, self.set_b])
+                        Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(self.updateCounter), userInfo: nil, repeats: true)
+
+                    } else {/*
+                        self.lineChartView.data?.addEntry(ChartDataEntry(x: Double(self.chartNum), y: Double(self.tempHumiValue.tempValue)), dataSetIndex: 0)
+                        self.lineChartView.data?.addEntry(ChartDataEntry(x: Double(self.chartNum), y: Double(self.tempHumiValue.humiValue)), dataSetIndex: 1)
+                        self.lineChartView.setVisibleXRange(minXRange: 1, maxXRange: 50)
+                        self.lineChartView.notifyDataSetChanged()
+                        self.lineChartView.moveViewToX(Double(self.chartNum))
+                        self.chartNum = self.chartNum + 1
+ */
                     }
-                    
-                    self.lineChartView.data = LineChartData(dataSet: LineChartDataSet(values: self.dataEntries, label: "default"))
-                    self.lineChartView.notifyDataSetChanged()
-                    //self.lineChartView.moveViewToX(Double(CGFloat(self.chartNum)))
                 }
             }
         }
