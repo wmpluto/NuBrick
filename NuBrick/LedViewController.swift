@@ -7,9 +7,15 @@
 //
 
 import UIKit
+import CoreBluetooth
 
 class LedViewController: UIViewController {
-
+    
+    var peripheral: CBPeripheral!
+    var writeCharacteristic: CBCharacteristic!
+    var readCharacteristic: CBCharacteristic!
+    var tmpBuffer:[UInt8] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

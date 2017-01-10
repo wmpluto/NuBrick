@@ -216,8 +216,36 @@ struct DeviceDescriptor {
         self.setFeatLeng = bytesToWord(head: head, tail: tail)
     }
     
-    mutating func setDeviceDescriptor(array:[UInt8]) {
-        guard array.count == Int(self.devDescLeng) else { return }
+    mutating func setCID(head:UInt8, tail:UInt8) {
+        self.cid = bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setDID(head:UInt8, tail:UInt8) {
+        self.did = bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setPID(head:UInt8, tail:UInt8) {
+        self.pid = bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setUID(head:UInt8, tail:UInt8) {
+        self.uid = bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setUCID(head:UInt8, tail:UInt8) {
+        self.ucid = bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setReserveOne(head:UInt8, tail:UInt8) {
+        self.reserveOne = bytesToWord(head: head, tail: tail)
+    }
+    
+    mutating func setReserveTwo(head:UInt8, tail:UInt8) {
+        self.reserveTwo = bytesToWord(head: head, tail: tail)
+    }
+    /*
+    mutating func setDeviceDescriptor(array:[UInt8]) -> Int {
+        guard array.count != Int(self.devDescLeng) else { return 0}
         
         self.setDevDescLeng(head: array[0], tail: array[1])
         self.setRptDescLeng(head: array[2], tail: array[3])
@@ -226,6 +254,44 @@ struct DeviceDescriptor {
         self.setGetFeatLeng(head: array[8], tail: array[9])
         self.setSetFeatLeng(head: array[10], tail: array[12])
         //Others set 0
+        return 0
+    }
+    */
+    
+    mutating func setDeviceDescriptor(array:[UInt8]) -> Int {
+        guard array.count > 2 else {return 0}
+        var i = 0
+        
+        while i < array.count {
+            //Try to Get 1st Stage
+            guard array.count - i > 4 else {return 0}
+            if(array[i++] == StartFlag && array[i++] == StartFlag) {
+                //Get 1st Stage
+                self.setDevDescLeng(head: array[i++], tail: array[i++])
+                guard array.count - i > Int(self.devDescLeng) else {return 0}
+                self.setRptDescLeng(head: array[i++], tail: array[i++])
+                self.setInRptLeng(head: array[i++], tail: array[i++])
+                self.setOutRptLeng(head: array[i++], tail: array[i++])
+                self.setGetFeatLeng(head: array[i++], tail: array[i++])
+                self.setSetFeatLeng(head: array[i++], tail: array[i++])
+                self.setCID(head: array[i++], tail: array[i++])
+                self.setDID(head: array[i++], tail: array[i++])
+                self.setPID(head: array[i++], tail: array[i++])
+                self.setUID(head: array[i++], tail: array[i++])
+                self.setUCID(head: array[i++], tail: array[i++])
+                self.setReserveOne(head: array[i++], tail: array[i++])
+                self.setReserveTwo(head: array[i++], tail: array[i++])
+
+                if i < array.count {
+                    print("There is 1st stage: \n\(self)")
+                    return i
+                } else {
+                    return 0
+                }
+            }
+        }
+        
+        return 0
     }
 }
 

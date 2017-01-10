@@ -9,6 +9,7 @@
 import UIKit
 import Charts
 import CoreBluetooth
+import JGProgressHUD
 
 struct TempHumiValue {
     var length:               UInt16 = 0
@@ -49,6 +50,8 @@ class TemperatureViewController: UIViewController {
     var chartNum: Int = 0
     var set_a: LineChartDataSet = LineChartDataSet(values: [ChartDataEntry](), label: "temp")
     var set_b: LineChartDataSet = LineChartDataSet(values: [ChartDataEntry](), label: "humidity")
+    
+    let progressHUD = JGProgressHUD(style: .dark)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,12 +60,19 @@ class TemperatureViewController: UIViewController {
         //Set Default Line Chart View
         print("Temperature View")
         
+        progressHUD?.textLabel.text = "Getting Temp&Humidity Data..."
+        progressHUD?.show(in: self.view, animated: true)
         self.peripheral.delegate = self
         
         self.peripheral.writeValue(TEMPHUMCMD!, for: self.writeCharacteristic, type: .withResponse)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
             self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
 
     override func didReceiveMemoryWarning() {
@@ -117,7 +127,7 @@ extension TemperatureViewController: CBPeripheralDelegate {
         guard characteristic.uuid == BTReadUUID else { return }
         let bytesArray:[UInt8] = [UInt8](characteristic.value!)
         
-        print(bytesArray)
+        //print(bytesArray)
         //Buffer
         tmpBuffer += bytesArray
         guard tmpBuffer.count > 512 else {return}
@@ -164,6 +174,7 @@ extension TemperatureViewController: CBPeripheralDelegate {
                         
                         self.lineChartView.data = LineChartData(dataSets: [self.set_a, self.set_b])
                         Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(self.updateCounter), userInfo: nil, repeats: true)
+                        self.progressHUD?.dismiss()
 
                     } else {/*
                         self.lineChartView.data?.addEntry(ChartDataEntry(x: Double(self.chartNum), y: Double(self.tempHumiValue.tempValue)), dataSetIndex: 0)
