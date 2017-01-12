@@ -167,12 +167,16 @@ class AllSensorsTableViewController: UITableViewController {
             vc.peripheral  = self.peripheral
             vc.writeCharacteristic = self.writeCharacteristic
             vc.readCharacteristic = self.readCharacteristic
-        } else if let vc = segue.destination as? TemperatureViewController {
+        } else if let vc = segue.destination as? BuzzerViewController {
             vc.peripheral  = self.peripheral
             vc.writeCharacteristic = self.writeCharacteristic
             vc.readCharacteristic = self.readCharacteristic
         } else if let vc = segue.destination as? GasViewController {
             vc.peripheral = self.peripheral
+            vc.writeCharacteristic = self.writeCharacteristic
+            vc.readCharacteristic = self.readCharacteristic
+        } else if let vc = segue.destination as? TemperatureViewController {
+            vc.peripheral  = self.peripheral
             vc.writeCharacteristic = self.writeCharacteristic
             vc.readCharacteristic = self.readCharacteristic
         }

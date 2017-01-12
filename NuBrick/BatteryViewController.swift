@@ -96,9 +96,18 @@ class BatteryViewController: UIViewController {
         }
     }
     
-    func updateLabel() {
-        self.electricLabel.text = String(Int(self.battery.batteryValue)) + "%"
-        
+    func update() {
+        let value = Int(self.battery.batteryValue)
+        self.electricLabel.text = String(Int(value)) + "%"
+        let h = self.bgView.frame.height
+        self.electricLabel.text = String(value)
+        UIView.animate(withDuration: 4.0, animations: {
+            self.waveImageView.frame.origin.y = CGFloat(Double(h) - ((Double(value)/100.0) * Double(h)))
+            if  value == 100  {
+                self.waveImageView.frame.origin.y = -0;
+            }
+            self.waveImageView.frame.origin.x = 0;
+        })
     }
     
     func waveEffect(value: Int) {
@@ -127,24 +136,11 @@ class BatteryViewController: UIViewController {
         
         self.rotationIMG.layer.add(group, forKey: nil)
         
-        /*
-         let anim = CABasicAnimation(keyPath: "transform.rotation")
-         anim.toValue = 2 * M_PI
-         anim.duration = 10
-         anim.repeatCount = MAXFLOAT
-         anim.isRemovedOnCompletion = true
-         self.rotationIMG.layer.add(anim, forKey: nil)
-         */
-        
-        
-        //self.bgView.frame = CGRect(x: 0, y: 0, width: 180, height: 180)
         let w = self.bgView.frame.width
         let h = self.bgView.frame.height
         self.bgView.layer.cornerRadius = self.bgView.frame.width/2.0
         self.bgView.clipsToBounds = true
         self.bgView.layer.masksToBounds = true
-        
-        
         
         waveImageView.frame = CGRect(x: 0, y: 0, width: 2*w, height: h)
         waveImageView.alpha = 1
@@ -226,9 +222,10 @@ extension BatteryViewController: CBPeripheralDelegate {
             
             if self.electricLabel.text == "00%" {
                 self.waveEffect(value: Int(self.battery.batteryValue))
-                //Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(self.updateLabel), userInfo: nil, repeats: true)
+                Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(self.update), userInfo: nil, repeats: true)
                 self.progressHUD?.dismiss()
             }
+            
         }
         
     }
