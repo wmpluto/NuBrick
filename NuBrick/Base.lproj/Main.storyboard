@@ -106,12 +106,12 @@
                         <segue destination="SFA-W1-DwO" kind="show" identifier="toTemperatureView" id="Ieu-CG-7iF"/>
                         <segue destination="eZA-Ld-4Lu" kind="show" identifier="toBatteryView" id="oaJ-P5-Uyp"/>
                         <segue destination="0h1-jx-Ej9" kind="show" identifier="toGasView" id="78m-zs-MWE"/>
-                        <segue destination="rfL-jE-YP0" kind="show" identifier="toLedView" action="showDetailViewController:sender:" id="tbv-Hv-pbv"/>
                         <segue destination="j2N-1K-FDf" kind="show" identifier="toBuzzerView" id="9HB-n1-6YZ"/>
                         <segue destination="AP7-gN-iVU" kind="show" identifier="toIRView" id="twA-oz-pDT"/>
                         <segue destination="NGm-JZ-RoR" kind="show" identifier="toKeyView" id="ooT-w9-BEH"/>
                         <segue destination="EWK-vG-fhC" kind="show" identifier="toSonarView" id="j1C-Kt-zoA"/>
                         <segue destination="MB8-W2-w03" kind="show" identifier="toAHRSView" id="O3h-gq-Ob2"/>
+                        <segue destination="rfL-jE-YP0" kind="show" identifier="toLedView" id="y4a-GX-ygL"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gac-qd-RmH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -263,7 +263,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ycb-cO-tgX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2533.5999999999999" y="972.86356821589209"/>
+            <point key="canvasLocation" x="2486" y="1133"/>
         </scene>
         <!--Sonar View Controller-->
         <scene sceneID="qD1-js-zcy">
@@ -308,20 +308,51 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="OJK-YJ-aDT">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Led Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bfa-zo-US0">
+                                <rect key="frame" x="146" y="72" width="82" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="led" translatesAutoresizingMaskIntoConstraints="NO" id="hEm-E3-DTa">
+                                <rect key="frame" x="16" y="101" width="343" height="343"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="hEm-E3-DTa" secondAttribute="height" multiplier="1:1" id="KFm-5m-hHg"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VwI-F5-fvD">
+                                <rect key="frame" x="325" y="423" width="34" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="hEm-E3-DTa" firstAttribute="top" secondItem="rRi-Ej-rvN" secondAttribute="bottom" constant="37" id="6bI-0U-aIZ"/>
                             <constraint firstItem="OJK-YJ-aDT" firstAttribute="leading" secondItem="SH2-Ps-8GT" secondAttribute="leading" id="9kb-J4-bp6"/>
                             <constraint firstItem="Xoh-iN-Zsa" firstAttribute="top" secondItem="OJK-YJ-aDT" secondAttribute="bottom" id="LOM-pG-suo"/>
                             <constraint firstAttribute="trailing" secondItem="OJK-YJ-aDT" secondAttribute="trailing" id="Pfn-gF-Xmz"/>
+                            <constraint firstItem="VwI-F5-fvD" firstAttribute="trailing" secondItem="hEm-E3-DTa" secondAttribute="trailing" id="Y7L-9E-DJi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hEm-E3-DTa" secondAttribute="trailing" id="fkL-bl-kYN"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="hEm-E3-DTa" secondAttribute="leading" id="iVs-0d-8io"/>
+                            <constraint firstItem="VwI-F5-fvD" firstAttribute="bottom" secondItem="hEm-E3-DTa" secondAttribute="bottom" id="j3Q-Z9-nb7"/>
                             <constraint firstItem="OJK-YJ-aDT" firstAttribute="top" secondItem="rRi-Ej-rvN" secondAttribute="bottom" id="oUS-2b-YSh"/>
+                            <constraint firstItem="Bfa-zo-US0" firstAttribute="centerX" secondItem="SH2-Ps-8GT" secondAttribute="centerX" id="odr-Go-W16"/>
+                            <constraint firstItem="Bfa-zo-US0" firstAttribute="top" secondItem="rRi-Ej-rvN" secondAttribute="bottom" constant="8" id="w6n-oX-Ard"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="hEm-E3-DTa" id="xW0-bw-Wk7"/>
+                        <outlet property="label" destination="VwI-F5-fvD" id="Zgk-Fa-N62"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UP7-Z1-54S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3257" y="1066"/>
+            <point key="canvasLocation" x="3132" y="1125"/>
         </scene>
         <!--Buzzer View Controller-->
         <scene sceneID="cJB-jQ-2hI">
@@ -511,6 +542,7 @@
     </scenes>
     <resources>
         <image name="background" width="1134" height="2050"/>
+        <image name="led" width="800" height="800"/>
         <image name="mute" width="300" height="300"/>
         <image name="rotation" width="250" height="250"/>
     </resources>

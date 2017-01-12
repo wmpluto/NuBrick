@@ -32,11 +32,15 @@ class AllSensorsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         print("AllSensorsTableview")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         self.peripheral.delegate = self
         
         let when = DispatchTime.now() + 2 // change 2 to desired number of seconds
-
+        
         self.peripheral.writeValue(TXCMD!, for: self.writeCharacteristic, type: .withResponse)
         DispatchQueue.main.asyncAfter(deadline: when) {
             // Your code with delay
@@ -173,6 +177,10 @@ class AllSensorsTableViewController: UITableViewController {
             vc.readCharacteristic = self.readCharacteristic
         } else if let vc = segue.destination as? GasViewController {
             vc.peripheral = self.peripheral
+            vc.writeCharacteristic = self.writeCharacteristic
+            vc.readCharacteristic = self.readCharacteristic
+        } else if let vc = segue.destination as? LedViewController {
+            vc.peripheral  = self.peripheral
             vc.writeCharacteristic = self.writeCharacteristic
             vc.readCharacteristic = self.readCharacteristic
         } else if let vc = segue.destination as? TemperatureViewController {

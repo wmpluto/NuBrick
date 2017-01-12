@@ -112,7 +112,6 @@ class BuzzerViewController: UIViewController {
         } else {
             self.imageView.image = UIImage(named: "speak")
             self.label.text = String(self.buzzer.volume) + "%"
-            
         }
     }
     
