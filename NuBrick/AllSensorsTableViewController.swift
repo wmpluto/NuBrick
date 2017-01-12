@@ -163,7 +163,11 @@ class AllSensorsTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if  let vc = segue.destination as? TemperatureViewController {
+        if  let vc = segue.destination as? BatteryViewController {
+            vc.peripheral  = self.peripheral
+            vc.writeCharacteristic = self.writeCharacteristic
+            vc.readCharacteristic = self.readCharacteristic
+        } else if let vc = segue.destination as? TemperatureViewController {
             vc.peripheral  = self.peripheral
             vc.writeCharacteristic = self.writeCharacteristic
             vc.readCharacteristic = self.readCharacteristic
@@ -171,7 +175,7 @@ class AllSensorsTableViewController: UITableViewController {
             vc.peripheral = self.peripheral
             vc.writeCharacteristic = self.writeCharacteristic
             vc.readCharacteristic = self.readCharacteristic
-        } 
+        }
     }
     
 
