@@ -25,29 +25,20 @@ class AllSensorsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         print("AllSensorsTableview")
+        self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        progressHUD?.textLabel.text = "Getting All Sensor Data..."
+        progressHUD?.show(in: self.view, animated: true)
+        
         self.peripheral.delegate = self
-        
-        let when = DispatchTime.now() + 2 // change 2 to desired number of seconds
-        
         self.peripheral.writeValue(TXCMD!, for: self.writeCharacteristic, type: .withResponse)
-        DispatchQueue.main.asyncAfter(deadline: when) {
-            // Your code with delay
-        }
-        self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
-            // Your code with delay
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+            self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
         }
     }
     
@@ -60,6 +51,15 @@ class AllSensorsTableViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func resendCMD() {
+        print("Something Wrong Resend CMD")
+        self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
+        self.peripheral.writeValue(TXCMD!, for: self.writeCharacteristic, type: .withResponse)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.6) {
+            self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
+        }
     }
 
     // MARK: - Table view data source
@@ -191,6 +191,7 @@ class AllSensorsTableViewController: UITableViewController {
             vc.peripheral  = self.peripheral
             vc.writeCharacteristic = self.writeCharacteristic
             vc.readCharacteristic = self.readCharacteristic
+            vc.sensor = "Temp&Humi"
         }
     }
     
@@ -251,6 +252,7 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
                         i += (Int)(self.indexReport.dataLeng)-1
                         DispatchQueue.main.async {
                             print("update it")
+                            self.progressHUD?.dismiss()
                             self.tableView.reloadData()
                         }
                     } else {
