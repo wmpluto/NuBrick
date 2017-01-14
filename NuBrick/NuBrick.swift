@@ -34,7 +34,7 @@ let VFCMD          = "@vf".data(using: .ascii)
 let TXCMD          = "@tx".data(using: .ascii)
 
 // Reponse to Command
-let rHOOKCMD       = "@HOOK00".data(using: .ascii)
+let rHOOKCMD       = "@HOOK00"
 let rVFCMD         = "@d".data(using: .ascii)
 
 // Device Transport Command

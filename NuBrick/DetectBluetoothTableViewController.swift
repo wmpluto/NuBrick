@@ -19,10 +19,6 @@ struct BLEPeripheral {
 
 
 class DetectBluetoothTableViewController: UITableViewController {
-
-    // peripheral status
-    dynamic var pStatus: NSNumber = NSNumber(booleanLiteral: false)
-    var myContext = 0
     
     // Blutetooth
     var centralManager: CBCentralManager!
@@ -32,6 +28,8 @@ class DetectBluetoothTableViewController: UITableViewController {
     var readCharacteristic: CBCharacteristic!
     
     var refreshCont: UIRefreshControl!
+    
+    var tmpBuffer:[UInt8] = []
     
     //JGProgressHUD
     let progressHUD = JGProgressHUD(style: .dark)
@@ -48,8 +46,6 @@ class DetectBluetoothTableViewController: UITableViewController {
         
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.black]
         self.setupRefresh()
-        
-        self.addObserver(self, forKeyPath: "pStaus", options: .new, context: nil)
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     
@@ -64,7 +60,6 @@ class DetectBluetoothTableViewController: UITableViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         print("View Will Disappear")
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -297,7 +292,6 @@ extension DetectBluetoothTableViewController: CBPeripheralDelegate {
                 print(c.uuid.uuidString)
                 selectedPeripheral.readValue(for: c)
                 selectedPeripheral.setNotifyValue(true, for: c)
-                self.pStatus = NSNumber(booleanLiteral: true)
                 self.readCharacteristic = c
             }
         }
@@ -322,11 +316,17 @@ extension DetectBluetoothTableViewController: CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         print("----didUpdateValueForCharacteristic---")
         guard characteristic.uuid == BTReadUUID else { return }
-        let data:Data = characteristic.value!
-        //let  d  = Array(UnsafeBufferPointer(start: (data as NSData).bytes.bindMemory(to: UInt8.self, capacity: data.count), count: data.count))
-        print(String(data: data, encoding: .ascii) as Any)
+
+        let bytesArray:[UInt8] = [UInt8](characteristic.value!)
         
-        if(data == rHOOKCMD) {
+        tmpBuffer += bytesArray
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 8) {
+            //Timeout
+            self.progressHUD?.textLabel.text = "TimeOut"
+            self.progressHUD?.dismiss()
+        }
+        
+        if(String(bytes: tmpBuffer, encoding: .ascii)?.contains(rHOOKCMD))! {
             print("get hook cmd")
             progressHUD?.textLabel.text = "Connecting to \(DeviceName)"
             self.selectedPeripheral.writeValue(FBCMD!, for: self.writeCharacteristic, type: .withResponse)
