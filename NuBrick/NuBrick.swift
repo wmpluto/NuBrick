@@ -78,6 +78,15 @@ struct Sensor {
     }
 }
 
+// Sensor
+struct Input {
+    let name:String
+    
+    init(name:String) {
+        self.name = name
+    }
+}
+
 // Index Report 1st stage
 struct IndexReport {
     var reportLeng: UInt16 = 0
