@@ -24,18 +24,18 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="u5W-ZE-uac" id="WGQ-Ti-JZb">
-                                    <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0kt-Xf-axe">
-                                            <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
+                                            <rect key="frame" x="15" y="4" width="34" height="21"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="72k-Ij-EAa">
-                                            <rect key="frame" x="15" y="25.5" width="33" height="14.5"/>
+                                            <rect key="frame" x="15" y="25" width="33" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
@@ -76,18 +76,18 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V0b-8r-957" id="4hj-dp-FGT">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GUz-fT-jCm">
-                                            <rect key="frame" x="15" y="12" width="33.5" height="20.5"/>
+                                            <rect key="frame" x="15" y="11" width="34" height="21"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sbd-xM-ANG">
-                                            <rect key="frame" x="316" y="12" width="44" height="20.5"/>
+                                            <rect key="frame" x="316" y="11" width="44" height="21"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -133,15 +133,35 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="4Wz-fp-bfE">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AHRS Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uXK-7F-T3h">
+                                <rect key="frame" x="138" y="72" width="98" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ahrs" translatesAutoresizingMaskIntoConstraints="NO" id="S8M-Jw-8UJ">
+                                <rect key="frame" x="16" y="101" width="343" height="343"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="S8M-Jw-8UJ" secondAttribute="height" multiplier="1:1" id="dHH-yH-XXE"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="4Wz-fp-bfE" firstAttribute="top" secondItem="ay9-V9-DLJ" secondAttribute="bottom" id="3eh-f1-FHE"/>
+                            <constraint firstItem="S8M-Jw-8UJ" firstAttribute="top" secondItem="uXK-7F-T3h" secondAttribute="bottom" constant="8" id="4Ro-vy-Kk0"/>
+                            <constraint firstItem="uXK-7F-T3h" firstAttribute="top" secondItem="ay9-V9-DLJ" secondAttribute="bottom" constant="8" id="QiI-SO-9ig"/>
                             <constraint firstAttribute="right" secondItem="4Wz-fp-bfE" secondAttribute="right" id="Tzq-qW-bkV"/>
                             <constraint firstItem="4Wz-fp-bfE" firstAttribute="left" secondItem="0Zm-r2-W3n" secondAttribute="left" id="VlN-mc-1mL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="S8M-Jw-8UJ" secondAttribute="trailing" id="ZlN-Sv-CM1"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="S8M-Jw-8UJ" secondAttribute="leading" id="aMZ-uH-n07"/>
                             <constraint firstItem="kJA-JV-Kou" firstAttribute="top" secondItem="4Wz-fp-bfE" secondAttribute="bottom" id="gRy-Up-SQf"/>
+                            <constraint firstItem="uXK-7F-T3h" firstAttribute="centerX" secondItem="0Zm-r2-W3n" secondAttribute="centerX" id="xlN-KL-cOg"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="rotationIMG" destination="S8M-Jw-8UJ" id="0EF-nh-tDD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L70-MO-xU8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -541,6 +561,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ahrs" width="1575" height="1575"/>
         <image name="background" width="1134" height="2050"/>
         <image name="led" width="800" height="800"/>
         <image name="mute" width="300" height="300"/>

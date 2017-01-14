@@ -50,31 +50,17 @@ struct AHRS {
 }
 
 
-class AHRSViewController: UIViewController {
-
-    let progressHUD = JGProgressHUD(style: .dark)
+class AHRSViewController: SensorViewController {
     
-    var peripheral: CBPeripheral!
-    var writeCharacteristic: CBCharacteristic!
-    var readCharacteristic: CBCharacteristic!
-    var tmpBuffer:[UInt8] = []
+    @IBOutlet weak var rotationIMG: UIImageView!
+    let basic1 = CABasicAnimation(keyPath: "transform.rotation")
+    let group = CAAnimationGroup()
     
-    var deviceDescriptor = DeviceDescriptor()
-    var deviceData = DeviceData()
     var ahrs = AHRS()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        progressHUD?.textLabel.text = "Getting AHRS Data..."
-        progressHUD?.show(in: self.view, animated: true)
-        self.peripheral.delegate = self
-        
-        self.peripheral.writeValue(GASCMD!, for: self.writeCharacteristic, type: .withResponse)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
-        }
+        self.peripheral.writeValue(AHRSCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
 
     override func didReceiveMemoryWarning() {
@@ -82,12 +68,28 @@ class AHRSViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func resendCMD() {
-        self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
+    override func resendCMD() {
+        super.resendCMD()
         self.peripheral.writeValue(AHRSCMD!, for: self.writeCharacteristic, type: .withResponse)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
+    }
+    
+    override func update() {
+        if self.ahrs.flag == 1 {
+            basic1.toValue = 135 / 360 * M_PI * 2
+        } else {
+            basic1.toValue = 0 * M_PI * 2
         }
+        basic1.repeatCount = 1
+        basic1.duration = 1.0
+        basic1.autoreverses = false
+        basic1.fillMode = kCAFillModeForwards
+        
+        group.duration = 1
+        group.repeatCount = 1
+        group.animations = [basic1]
+        group.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        
+        self.rotationIMG.layer.add(group, forKey: nil)
     }
     /*
     // MARK: - Navigation
@@ -98,57 +100,17 @@ class AHRSViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
-}
-
-
-extension AHRSViewController: CBPeripheralDelegate {
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        print("did discover services")
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        print("did discover characteristics for service")
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-        print("didWriteValueForCharacteristic")
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
-        print("did update notification state for characteristic")
-        if (error != nil) {
-            print("error")
-        }
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        print("did update value for characteristic")
-        guard characteristic.uuid == BTReadUUID else { return }
-        let bytesArray:[UInt8] = [UInt8](characteristic.value!)
-        
-        tmpBuffer += bytesArray
-        if tmpBuffer.count > 1024 {
-            //Something Wrong
-            self.resendCMD()
-        }
-        
-        var new = self.deviceDescriptor.setDeviceDescriptor(array: Array(tmpBuffer))
-        if new > 0 {
-            print(tmpBuffer)
-            tmpBuffer = Array(tmpBuffer[new..<tmpBuffer.count])
-            print(tmpBuffer)
-        }
-        
+    override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        super.peripheral(peripheral, didUpdateValueFor: characteristic, error: error)
         //Skip 2nd Stage Try to Get 3rd Stage After 1st Stage
         guard self.deviceDescriptor.rptDescLeng > 0 else { return }
-        new = self.ahrs.setAHRS(array: Array(tmpBuffer))
+        let new = self.ahrs.setAHRS(array: Array(tmpBuffer))
         if new > 0 {
             //print("tmpBuffer before:\(tmpBuffer)")
             tmpBuffer = Array(tmpBuffer[new..<tmpBuffer.count])
             //print("tmpBuffer after:\(tmpBuffer)")
+            self.progressHUD?.dismiss()
+            Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(self.update), userInfo: nil, repeats: true)
         }
-        
     }
 }
-

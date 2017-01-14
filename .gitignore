@@ -1,3 +1,5 @@
 Podfile.lock
 NuBrick.xcworkspace
 Pods
+Documents
+.DS_Store
