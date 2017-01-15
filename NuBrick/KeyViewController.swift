@@ -51,11 +51,14 @@ struct Key {
 
 class KeyViewController: SensorViewController {
     
+    var key = Key()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.peripheral.writeValue(IRCMD!, for: self.writeCharacteristic, type: .withResponse)
+        super.addTable(point: CGPoint(x: 0, y: 60))
+        self.peripheral.writeValue(KEYCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,7 +73,12 @@ class KeyViewController: SensorViewController {
     }
     
     override func update() {
-        
+        super.update()
+        var tmp:[SStatus] = []
+        tmp.append(SStatus(content: "KeyStatus", getting: self.key.keyValue))
+        tmp.append(SStatus(content: "KeyPress", getting: self.key.flag))
+        self.sstatuses = tmp
+        self.tableView?.reloadData()
     }
     /*
      // MARK: - Navigation
@@ -91,8 +99,12 @@ class KeyViewController: SensorViewController {
             //print("tmpBuffer before:\(tmpBuffer)")
             tmpBuffer = Array(tmpBuffer[new..<tmpBuffer.count])
             //print("tmpBuffer after:\(tmpBuffer)")
-            self.progressHUD?.dismiss()
-            self.update()
+            if sstatuses.count == 0 {
+                self.progressHUD?.dismiss()
+                Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(self.update), userInfo: nil, repeats: true)
+            }
         }
     }
+    
+    
 }

@@ -122,7 +122,7 @@ class AllSensorsTableViewController: UITableViewController {
         s = sensors[indexPath.row]
         if indexPath.section == 0 {
             s = inputs[indexPath.row]
-        } else if indexPath.section == 0 {
+        } else if indexPath.section == 1 {
             s = outputs[indexPath.row]
         }
         print("Did SelectRowAt\(s.name)")

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ControlCellDelegate {
-    func update(sender: UISlider)
+    func slideUpdate(sender: UISlider)
 }
 
 class ControlTableViewCell: UITableViewCell {
@@ -36,6 +36,6 @@ class ControlTableViewCell: UITableViewCell {
     }
     
     @IBAction func valueChanged(_ sender: UISlider) {
-        delegate?.update(sender: sender)
+        delegate?.slideUpdate(sender: sender)
     }
 }

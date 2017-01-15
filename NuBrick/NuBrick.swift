@@ -467,6 +467,21 @@ struct SControl {
     var getting: Int = 0
 }
 
+struct SStatus {
+    var content: String = ""
+    var getting: Int = 0
+    
+    init(content: String, getting: UInt16) {
+        self.content = content
+        self.getting = Int(getting)
+    }
+    
+    init(content: String, getting: UInt8) {
+        self.content = content
+        self.getting = Int(getting)
+    }
+}
+
 func bytesToWord(head:UInt8, tail:UInt8) -> UInt16 {
     return UInt16(tail) << 8 | UInt16(head)
 }

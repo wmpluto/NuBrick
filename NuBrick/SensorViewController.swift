@@ -10,9 +10,10 @@ import UIKit
 import CoreBluetooth
 import JGProgressHUD
 
-class SensorViewController: UIViewController {
+class SensorViewController: UIViewController, ControlCellDelegate {
     
     let progressHUD = JGProgressHUD(style: .dark)
+    var tableView: UITableView? = nil
     
     var peripheral: CBPeripheral!
     var writeCharacteristic: CBCharacteristic!
@@ -23,6 +24,9 @@ class SensorViewController: UIViewController {
     var sensor: String = ""
     
     var tmpBuffer:[UInt8] = []
+    
+    var sstatuses: [SStatus] = []
+    var scontrols: [SControl] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +53,16 @@ class SensorViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func addTable(point: CGPoint) {
+        self.tableView = UITableView(frame: CGRect(x: 10, y: point.y + 10, width: self.view.frame.width - 20, height: self.view.frame.height - 20))
+        self.tableView?.delegate = self
+        self.tableView?.dataSource = self
+        self.tableView?.backgroundColor = UIColor.clear
+        self.view.addSubview(self.tableView!)
+        tableView?.register(UINib(nibName: "ControlTableViewCell", bundle: nil), forCellReuseIdentifier: "ControlCell")
+        tableView?.register(UINib(nibName: "StatusTableViewCell", bundle: nil), forCellReuseIdentifier: "StatusCell")
+    }
+    
     func resendCMD() {
         print("Something Wrong Resend CMD")
         self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
@@ -56,6 +70,17 @@ class SensorViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.6) {
             self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
         }
+    }
+    
+    func slideUpdate(sender: UISlider) {
+        if let c = sender.superview as? ControlTableViewCell {
+            let index = self.tableView?.indexPath(for: c)
+            self.afterSlide(row: (index?.row)!)
+        }
+    }
+    
+    func afterSlide(row: Int) {
+        print("After Slide")
     }
     
     func update() {
@@ -113,5 +138,86 @@ extension SensorViewController: CBPeripheralDelegate {
             //print(tmpBuffer)
         }
     }
+}
+
+extension SensorViewController: UITableViewDelegate, UITableViewDataSource {
+    // MARK: - Table view data source
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        if section == 0 {
+            return sstatuses.count
+        }
+        return scontrols.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Status"
+        }
+        return "Control"
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath.section {
+        case 0:
+            let s = sstatuses[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "StatusCell", for: indexPath) as? StatusTableViewCell
+            cell?.cellData(data: s)
+            return cell!
+        case 1:
+            let s = scontrols[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ControlCell", for: indexPath) as? ControlTableViewCell
+            cell?.delegate = self
+            cell?.cellData(data: s)
+            return cell!
+        default:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ConnectedSensor", for: indexPath)
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    /*
+     // Override to support conditional editing of the table view.
+     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the specified item to be editable.
+     return true
+     }
+     */
+    
+    /*
+     // Override to support editing the table view.
+     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+     if editingStyle == .delete {
+     // Delete the row from the data source
+     tableView.deleteRows(at: [indexPath], with: .fade)
+     } else if editingStyle == .insert {
+     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+     }
+     }
+     */
+    
+    /*
+     // Override to support rearranging the table view.
+     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+     
+     }
+     */
+    
+    /*
+     // Override to support conditional rearranging of the table view.
+     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the item to be re-orderable.
+     return true
+     }
+     */
 }
 
