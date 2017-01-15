@@ -45,7 +45,8 @@ let AHRSCMD        = "@ta".data(using: .ascii)
 let SONARCMD       = "@ts".data(using: .ascii)
 let TEMPHUMCMD     = "@tt".data(using: .ascii)
 let GASCMD         = "@tg".data(using: .ascii)
-
+let KEYCMD         = "@tg".data(using: .ascii)
+let IRCMD          = "@ti".data(using: .ascii)
 // Communication Start Flag
 let StartFlag:UInt8    = 0x55
 

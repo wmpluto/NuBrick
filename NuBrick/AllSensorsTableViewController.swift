@@ -118,7 +118,13 @@ class AllSensorsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let s = sensors[indexPath.row]
+        var s: Sensor
+        s = sensors[indexPath.row]
+        if indexPath.section == 0 {
+            s = inputs[indexPath.row]
+        } else if indexPath.section == 0 {
+            s = outputs[indexPath.row]
+        }
         print("Did SelectRowAt\(s.name)")
         
         progressHUD?.textLabel.text = "Showing \(s.name)"
@@ -222,6 +228,16 @@ class AllSensorsTableViewController: UITableViewController {
             vc.peripheral = self.peripheral
             vc.writeCharacteristic = self.writeCharacteristic
             vc.readCharacteristic = self.readCharacteristic
+        } else if let vc = segue.destination as? IRViewController {
+            vc.peripheral  = self.peripheral
+            vc.writeCharacteristic = self.writeCharacteristic
+            vc.readCharacteristic = self.readCharacteristic
+            vc.sensor = "IR"
+        } else if let vc = segue.destination as? KeyViewController {
+            vc.peripheral  = self.peripheral
+            vc.writeCharacteristic = self.writeCharacteristic
+            vc.readCharacteristic = self.readCharacteristic
+            vc.sensor = "Key"
         } else if let vc = segue.destination as? LedViewController {
             vc.peripheral  = self.peripheral
             vc.writeCharacteristic = self.writeCharacteristic
@@ -304,7 +320,7 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
         self.outputs = tmp.filter({$0.connected})
         
         tmp = []
-        tmp.append(Sensor(name: "ir", status: 0, alarm: 0, connected: self.indexReport.devConnected))
+        //tmp.append(Sensor(name: "ir", status: 0, alarm: 0, connected: self.indexReport.devConnected))
         tmp.append(Sensor(name: "key", status: 0, alarm: 0, connected: self.indexReport.devConnected))
         self.inputs = tmp.filter({$0.connected})
         

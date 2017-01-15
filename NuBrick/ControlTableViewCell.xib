@@ -53,7 +53,7 @@
                 <outlet property="slide" destination="oGE-A4-mXT" id="mXq-7Z-l3h"/>
                 <outlet property="valueLabel" destination="d8I-EC-RE0" id="eiA-is-FrH"/>
             </connections>
-            <point key="canvasLocation" x="26" y="50"/>
+            <point key="canvasLocation" x="23" y="56"/>
         </tableViewCell>
     </objects>
 </document>
