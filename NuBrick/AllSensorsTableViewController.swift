@@ -17,15 +17,21 @@ class AllSensorsTableViewController: UITableViewController {
     var readCharacteristic: CBCharacteristic!
     var indexReport = IndexReport()
     var indexData = IndexData()
-    //var buffer:[UInt8] = []
+ 
     var tmpBuffer:[UInt8] = []
     var sensors:[Sensor] = []
+    var outputs:[Sensor] = []
+    var inputs:[Sensor] = []
 
     let progressHUD = JGProgressHUD(style: .dark)
 
     override func viewDidLoad() {
         super.viewDidLoad()
         print("AllSensorsTableview")
+        self.navigationItem.hidesBackButton = true
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        //self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.navigationItem.title = "NuBrick"
         self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     
@@ -66,26 +72,49 @@ class AllSensorsTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 3
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Input"
+        } else if section == 1 {
+            return "Output"
+        }
+        return "Sensor"
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        if section == 0 {
+            return self.inputs.count
+        } else if section == 1 {
+            return self.outputs.count
+        }
         return sensors.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ConnectedSensor", for: indexPath)
-        if indexPath.row > sensors.count {
-            print("wrong")
+        switch indexPath.section {
+        case 0:
+            let s = inputs[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ConnectedInput", for: indexPath) as? ConnectedInputCell
+            cell?.cellData(data: s)
+            return cell!
+        case 1:
+            let s = outputs[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ConnectedOutput", for: indexPath) as? ConnectedOutputCell
+            cell?.cellData(data: s)
+            return cell!
+        case 2:
+            let s = sensors[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ConnectedSensor", for: indexPath) as? ConnectedSensorCell
+            cell?.cellData(data: s)
+            return cell!
+        default:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ConnectedSensor", for: indexPath)
             return cell
         }
-        let s = sensors[indexPath.row]
-        // Configure the cell...
-        cell.textLabel?.text = s.name
-        cell.detailTextLabel?.text = String(s.status)
-        return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -117,7 +146,7 @@ class AllSensorsTableViewController: UITableViewController {
             case "gas":
                 self.performSegue(withIdentifier: "toGasView", sender: self)
                 break
-            case "temper":
+            case "temp":
                 self.performSegue(withIdentifier: "toTemperatureView", sender: self)
                 break
             default:
@@ -222,90 +251,52 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
         print("did update value for characteristic")
         guard characteristic.uuid == BTReadUUID else { return }
         let bytesArray:[UInt8] = [UInt8](characteristic.value!)
-
-        // process 2nd stage
-        if self.indexReport.dataLeng > 0 {
-           // save bytes array to buffer
-            tmpBuffer += bytesArray
-            guard tmpBuffer.count > 512 else {return}
-            
-            dataQueue.sync {
-                var buffer = self.tmpBuffer
-                self.tmpBuffer = []
-                //do something with buffer
-                print("do something with buffer")
-                //find head 
-                var i = 0
-                while (i+(Int)(self.indexReport.dataLeng)+1) < buffer.count {
-                    let flagBefore = bytesToWord(head: buffer[i], tail: buffer[i+1])
-                    let flagNext = bytesToWord(head: buffer[i+(Int)(self.indexReport.dataLeng)], tail: buffer[i+(Int)(self.indexReport.dataLeng)+1])
-                    if flagBefore == self.indexReport.dataLeng && flagNext == self.indexReport.dataLeng{
-                        //get 2nd stage data
-                        self.sensors = []
-                        self.processIndexData(da: Array(buffer[i+2..<(i+(Int)(self.indexReport.dataLeng))]))
-                        //convert 2nd stage data to 
-                        //print(self.indexData)
-                        if self.indexReport.dataLeng > 28 {
-                            //print("here is custome sensor")
-                        }
-                        
-                        i += (Int)(self.indexReport.dataLeng)-1
-                        DispatchQueue.main.async {
-                            print("update it")
-                            self.progressHUD?.dismiss()
-                            self.tableView.reloadData()
-                        }
-                    } else {
-                        i += 1
-                    }
-                }
-                
-            }
+        
+        tmpBuffer += bytesArray
+        if tmpBuffer.count > 1024 {
+            //Something Wrong
+            self.resendCMD()
         }
         
+        var new = self.indexReport.setIndexReport(array: Array(tmpBuffer))
+        if new > 0 {
+            print(tmpBuffer)
+            self.indexData.start = self.indexReport.dataLeng
+            tmpBuffer = Array(tmpBuffer[new..<tmpBuffer.count])
+        }
         
-        // get 1st stage
-        if bytesArray[0] == StartFlag  && bytesArray[1] == StartFlag {
-            self.indexReport.setReportLeng(head: bytesArray[2], tail: bytesArray[3])
-            self.indexReport.setDevNum(head: bytesArray[4], tail: bytesArray[5])
-            self.indexReport.setDevConnected(head: bytesArray[6], tail: bytesArray[7])
-            self.indexReport.setDataLeng(head: bytesArray[8], tail: bytesArray[9])
+        guard self.indexData.start > 0 else { return }
+        new = self.indexData.setIndexData(array: Array(tmpBuffer))
+        if new > 0 {
+            tmpBuffer = Array(tmpBuffer[new..<tmpBuffer.count])
+            self.updateTable()
         }
     }
     
-    func processIndexData(da:[UInt8]) {
-        guard da.count > 28 else {
-            print("please check sensors data")
-            return
+    func updateTable() {
+        var tmp:[Sensor] = []
+        tmp.append(Sensor(name: "battery", status: self.indexData.batteryStatus, alarm: self.indexData.batteryAlarm, connected: self.indexReport.devConnected))
+        tmp.append(Sensor(name: "ahrs", status: self.indexData.ahrsStatus, alarm: self.indexData.ahrsAlarm, connected: self.indexReport.devConnected))
+        tmp.append(Sensor(name: "sonar", status: self.indexData.sonarStatus, alarm: self.indexData.sonarAlarm, connected: self.indexReport.devConnected))
+        tmp.append(Sensor(name: "temp", status: self.indexData.tempStatus, alarm: self.indexData.tempAlarm, connected: self.indexReport.devConnected))
+        tmp.append(Sensor(name: "humidity", status: self.indexData.humidityStatus, alarm: self.indexData.humidityAlarm, connected: self.indexReport.devConnected))
+        tmp.append(Sensor(name: "gas", status: self.indexData.gasStatus, alarm: self.indexData.gasAlarm, connected: self.indexReport.devConnected))
+        self.sensors = tmp.filter({$0.connected})
+        
+        tmp = []
+        tmp.append(Sensor(name: "buzzer", status: self.indexData.buzzerStatus, alarm: 0, connected: self.indexReport.devConnected))
+        tmp.append(Sensor(name: "led", status: self.indexData.ledStatus, alarm: 0, connected: self.indexReport.devConnected))
+        self.outputs = tmp.filter({$0.connected})
+        
+        tmp = []
+        tmp.append(Sensor(name: "ir", status: 0, alarm: 0, connected: self.indexReport.devConnected))
+        tmp.append(Sensor(name: "key", status: 0, alarm: 0, connected: self.indexReport.devConnected))
+        self.inputs = tmp.filter({$0.connected})
+        
+        DispatchQueue.main.async {
+            print("update it")
+            self.progressHUD?.dismiss()
+            self.tableView.reloadData()
         }
-        
-        self.indexData.setBatteryStatus(head: da[0], tail: da[1])
-        self.indexData.setBatteryAlarm(head: da[2], tail: da[3])
-        self.sensors.append(Sensor(name: "battery", status: self.indexData.batteryStatus, alarm: self.indexData.batteryAlarm))
-        
-        self.indexData.setBuzzerStatus(head: da[4], tail: da[5])
-        self.sensors.append(Sensor(name: "buzzer", status: self.indexData.buzzerStatus, alarm: 0))
-        
-        self.indexData.setLedStatus(head: da[6], tail: da[7])
-        self.sensors.append(Sensor(name: "led", status: self.indexData.ledStatus, alarm: 0))
-        
-        self.indexData.setAHRSStatus(head: da[8], tail: da[9])
-        self.indexData.setAHRSAlarm(head: da[10], tail: da[11])
-        self.sensors.append(Sensor(name: "ahrs", status: self.indexData.ahrsStatus, alarm: self.indexData.ahrsAlarm))
-        
-        self.indexData.setSonarStatus(head: da[12], tail: da[13])
-        self.indexData.setSonarAlarm(head: da[14], tail: da[15])
-        self.sensors.append(Sensor(name: "sonar", status: self.indexData.sonarStatus, alarm: self.indexData.sonarAlarm))
-        
-        self.indexData.setTemperStatus(head: da[16], tail: da[17])
-        self.indexData.setHumidityStatus(head: da[18], tail: da[19])
-        self.indexData.setTemperAlarm(head: da[20], tail: da[21])
-        self.indexData.setHumidityAlarm(head: da[22], tail: da[23])
-        self.sensors.append(Sensor(name: "temper", status: self.indexData.temperStatus, alarm: self.indexData.temperAlarm))
-        self.sensors.append(Sensor(name: "humidity", status: self.indexData.humidityStatus, alarm: self.indexData.humidityStatus))
-        
-        self.indexData.setGasStatus(head: da[24], tail: da[25])
-        self.indexData.setGasAlarm(head: da[26], tail: da[27])
-        self.sensors.append(Sensor(name: "gas", status: self.indexData.gasStatus, alarm: self.indexData.gasAlarm))
     }
 }

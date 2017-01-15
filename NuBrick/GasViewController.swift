@@ -23,7 +23,7 @@ struct Gas {
         
         while i < array.count {
             //Try to Get 1st Stage
-            guard array.count - i > 11 else {return 0}
+            guard array.count - i > Int(self.length + 1) else {return 0}
             if(bytesToWord(head: array[i], tail: array[i+1]) == self.length) {
                 //Get 1st Stage
                 self.length = bytesToWord(head: array[i++], tail: array[i++])

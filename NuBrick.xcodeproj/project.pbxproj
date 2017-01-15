@@ -28,6 +28,9 @@
 		3330BFB665C85FAA15CBB422 /* Pods_NuBrick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA07D273A2AAD25E01BFC59 /* Pods_NuBrick.framework */; };
 		B60FADA41E29E58400EC2986 /* SensorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60FADA31E29E58400EC2986 /* SensorViewController.swift */; };
 		B63AB6781E29FED200249C2C /* Pods_NuBrick.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA07D273A2AAD25E01BFC59 /* Pods_NuBrick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B6EE2E601E2B19540090F260 /* ConnectedSensorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EE2E5F1E2B19540090F260 /* ConnectedSensorCell.swift */; };
+		B6EE2E621E2B1FEF0090F260 /* ConnectedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EE2E611E2B1FEF0090F260 /* ConnectedInputCell.swift */; };
+		B6EE2E641E2B200A0090F260 /* ConnectedOutputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EE2E631E2B200A0090F260 /* ConnectedOutputCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -69,6 +72,9 @@
 		304F5E8CB4781BD0790000E7 /* Pods-NuBrick.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NuBrick.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NuBrick/Pods-NuBrick.debug.xcconfig"; sourceTree = "<group>"; };
 		3EA07D273A2AAD25E01BFC59 /* Pods_NuBrick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NuBrick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B60FADA31E29E58400EC2986 /* SensorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorViewController.swift; sourceTree = "<group>"; };
+		B6EE2E5F1E2B19540090F260 /* ConnectedSensorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectedSensorCell.swift; sourceTree = "<group>"; };
+		B6EE2E611E2B1FEF0090F260 /* ConnectedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectedInputCell.swift; sourceTree = "<group>"; };
+		B6EE2E631E2B200A0090F260 /* ConnectedOutputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectedOutputCell.swift; sourceTree = "<group>"; };
 		F3D0A84D225F7F0481E91707 /* Pods-NuBrick.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NuBrick.release.xcconfig"; path = "Pods/Target Support Files/Pods-NuBrick/Pods-NuBrick.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -130,6 +136,9 @@
 		280092721DFF938100EC0C7E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B6EE2E5F1E2B19540090F260 /* ConnectedSensorCell.swift */,
+				B6EE2E611E2B1FEF0090F260 /* ConnectedInputCell.swift */,
+				B6EE2E631E2B200A0090F260 /* ConnectedOutputCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -302,12 +311,15 @@
 				2821BF3E1E2332FC0077861A /* SonarViewController.swift in Sources */,
 				2821BF321E2332080077861A /* BatteryViewController.swift in Sources */,
 				2821BF381E2332950077861A /* IRViewController.swift in Sources */,
+				B6EE2E641E2B200A0090F260 /* ConnectedOutputCell.swift in Sources */,
+				B6EE2E601E2B19540090F260 /* ConnectedSensorCell.swift in Sources */,
 				2879181E1E0264EA0091C740 /* BaseNavigationControllerViewController.swift in Sources */,
 				287918221E02678D0091C740 /* Util.swift in Sources */,
 				280092601DFF90F100EC0C7E /* AppDelegate.swift in Sources */,
 				2892DF181E03943900D76231 /* AllSensorsTableViewController.swift in Sources */,
 				28BA2C1B1DFFDEB7007C8ADA /* NuBrick.swift in Sources */,
 				2821BF401E2335E80077861A /* BuzzerViewController.swift in Sources */,
+				B6EE2E621E2B1FEF0090F260 /* ConnectedInputCell.swift in Sources */,
 				2851F7841E1503CB00CEAA06 /* TemperatureViewController.swift in Sources */,
 				2821BF341E23325D0077861A /* AHRSViewController.swift in Sources */,
 				2821BF3A1E2332D30077861A /* KeyViewController.swift in Sources */,

@@ -67,28 +67,57 @@ let dataQueue = DispatchQueue(label:"com.nuvoton.dataQueue")
 
 // Sensor
 struct Sensor {
-    let name:String
-    let status:Int
-    let alarm:Bool
+    var name:String = ""
+    var status:Int = 0
+    var alarm:Bool = false
+    var connected:Bool = false
     
-    init(name:String, status: UInt16,alarm: UInt16) {
+    init(name:String, status: UInt16,alarm: UInt16,connected: UInt16) {
         self.name = name
         self.status = Int(status)
         self.alarm = alarm > 0 ? true : false
-    }
-}
+        switch name {
 
-// Sensor
-struct Input {
-    let name:String
-    
-    init(name:String) {
-        self.name = name
+        case "battery":
+            self.connected = uintToBool(origin: connected, i: 0)
+            break
+        case "buzzer" :
+            self.connected = uintToBool(origin: connected, i: 1)
+            break
+        case "led":
+            self.connected = uintToBool(origin: connected, i: 2)
+            break
+        case "ahrs":
+            self.connected = uintToBool(origin: connected, i: 3)
+            break
+        case "sonar":
+            self.connected = uintToBool(origin: connected, i: 4)
+            break
+        case "humidity":
+            self.connected = uintToBool(origin: connected, i: 5)
+            break
+        case "temp":
+            self.connected = uintToBool(origin: connected, i: 5)
+            break
+        case "gas":
+            self.connected = uintToBool(origin: connected, i: 6)
+            break
+        case "ir" :
+            self.connected = uintToBool(origin: connected, i: 7)
+            break
+        case "key" :
+            self.connected = uintToBool(origin: connected, i: 8)
+            break
+        default:
+            break
+        }
+        
     }
 }
 
 // Index Report 1st stage
 struct IndexReport {
+    var start: UInt16 = bytesToWord(head: StartFlag, tail: StartFlag)
     var reportLeng: UInt16 = 0
     var devNum         : UInt16 = 0
     var devConnected   : UInt16 = 0
@@ -109,10 +138,42 @@ struct IndexReport {
     mutating func setDataLeng(head:UInt8, tail:UInt8) {
         self.dataLeng = bytesToWord(head: head, tail: tail)
     }
+    
+    mutating func setIndexReport(array:[UInt8]) -> Int{
+        var i = 0
+        
+        while i < array.count {
+            //Try to Get 1st Stage
+            guard array.count - i > (10+1) else {return 0}
+            if(bytesToWord(head: array[i], tail: array[i+1]) == self.start) {
+                //Get 1st Stage
+                self.start = bytesToWord(head: array[i++], tail: array[i++])
+                self.reportLeng = bytesToWord(head: array[i++], tail: array[i++])
+                self.devNum = bytesToWord(head: array[i++], tail: array[i++])
+                self.devConnected = bytesToWord(head: array[i++], tail: array[i++])
+                self.dataLeng = bytesToWord(head: array[i++], tail: array[i++])
+                
+                if(bytesToWord(head: array[i], tail: array[i+1]) != self.dataLeng) {
+                    continue
+                }
+                
+                if i < array.count {
+                    print("There is 1st stage: \n\(self)")
+                    return i
+                } else {
+                    return 0
+                }
+            }
+            i += 1
+        }
+        
+        return 0
+    }
 }
 
 //Index Data 2nd stage
 struct IndexData {
+    var start:            UInt16 = 0
     var batteryStatus:    UInt16 = 0
     var batteryAlarm:     UInt16 = 0
     var buzzerStatus:       UInt16 = 0
@@ -121,67 +182,54 @@ struct IndexData {
     var ahrsAlarm:    UInt16 = 0
     var sonarStatus:      UInt16 = 0
     var sonarAlarm:       UInt16 = 0
-    var temperStatus:     UInt16 = 0
+    var tempStatus:     UInt16 = 0
     var humidityStatus:   UInt16 = 0
-    var temperAlarm:      UInt16 = 0
+    var tempAlarm:      UInt16 = 0
     var humidityAlarm:    UInt16 = 0
     var gasStatus:        UInt16 = 0
     var gasAlarm:         UInt16 = 0
 
-    mutating func setBatteryStatus(head:UInt8, tail:UInt8) {
-        self.batteryStatus = bytesToWord(head: head, tail: tail)
-    }
-    
-    mutating func setBatteryAlarm(head:UInt8, tail:UInt8) {
-        self.batteryAlarm = bytesToWord(head: head, tail: tail)
-    }
-    
-    mutating func setBuzzerStatus(head:UInt8, tail:UInt8) {
-        self.buzzerStatus = bytesToWord(head: head, tail: tail)
-    }
-    
-    mutating func setLedStatus(head:UInt8, tail:UInt8) {
-        self.ledStatus = bytesToWord(head: head, tail: tail)
-    }
-    
-    mutating func setAHRSStatus(head:UInt8, tail:UInt8) {
-        self.ahrsStatus = bytesToWord(head: head, tail: tail)
-    }
-    
-    mutating func setAHRSAlarm(head:UInt8, tail:UInt8) {
-        self.ahrsAlarm = bytesToWord(head: head, tail: tail)
-    }
-    
-    mutating func setSonarStatus(head:UInt8, tail:UInt8) {
-        self.sonarStatus = bytesToWord(head: head, tail: tail)
-    }
-    
-    mutating func setSonarAlarm(head:UInt8, tail:UInt8) {
-        self.sonarAlarm = bytesToWord(head: head, tail: tail)
-    }
-    
-    mutating func setTemperStatus(head:UInt8, tail:UInt8) {
-        self.temperStatus = bytesToWord(head: head, tail: tail)
-    }
-    
-    mutating func setHumidityStatus(head:UInt8, tail:UInt8) {
-        self.humidityStatus = bytesToWord(head: head, tail: tail)
-    }
-    
-    mutating func setTemperAlarm(head:UInt8, tail:UInt8) {
-        self.temperAlarm = bytesToWord(head: head, tail: tail)
-    }
-    
-    mutating func setHumidityAlarm(head:UInt8, tail:UInt8) {
-        self.humidityAlarm = bytesToWord(head: head, tail: tail)
-    }
-    
-    mutating func setGasStatus(head:UInt8, tail:UInt8) {
-        self.gasStatus = bytesToWord(head: head, tail: tail)
-    }
-    
-    mutating func setGasAlarm(head:UInt8, tail:UInt8) {
-        self.gasAlarm = bytesToWord(head: head, tail: tail)
+    mutating func setIndexData(array:[UInt8]) -> Int{
+        print("setIndexData")
+        var i = 0
+        
+        while i < array.count {
+            //Try to Get 1st Stage
+            guard array.count - i > Int(self.start+1) else {return 0}
+            if(bytesToWord(head: array[i], tail: array[i+1]) == self.start) {
+                //Get 1st Stage
+                self.start = bytesToWord(head: array[i++], tail: array[i++])
+                self.batteryStatus = bytesToWord(head: array[i++], tail: array[i++])
+                self.batteryAlarm = bytesToWord(head: array[i++], tail: array[i++])
+                self.buzzerStatus = bytesToWord(head: array[i++], tail: array[i++])
+                self.ledStatus = bytesToWord(head: array[i++], tail: array[i++])
+                self.ahrsStatus = bytesToWord(head: array[i++], tail: array[i++])
+                self.ahrsAlarm = bytesToWord(head: array[i++], tail: array[i++])
+                self.sonarStatus = bytesToWord(head: array[i++], tail: array[i++])
+                self.sonarAlarm = bytesToWord(head: array[i++], tail: array[i++])
+                self.tempStatus = bytesToWord(head: array[i++], tail: array[i++])
+                self.humidityStatus = bytesToWord(head: array[i++], tail: array[i++])
+                self.tempAlarm = bytesToWord(head: array[i++], tail: array[i++])
+                self.humidityAlarm = bytesToWord(head: array[i++], tail: array[i++])
+                self.gasStatus = bytesToWord(head: array[i++], tail: array[i++])
+                self.gasAlarm = bytesToWord(head: array[i++], tail: array[i++])
+
+                i = i+Int(self.start)-15*2
+                if(bytesToWord(head: array[i], tail: array[i+1]) != self.start) {
+                    continue
+                }
+                
+                if i < array.count {
+                    print("There is 2nd stage: \n\(self)")
+                    return i
+                } else {
+                    return 0
+                }
+            }
+            i += 1
+        }
+        
+        return 0
     }
 }
 
@@ -278,7 +326,7 @@ struct DeviceDescriptor {
                 //Get 1st Stage
                 i += 2
                 self.setDevDescLeng(head: array[i++], tail: array[i++])
-                guard array.count - i > Int(self.devDescLeng) else {return 0}
+                guard array.count - i > Int(self.devDescLeng+1) else {return 0}
                 self.setRptDescLeng(head: array[i++], tail: array[i++])
                 self.setInRptLeng(head: array[i++], tail: array[i++])
                 self.setOutRptLeng(head: array[i++], tail: array[i++])
@@ -414,6 +462,13 @@ struct TIDDATA {
 
 func bytesToWord(head:UInt8, tail:UInt8) -> UInt16 {
     return UInt16(tail) << 8 | UInt16(head)
+}
+
+func uintToBool(origin: UInt16, i: Int) -> Bool {
+    if (origin & UInt16(1 << i)) > 0 {
+        return true
+    }
+    return false
 }
 
 prefix operator ++
