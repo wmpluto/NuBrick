@@ -101,6 +101,7 @@ class KeyViewController: SensorViewController {
             //print("tmpBuffer after:\(tmpBuffer)")
             if sstatuses.count == 0 {
                 self.progressHUD?.dismiss()
+                self.update()
                 Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(self.update), userInfo: nil, repeats: true)
             }
         }

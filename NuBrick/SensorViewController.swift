@@ -54,7 +54,7 @@ class SensorViewController: UIViewController, ControlCellDelegate {
     }
     
     func addTable(point: CGPoint) {
-        self.tableView = UITableView(frame: CGRect(x: 10, y: point.y + 10, width: self.view.frame.width - 20, height: self.view.frame.height - 20))
+        self.tableView = UITableView(frame: CGRect(x: 10, y: point.y + 5, width: self.view.frame.width - 20, height: self.view.frame.height - 20))
         self.tableView?.delegate = self
         self.tableView?.dataSource = self
         self.tableView?.backgroundColor = UIColor.clear

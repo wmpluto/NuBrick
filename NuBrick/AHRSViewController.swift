@@ -60,6 +60,7 @@ class AHRSViewController: SensorViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        super.addTable(point: CGPoint(x: 0, y: rotationIMG.frame.maxY))
         self.peripheral.writeValue(AHRSCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
 
@@ -90,6 +91,12 @@ class AHRSViewController: SensorViewController {
         group.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
         
         self.rotationIMG.layer.add(group, forKey: nil)
+        
+        var tmp:[SStatus] = []
+        tmp.append(SStatus(content: "AHRSStatus", getting: self.ahrs.vibrationValue))
+        tmp.append(SStatus(content: "OverFlag", getting: self.ahrs.flag))
+        self.sstatuses = tmp
+        self.tableView?.reloadData()
     }
     /*
     // MARK: - Navigation
@@ -109,8 +116,11 @@ class AHRSViewController: SensorViewController {
             //print("tmpBuffer before:\(tmpBuffer)")
             tmpBuffer = Array(tmpBuffer[new..<tmpBuffer.count])
             //print("tmpBuffer after:\(tmpBuffer)")
-            self.progressHUD?.dismiss()
-            Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(self.update), userInfo: nil, repeats: true)
+            
+            if sstatuses.count == 0 {
+                self.progressHUD?.dismiss()
+            }
+            self.update()
         }
     }
 }
