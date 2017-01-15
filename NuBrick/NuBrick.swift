@@ -465,6 +465,16 @@ struct SControl {
     var content: String = ""
     var setting: Int = 0
     var getting: Int = 0
+    
+    init(content: String, getting: UInt16) {
+        self.content = content
+        self.getting = Int(getting)
+    }
+    
+    init(content: String, getting: UInt8) {
+        self.content = content
+        self.getting = Int(getting)
+    }
 }
 
 struct SStatus {

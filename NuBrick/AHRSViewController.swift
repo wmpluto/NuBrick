@@ -96,6 +96,11 @@ class AHRSViewController: SensorViewController {
         tmp.append(SStatus(content: "AHRSStatus", getting: self.ahrs.vibrationValue))
         tmp.append(SStatus(content: "OverFlag", getting: self.ahrs.flag))
         self.sstatuses = tmp
+        
+        var cache: [SControl] = []
+        cache.append(SControl(content: "SleepPeriod", getting: self.ahrs.sleepPeriod))
+        cache.append(SControl(content: "VibrationLevel", getting: self.ahrs.vibrationLevel))
+        self.scontrols = cache
         self.tableView?.reloadData()
     }
     /*
