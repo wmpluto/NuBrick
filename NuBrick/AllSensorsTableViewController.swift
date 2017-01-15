@@ -137,6 +137,12 @@ class AllSensorsTableViewController: UITableViewController {
             case "buzzer" :
                 self.performSegue(withIdentifier: "toBuzzerView", sender: self)
                 break
+            case "ir":
+                self.performSegue(withIdentifier: "toIRView", sender: self)
+                break
+            case "key":
+                self.performSegue(withIdentifier: "toKeyView", sender: self)
+                break
             case "led":
                 self.performSegue(withIdentifier: "toLedView", sender: self)
                 break
@@ -145,6 +151,9 @@ class AllSensorsTableViewController: UITableViewController {
                 break
             case "gas":
                 self.performSegue(withIdentifier: "toGasView", sender: self)
+                break
+            case "sonar":
+                self.performSegue(withIdentifier: "toSonarView", sender: self)
                 break
             case "temp":
                 self.performSegue(withIdentifier: "toTemperatureView", sender: self)
@@ -200,6 +209,7 @@ class AllSensorsTableViewController: UITableViewController {
             vc.peripheral  = self.peripheral
             vc.writeCharacteristic = self.writeCharacteristic
             vc.readCharacteristic = self.readCharacteristic
+            vc.sensor = "AHRS"
         } else if  let vc = segue.destination as? BatteryViewController {
             vc.peripheral  = self.peripheral
             vc.writeCharacteristic = self.writeCharacteristic
@@ -216,7 +226,12 @@ class AllSensorsTableViewController: UITableViewController {
             vc.peripheral  = self.peripheral
             vc.writeCharacteristic = self.writeCharacteristic
             vc.readCharacteristic = self.readCharacteristic
-        } else if let vc = segue.destination as? TemperatureViewController {
+        } else if let vc = segue.destination as? SonarViewController {
+            vc.peripheral  = self.peripheral
+            vc.writeCharacteristic = self.writeCharacteristic
+            vc.readCharacteristic = self.readCharacteristic
+            vc.sensor = "Sonar"
+        }  else if let vc = segue.destination as? TemperatureViewController {
             vc.peripheral  = self.peripheral
             vc.writeCharacteristic = self.writeCharacteristic
             vc.readCharacteristic = self.readCharacteristic
