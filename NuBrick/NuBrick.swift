@@ -460,6 +460,12 @@ struct TIDDATA {
     }
 }
 
+struct SControl {
+    var content: String = ""
+    var setting: Int = 0
+    var getting: Int = 0
+}
+
 func bytesToWord(head:UInt8, tail:UInt8) -> UInt16 {
     return UInt16(tail) << 8 | UInt16(head)
 }
