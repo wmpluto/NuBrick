@@ -57,7 +57,7 @@ class SensorViewController: UIViewController, ControlCellDelegate {
     }
     
     func addTable(point: CGPoint) {
-        self.tableView = UITableView(frame: CGRect(x: 10, y: point.y + 5, width: self.view.frame.width - 20, height: self.view.frame.height - 15 - point.y))
+        self.tableView = UITableView(frame: CGRect(x: 10, y: point.y, width: self.view.frame.width - 20, height: self.view.frame.height - 15 - point.y))
         self.tableView?.delegate = self
         self.tableView?.dataSource = self
         self.tableView?.backgroundColor = UIColor.clear
@@ -77,7 +77,7 @@ class SensorViewController: UIViewController, ControlCellDelegate {
     
     func slideUpdate(value: Int, slide: String) {
         if modifyCmds.count == 0 {
-            Timer.scheduledTimer(timeInterval: 5, target:self, selector: #selector(self.sendModifyCMD), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: 3, target:self, selector: #selector(self.sendModifyCMD), userInfo: nil, repeats: false)
         }
         modifyCmds[slide] = value
     }

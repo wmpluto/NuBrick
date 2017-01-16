@@ -85,9 +85,9 @@ let SONARM         = [
 ]
 
 let TEMPHUMM       = [
-    "SleepPeriod":    "@mt10",
-    "TempAlarmValue": "@mt11",
-    "HumiAlarmValue": "@mt12",
+    "SleepPeriod":    "@mt11%04d\r",
+    "TempAlarmValue": "@mt12%04d\r",
+    "HumiAlarmValue": "@mt13%04d\r",
 ]
 
 let GASM           = [

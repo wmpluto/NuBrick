@@ -69,6 +69,8 @@ class TemperatureViewController: SensorViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        M = TEMPHUMM
+        super.addTable(point: CGPoint(x: 0, y: lineChartView.frame.maxY))
         self.peripheral.writeValue(TEMPHUMCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     
@@ -94,6 +96,20 @@ class TemperatureViewController: SensorViewController {
         self.lineChartView.notifyDataSetChanged()
         self.lineChartView.moveViewToX(Double(self.chartNum))
         self.chartNum = self.chartNum + 1
+        
+        var tmp:[SStatus] = []
+        tmp.append(SStatus(content: "Temperature", getting: self.tempHumi.tempValue))
+        tmp.append(SStatus(content: "OverFlag", getting: self.tempHumi.tempOverFlag))
+        tmp.append(SStatus(content: "Humidity", getting: self.tempHumi.humiValue))
+        tmp.append(SStatus(content: "OverFlag", getting: self.tempHumi.humiOverFlag))
+        self.sstatuses = tmp
+        
+        var cache: [SControl] = []
+        cache.append(SControl(content: "SleepPeriod", setting: TIDDATA(value: 0, min: 0, max: 1023), getting: self.tempHumi.sleepPeriod))
+        cache.append(SControl(content: "TempAlarmValue", setting: TIDDATA(value: 0, min: 0, max: 99), getting: self.tempHumi.tempAlarmValue))
+        cache.append(SControl(content: "HumiAlarmValue", setting: TIDDATA(value: 0, min: 0, max: 99), getting: self.tempHumi.humiAlarmValue))
+        self.scontrols = cache
+        self.tableView?.reloadData()
     }
     
     override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
