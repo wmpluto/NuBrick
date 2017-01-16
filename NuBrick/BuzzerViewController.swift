@@ -82,6 +82,7 @@ class BuzzerViewController: SensorViewController {
     }
     
     override func resendCMD() {
+        super.resendCMD()
         self.peripheral.writeValue(BUZZERCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     

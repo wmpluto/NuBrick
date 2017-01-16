@@ -50,38 +50,19 @@ struct Gas {
     }
 }
 
-class GasViewController: UIViewController {
+class GasViewController: SensorViewController {
     
     @IBOutlet weak var lineChartView: LineChartView!
-    
-    let progressHUD = JGProgressHUD(style: .dark)
-    
-    var peripheral: CBPeripheral!
-    var writeCharacteristic: CBCharacteristic!
-    var readCharacteristic: CBCharacteristic!
-    var tmpBuffer:[UInt8] = []
-    
-    var deviceDescriptor = DeviceDescriptor()
-    var deviceData = DeviceData()
+
     var gas = Gas()
     
     var dataEntries: [ChartDataEntry] = []
     var chartNum: Int = 0
     var set_a: LineChartDataSet = LineChartDataSet(values: [ChartDataEntry](), label: "gas")
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        progressHUD?.textLabel.text = "Getting Gas Data..."
-        progressHUD?.show(in: self.view, animated: true)
-        self.peripheral.delegate = self
-        
         self.peripheral.writeValue(GASCMD!, for: self.writeCharacteristic, type: .withResponse)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -89,20 +70,40 @@ class GasViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func resendCMD() {
-        self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
+    override func resendCMD() {
+        super.resendCMD()
         self.peripheral.writeValue(GASCMD!, for: self.writeCharacteristic, type: .withResponse)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
-        }
     }
     
-    func updateCounter() {
+    override func update() {
+        super.update()
         self.lineChartView.data?.addEntry(ChartDataEntry(x: Double(self.chartNum), y: Double(self.gas.gasValue)), dataSetIndex: 0)
         self.lineChartView.setVisibleXRange(minXRange: 1, maxXRange: 50)
         self.lineChartView.notifyDataSetChanged()
         self.lineChartView.moveViewToX(Double(self.chartNum))
         self.chartNum = self.chartNum + 1
+    }
+    
+    override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        super.peripheral(peripheral, didUpdateValueFor: characteristic, error: error)
+        //Skip 2nd Stage Try to Get 3rd Stage After 1st Stage
+        guard self.deviceDescriptor.rptDescLeng > 0 else { return }
+        let new = self.gas.setGas(array: Array(tmpBuffer))
+        if new > 0 {
+            //print("tmpBuffer before:\(tmpBuffer)")
+            tmpBuffer = Array(tmpBuffer[new..<tmpBuffer.count])
+            //print("tmpBuffer after:\(tmpBuffer)")
+            if self.lineChartView.data == nil {
+                self.set_a = LineChartDataSet(values: [ChartDataEntry(x: Double(0), y: Double(self.gas.gasValue))], label: "gas")
+                self.set_a.drawCirclesEnabled = false
+                self.set_a.setColor(UIColor.red)
+                
+                self.lineChartView.data = LineChartData(dataSets: [self.set_a])
+                Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(self.update), userInfo: nil, repeats: true)
+                self.progressHUD?.dismiss()
+            }
+        }
+        
     }
     /*
     // MARK: - Navigation
@@ -116,64 +117,6 @@ class GasViewController: UIViewController {
 
 }
 
+    
 
-extension GasViewController: CBPeripheralDelegate {
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        print("did discover services")
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        print("did discover characteristics for service")
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-        print("didWriteValueForCharacteristic")
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
-        print("did update notification state for characteristic")
-        if (error != nil) {
-            print("error")
-        }
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        print("did update value for characteristic")
-        guard characteristic.uuid == BTReadUUID else { return }
-        let bytesArray:[UInt8] = [UInt8](characteristic.value!)
-        
-        tmpBuffer += bytesArray
-        if tmpBuffer.count > 1024 {
-            //Something Wrong
-            self.resendCMD()
-        }
-        
-        var new = self.deviceDescriptor.setDeviceDescriptor(array: Array(tmpBuffer))
-        if new > 0 {
-            print(tmpBuffer)
-            tmpBuffer = Array(tmpBuffer[new..<tmpBuffer.count])
-            print(tmpBuffer)
-        }
-        
-        //Skip 2nd Stage Try to Get 3rd Stage After 1st Stage
-        guard self.deviceDescriptor.rptDescLeng > 0 else { return }
-        new = self.gas.setGas(array: Array(tmpBuffer))
-        if new > 0 {
-            //print("tmpBuffer before:\(tmpBuffer)")
-            tmpBuffer = Array(tmpBuffer[new..<tmpBuffer.count])
-            //print("tmpBuffer after:\(tmpBuffer)")
-            if self.lineChartView.data == nil {
-                self.set_a = LineChartDataSet(values: [ChartDataEntry(x: Double(0), y: Double(self.gas.gasValue))], label: "gas")
-                self.set_a.drawCirclesEnabled = false
-                self.set_a.setColor(UIColor.red)
-               
-                self.lineChartView.data = LineChartData(dataSets: [self.set_a])
-                Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(self.updateCounter), userInfo: nil, repeats: true)
-                self.progressHUD?.dismiss()
-                
-            }
-        }
-        
-    }
-}
 

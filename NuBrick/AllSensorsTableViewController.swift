@@ -229,6 +229,7 @@ class AllSensorsTableViewController: UITableViewController {
             vc.peripheral = self.peripheral
             vc.writeCharacteristic = self.writeCharacteristic
             vc.readCharacteristic = self.readCharacteristic
+            vc.sensor = "Gas"
         } else if let vc = segue.destination as? IRViewController {
             vc.peripheral  = self.peripheral
             vc.writeCharacteristic = self.writeCharacteristic
