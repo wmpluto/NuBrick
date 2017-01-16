@@ -61,35 +61,17 @@ struct Buzzer {
     }
 }
 
-class BuzzerViewController: UIViewController {
+class BuzzerViewController: SensorViewController {
 
-    let progressHUD = JGProgressHUD(style: .dark)
-    
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
-    var peripheral: CBPeripheral!
-    var writeCharacteristic: CBCharacteristic!
-    var readCharacteristic: CBCharacteristic!
-    
-    var deviceDescriptor = DeviceDescriptor()
-    var deviceData = DeviceData()
     var buzzer = Buzzer()
-    
-    var tmpBuffer:[UInt8] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        progressHUD?.textLabel.text = "Getting Buzzer Data..."
-        progressHUD?.show(in: self.view, animated: true)
-        self.peripheral.delegate = self
         
         self.peripheral.writeValue(BUZZERCMD!, for: self.writeCharacteristic, type: .withResponse)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -97,15 +79,12 @@ class BuzzerViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func resendCMD() {
-        self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
+    override func resendCMD() {
         self.peripheral.writeValue(BUZZERCMD!, for: self.writeCharacteristic, type: .withResponse)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
-        }
     }
     
-    func update() {
+    override func update() {
+        super.update()
         if self.buzzer.startFlag == 0 {
             self.imageView.image = UIImage(named: "mute")
             self.label.text = ""
@@ -115,60 +94,12 @@ class BuzzerViewController: UIViewController {
         }
     }
     
-    /*
-    // MARK: - Navigation
+    override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        super.peripheral(peripheral, didUpdateValueFor: characteristic, error: error)
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}
-
-
-extension BuzzerViewController: CBPeripheralDelegate {
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        print("did discover services")
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        print("did discover characteristics for service")
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-        print("didWriteValueForCharacteristic")
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
-        print("did update notification state for characteristic")
-        if (error != nil) {
-            print("error")
-        }
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        print("did update value for characteristic")
-        guard characteristic.uuid == BTReadUUID else { return }
-        let bytesArray:[UInt8] = [UInt8](characteristic.value!)
-        
-        tmpBuffer += bytesArray
-        if tmpBuffer.count > 1024 {
-            //Something Wrong
-            self.resendCMD()
-        }
-        
-        var new = self.deviceDescriptor.setDeviceDescriptor(array: Array(tmpBuffer))
-        if new > 0 {
-            //print(tmpBuffer)
-            tmpBuffer = Array(tmpBuffer[new..<tmpBuffer.count])
-            //print(tmpBuffer)
-        }
-        
         //Skip 2nd Stage Try to Get 3rd Stage After 1st Stage
         guard self.deviceDescriptor.rptDescLeng > 0 else { return }
-        new = self.buzzer.setBuzzer(array: Array(tmpBuffer))
+        let new = self.buzzer.setBuzzer(array: Array(tmpBuffer))
         if new > 0 {
             //print("tmpBuffer before:\(tmpBuffer)")
             tmpBuffer = Array(tmpBuffer[new..<tmpBuffer.count])
@@ -180,5 +111,14 @@ extension BuzzerViewController: CBPeripheralDelegate {
             self.update()
         }
     }
-}
+    /*
+    // MARK: - Navigation
 
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+}
