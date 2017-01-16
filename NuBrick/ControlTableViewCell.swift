@@ -42,6 +42,7 @@ class ControlTableViewCell: UITableViewCell {
     }
     
     @IBAction func valueChanged(_ sender: UISlider) {
+        self.valueLabel.text = String(Int(sender.value))
         delegate?.slideUpdate(value: Int(sender.value), slide: slideData)
     }
 }

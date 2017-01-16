@@ -320,7 +320,7 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
         self.outputs = tmp.filter({$0.connected})
         
         tmp = []
-        //tmp.append(Sensor(name: "ir", status: 0, alarm: 0, connected: self.indexReport.devConnected))
+        tmp.append(Sensor(name: "ir", status: 0, alarm: 0, connected: self.indexReport.devConnected))
         tmp.append(Sensor(name: "key", status: 0, alarm: 0, connected: self.indexReport.devConnected))
         self.inputs = tmp.filter({$0.connected})
         

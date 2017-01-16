@@ -98,14 +98,15 @@ let GASM           = [
 let KEYM           = [
     "SleepPeriod":    "@mk11%04d\r",
 ]
+
 let IRM            = [
-    "SleepPeriod":    "@ml10",
-    "LearnedData":    "@ml11",
-    "UsingDataType":  "@ml12",
-    "SendOriginalNumber":"@ml13",
-    "Period":         "@ml14",
-    "Duty":           "@ml15",
-    "Latency":        "@ml16"
+    "SleepPeriod":    "@ml11%04d\r",
+    "LearnedData":    "@ml12%02d\r",
+    "UsingDataType":  "@ml13%02d\r",
+    "SendOriginalNumber":"@ml14%02d\r",
+    "Period":         "@ml15%02d\r",
+    "Duty":           "@ml16%02d\r",
+    "Latency":        "@ml17%02d\r"
 ]
 
 // Communication Start Flag

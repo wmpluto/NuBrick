@@ -53,7 +53,7 @@ class KeyViewController: SensorViewController {
         super.viewDidLoad()
 
         M = KEYM
-        super.addTable(point: CGPoint(x: 0, y: 60))
+        super.addTable(point: CGPoint(x: 0, y: 65))
         self.peripheral.writeValue(KEYCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
 
