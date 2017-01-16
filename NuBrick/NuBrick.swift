@@ -45,8 +45,69 @@ let AHRSCMD        = "@ta".data(using: .ascii)
 let SONARCMD       = "@ts".data(using: .ascii)
 let TEMPHUMCMD     = "@tt".data(using: .ascii)
 let GASCMD         = "@tg".data(using: .ascii)
-let KEYCMD         = "@tg".data(using: .ascii)
+let KEYCMD         = "@tk".data(using: .ascii)
 let IRCMD          = "@ti".data(using: .ascii)
+
+// Device Modify Command
+let BATTERYM       = [
+    "SleepPeriod":    "@mb10",
+    "AlarmValue":     "@mb11"
+]
+
+let BUZZERM        = [
+    "SleepPeriod":    "@mz10",
+    "Volume":         "@mz11",
+    "Tone":           "@mz12",
+    "Song":           "@mz13",
+    "Period":         "@mz14",
+    "Duty":           "@mz15",
+    "Latency":        "@mz16"
+]
+
+let LEDM           = [
+    "SleepPeriod":    "@ml10",
+    "Bright":         "@ml11",
+    "Color":          "@ml12",
+    "Blink":          "@ml13",
+    "Period":         "@ml14",
+    "Duty":           "@ml15",
+    "Latency":        "@ml16"
+]
+
+let AHRSM          =  [
+    "SleepPeriod":    "@ma11%04d\r",
+    "VibrationLevel": "@ma12%02d\r"
+]
+
+let SONARM         = [
+    "SleepPeriod":    "@ms10",
+    "AlarmDistance":  "@ms11"
+]
+
+let TEMPHUMM       = [
+    "SleepPeriod":    "@mt10",
+    "TempAlarmValue": "@mt11",
+    "HumiAlarmValue": "@mt12",
+]
+
+let GASM           = [
+    "SleepPeriod":    "@mg10",
+    "GasLevel":       "@mg11"
+]
+
+let KEYM           = [
+    "SleepPeriod":    "@mk11%04d\r",
+]
+let IRM            = [
+    "SleepPeriod":    "@ml10",
+    "LearnedData":    "@ml11",
+    "UsingDataType":  "@ml12",
+    "SendOriginalNumber":"@ml13",
+    "Period":         "@ml14",
+    "Duty":           "@ml15",
+    "Latency":        "@ml16"
+]
+
 // Communication Start Flag
 let StartFlag:UInt8    = 0x55
 
@@ -445,34 +506,25 @@ struct  DeviceParameter {
 }
 
 struct TIDDATA {
-    var address:        UInt8  = 0
-    var length:         UInt8  = 0
-    var minFlag:        UInt8  = 0
-    var min:            UInt16 = 0
-    var maxFlag:        UInt8  = 0
-    var max:            UInt16 = 0
-    
-    mutating func setTIDDATA(array: [UInt8]) {
-        var i = -1
-        while i < array.count && !types.contains(bytesToWord(head: array[i], tail: array[i+1])) {
-            i+=1
-            
-        }
-    }
+    var value:          Int = 0
+    var min:            Int = 0
+    var max:            Int = 0
 }
 
 struct SControl {
     var content: String = ""
-    var setting: Int = 0
+    var setting = TIDDATA()
     var getting: Int = 0
     
-    init(content: String, getting: UInt16) {
+    init(content: String, setting: TIDDATA, getting: UInt16) {
         self.content = content
+        self.setting = setting
         self.getting = Int(getting)
     }
     
-    init(content: String, getting: UInt8) {
+    init(content: String, setting: TIDDATA, getting: UInt8) {
         self.content = content
+        self.setting = setting
         self.getting = Int(getting)
     }
 }
@@ -501,6 +553,12 @@ func uintToBool(origin: UInt16, i: Int) -> Bool {
         return true
     }
     return false
+}
+
+func invertInt(origin: Int) -> Int {
+    let head = origin & 0x00ff
+    let tail = origin >> 8
+    return Int(head | tail)
 }
 
 prefix operator ++

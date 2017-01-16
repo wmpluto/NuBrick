@@ -10,11 +10,9 @@ import UIKit
 import CoreBluetooth
 
 struct Key {
-    var length:          UInt16 = 11
+    var length:          UInt16 = 7
     var sleepPeriod:     UInt16 = 0
-    var keyAlarmValue:   UInt16 = 0
-    var keyValue:        UInt16 = 0
-    var flag:            UInt8  = 0
+    var keyState:        UInt16 = 0
     
     mutating func setKey(array:[UInt8]) -> Int{
         var i = 0
@@ -26,9 +24,7 @@ struct Key {
                 //Get 1st Stage
                 self.length = bytesToWord(head: array[i++], tail: array[i++])
                 self.sleepPeriod = bytesToWord(head: array[i++], tail: array[i++])
-                self.keyAlarmValue = bytesToWord(head: array[i++], tail: array[i++])
-                self.keyValue = bytesToWord(head: array[i++], tail: array[i++])
-                self.flag = array[i++]
+                self.keyState = bytesToWord(head: array[i++], tail: array[i++])
                 
                 if(bytesToWord(head: array[i], tail: array[i+1]) != self.length) {
                     continue
@@ -56,7 +52,7 @@ class KeyViewController: SensorViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        M = KEYM
         super.addTable(point: CGPoint(x: 0, y: 60))
         self.peripheral.writeValue(KEYCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
@@ -66,7 +62,6 @@ class KeyViewController: SensorViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
     override func resendCMD() {
         super.resendCMD()
         self.peripheral.writeValue(KEYCMD!, for: self.writeCharacteristic, type: .withResponse)
@@ -75,9 +70,12 @@ class KeyViewController: SensorViewController {
     override func update() {
         super.update()
         var tmp:[SStatus] = []
-        tmp.append(SStatus(content: "KeyStatus", getting: self.key.keyValue))
-        tmp.append(SStatus(content: "KeyPress", getting: self.key.flag))
+        tmp.append(SStatus(content: "KeyState", getting: self.key.keyState))
         self.sstatuses = tmp
+        
+        var cache: [SControl] = []
+        cache.append(SControl(content: "SleepPeriod", setting: TIDDATA(value: 0, min: 0, max: 2048), getting: self.key.sleepPeriod))
+        self.scontrols = cache
         self.tableView?.reloadData()
     }
     /*
@@ -101,9 +99,8 @@ class KeyViewController: SensorViewController {
             //print("tmpBuffer after:\(tmpBuffer)")
             if sstatuses.count == 0 {
                 self.progressHUD?.dismiss()
-                self.update()
-                Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(self.update), userInfo: nil, repeats: true)
             }
+            self.update()
         }
     }
     

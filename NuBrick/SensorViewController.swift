@@ -28,6 +28,9 @@ class SensorViewController: UIViewController, ControlCellDelegate {
     var sstatuses: [SStatus] = []
     var scontrols: [SControl] = []
     
+    var modifyCmds: [String: Int] = [:]
+    var M : [String: String] = [:]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -54,7 +57,7 @@ class SensorViewController: UIViewController, ControlCellDelegate {
     }
     
     func addTable(point: CGPoint) {
-        self.tableView = UITableView(frame: CGRect(x: 10, y: point.y + 5, width: self.view.frame.width - 20, height: self.view.frame.height - 20))
+        self.tableView = UITableView(frame: CGRect(x: 10, y: point.y + 5, width: self.view.frame.width - 20, height: self.view.frame.height - 15 - point.y))
         self.tableView?.delegate = self
         self.tableView?.dataSource = self
         self.tableView?.backgroundColor = UIColor.clear
@@ -72,15 +75,26 @@ class SensorViewController: UIViewController, ControlCellDelegate {
         }
     }
     
-    func slideUpdate(sender: UISlider) {
-        if let c = sender.superview as? ControlTableViewCell {
-            let index = self.tableView?.indexPath(for: c)
-            self.afterSlide(row: (index?.row)!)
+    func slideUpdate(value: Int, slide: String) {
+        if modifyCmds.count == 0 {
+            Timer.scheduledTimer(timeInterval: 5, target:self, selector: #selector(self.sendModifyCMD), userInfo: nil, repeats: false)
         }
+        modifyCmds[slide] = value
     }
     
-    func afterSlide(row: Int) {
-        print("After Slide")
+    func sendModifyCMD() {
+        var tmp: String = ""
+        let keys = Array(modifyCmds.keys)
+        for i in 0..<scontrols.count {
+            if keys.contains(scontrols[i].content) {
+                tmp.append(String(format: M[scontrols[i].content]!, modifyCmds[scontrols[i].content]!))
+            } else {
+                tmp.append(String(format: M[scontrols[i].content]!, scontrols[i].getting))
+            }
+        }
+        
+        self.peripheral.writeValue(tmp.data(using: .ascii)!, for: self.writeCharacteristic, type: .withResponse)
+        modifyCmds = [:]
     }
     
     func update() {

@@ -60,6 +60,7 @@ class AHRSViewController: SensorViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        M = AHRSM
         super.addTable(point: CGPoint(x: 0, y: rotationIMG.frame.maxY))
         self.peripheral.writeValue(AHRSCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
@@ -98,11 +99,12 @@ class AHRSViewController: SensorViewController {
         self.sstatuses = tmp
         
         var cache: [SControl] = []
-        cache.append(SControl(content: "SleepPeriod", getting: self.ahrs.sleepPeriod))
-        cache.append(SControl(content: "VibrationLevel", getting: self.ahrs.vibrationLevel))
+        cache.append(SControl(content: "SleepPeriod", setting: TIDDATA(value: 0, min: 0, max: 1024), getting: self.ahrs.sleepPeriod))
+        cache.append(SControl(content: "VibrationLevel", setting: TIDDATA(value: 0, min: 1, max: 10), getting: self.ahrs.vibrationLevel))
         self.scontrols = cache
         self.tableView?.reloadData()
     }
+    
     /*
     // MARK: - Navigation
 

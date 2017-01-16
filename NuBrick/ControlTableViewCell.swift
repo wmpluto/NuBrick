@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ControlCellDelegate {
-    func slideUpdate(sender: UISlider)
+    func slideUpdate(value: Int, slide: String)
 }
 
 class ControlTableViewCell: UITableViewCell {
@@ -18,6 +18,8 @@ class ControlTableViewCell: UITableViewCell {
     @IBOutlet weak var slide: UISlider!
     @IBOutlet weak var valueLabel: UILabel!
     var delegate: ControlCellDelegate?
+    
+    var slideData: String = ""
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,11 +33,15 @@ class ControlTableViewCell: UITableViewCell {
     }
     
     func cellData(data: SControl) {
+        slideData = data.content
+        
         self.contentLabel.text = data.content
         self.valueLabel.text = String(data.getting)
+        self.slide.maximumValue = Float(data.setting.max)
+        self.slide.minimumValue = Float(data.setting.min)
     }
     
     @IBAction func valueChanged(_ sender: UISlider) {
-        delegate?.slideUpdate(sender: sender)
+        delegate?.slideUpdate(value: Int(sender.value), slide: slideData)
     }
 }
