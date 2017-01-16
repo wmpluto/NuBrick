@@ -50,8 +50,8 @@ let IRCMD          = "@ti".data(using: .ascii)
 
 // Device Modify Command
 let BATTERYM       = [
-    "SleepPeriod":    "@mb10",
-    "AlarmValue":     "@mb11"
+    "SleepPeriod":    "@mb11%04d\r",
+    "AlarmValue":     "@mb12%04d\r"
 ]
 
 let BUZZERM        = [

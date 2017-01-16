@@ -61,7 +61,8 @@ class BatteryViewController: SensorViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        M = BATTERYM
+        super.addTable(point: CGPoint(x: 0, y: bgView.frame.maxY))
         self.peripheral.writeValue(BATTERYCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
 
@@ -88,6 +89,17 @@ class BatteryViewController: SensorViewController {
             }
             self.waveImageView.frame.origin.x = 0;
         })
+        
+        var tmp:[SStatus] = []
+        tmp.append(SStatus(content: "Battery", getting: self.battery.batteryValue))
+        tmp.append(SStatus(content: "OverFlag", getting: self.battery.flag))
+        self.sstatuses = tmp
+        
+        var cache: [SControl] = []
+        cache.append(SControl(content: "SleepPeriod", setting: TIDDATA(value: 0, min: 0, max: 1024), getting: self.battery.sleepPeriod))
+        cache.append(SControl(content: "AlarmValue", setting: TIDDATA(value: 0, min: 0, max: 100), getting: self.battery.batteryAlarmValue))
+        self.scontrols = cache
+        self.tableView?.reloadData()
     }
     
     func waveEffect(value: Int) {
