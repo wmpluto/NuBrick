@@ -65,13 +65,13 @@ let BUZZERM        = [
 ]
 
 let LEDM           = [
-    "SleepPeriod":    "@ml10",
-    "Bright":         "@ml11",
-    "Color":          "@ml12",
-    "Blink":          "@ml13",
-    "Period":         "@ml14",
-    "Duty":           "@ml15",
-    "Latency":        "@ml16"
+    "SleepPeriod":    "@ml11%04d\r",
+    "Bright":         "@ml12%02d\r",
+    "Color":          "@ml13%04d\r",
+    "Blink":          "@ml14%02d\r",
+    "Period":         "@ml15%04d\r",
+    "Duty":           "@ml16%02d\r",
+    "Latency":        "@ml17%02d\r"
 ]
 
 let AHRSM          =  [

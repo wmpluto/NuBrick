@@ -71,7 +71,8 @@ class LedViewController: SensorViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        M = LEDM
+        super.addTable(point: CGPoint(x: 0, y: imageView.frame.maxY))
         self.peripheral.writeValue(LEDCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
 
@@ -93,6 +94,21 @@ class LedViewController: SensorViewController {
             let cb = CGFloat(Float(self.led.brightness) / 100)
             self.imageView.backgroundColor = UIColor(red: cv, green: cv, blue: cv, alpha: cb)
         }
+        
+        var tmp:[SStatus] = []
+        tmp.append(SStatus(content: "ExecuteFlag", getting: self.led.executeFlag))
+        self.sstatuses = tmp
+        
+        var cache: [SControl] = []
+        cache.append(SControl(content: "SleepPeriod", setting: TIDDATA(value: 0, min: 0, max: 1024), getting: self.led.sleepPeriod))
+        cache.append(SControl(content: "Bright", setting: TIDDATA(value: 0, min: 0, max: 100), getting: self.led.brightness))
+        cache.append(SControl(content: "Color", setting: TIDDATA(value: 0, min: 0, max: 2045), getting: self.led.color))
+        cache.append(SControl(content: "Blink", setting: TIDDATA(value: 0, min: 0, max: 2), getting: self.led.blink))
+        cache.append(SControl(content: "Period", setting: TIDDATA(value: 0, min: 0, max: 2048), getting: self.led.period))
+        cache.append(SControl(content: "Duty", setting: TIDDATA(value: 0, min: 0, max: 100), getting: self.led.duty))
+        cache.append(SControl(content: "Latency", setting: TIDDATA(value: 0, min: 0, max: 60), getting: self.led.latency))
+        self.scontrols = cache
+        self.tableView?.reloadData()
     }
     
     override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
