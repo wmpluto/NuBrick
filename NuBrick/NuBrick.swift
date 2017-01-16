@@ -80,8 +80,8 @@ let AHRSM          =  [
 ]
 
 let SONARM         = [
-    "SleepPeriod":    "@ms10",
-    "AlarmDistance":  "@ms11"
+    "SleepPeriod":    "@ms11%04d\r",
+    "AlarmDistance":  "@ms12%04d\r"
 ]
 
 let TEMPHUMM       = [

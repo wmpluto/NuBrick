@@ -106,8 +106,8 @@ class TemperatureViewController: SensorViewController {
         
         var cache: [SControl] = []
         cache.append(SControl(content: "SleepPeriod", setting: TIDDATA(value: 0, min: 0, max: 1023), getting: self.tempHumi.sleepPeriod))
-        cache.append(SControl(content: "TempAlarmValue", setting: TIDDATA(value: 0, min: 0, max: 99), getting: self.tempHumi.tempAlarmValue))
-        cache.append(SControl(content: "HumiAlarmValue", setting: TIDDATA(value: 0, min: 0, max: 99), getting: self.tempHumi.humiAlarmValue))
+        cache.append(SControl(content: "TempAlarmValue", setting: TIDDATA(value: 0, min: 0, max: 100), getting: self.tempHumi.tempAlarmValue))
+        cache.append(SControl(content: "HumiAlarmValue", setting: TIDDATA(value: 0, min: 0, max: 100), getting: self.tempHumi.humiAlarmValue))
         self.scontrols = cache
         self.tableView?.reloadData()
     }

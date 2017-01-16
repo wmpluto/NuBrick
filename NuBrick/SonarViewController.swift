@@ -50,11 +50,14 @@ struct Sonar {
 
 class SonarViewController: SensorViewController {
    
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var valueLabel: UILabel!
     var sonar = Sonar()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        M = SONARM
+        super.addTable(point: CGPoint(x: 0, y: imageView.frame.maxY))
         self.peripheral.writeValue(SONARCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     
@@ -75,6 +78,17 @@ class SonarViewController: SensorViewController {
         } else {
             self.valueLabel.textColor = UIColor.green
         }
+        
+        var tmp:[SStatus] = []
+        tmp.append(SStatus(content: "Sonar", getting: self.sonar.sonarValue))
+        tmp.append(SStatus(content: "OverFlag", getting: self.sonar.flag))
+        self.sstatuses = tmp
+        
+        var cache: [SControl] = []
+        cache.append(SControl(content: "SleepPeriod", setting: TIDDATA(value: 0, min: 0, max: 1023), getting: self.sonar.sleepPeriod))
+        cache.append(SControl(content: "AlarmDistance", setting: TIDDATA(value: 0, min: 0, max: 200), getting: self.sonar.sonarAlarmValue))
+        self.scontrols = cache
+        self.tableView?.reloadData()
     }
     /*
      // MARK: - Navigation
