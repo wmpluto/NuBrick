@@ -49,38 +49,20 @@ struct Battery {
     }
 }
 
-class BatteryViewController: UIViewController {
+class BatteryViewController: SensorViewController {
     
-    let progressHUD = JGProgressHUD(style: .dark)
     
     @IBOutlet weak var rotationIMG: UIImageView!
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var electricLabel: UILabel!
     let waveImageView = UIImageView(image: UIImage(named: "wave"))
     
-    var peripheral: CBPeripheral!
-    var writeCharacteristic: CBCharacteristic!
-    var readCharacteristic: CBCharacteristic!
-    
-    var deviceDescriptor = DeviceDescriptor()
-    var deviceData = DeviceData()
     var battery = Battery()
-    
-    var tmpBuffer:[UInt8] = []
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        progressHUD?.textLabel.text = "Getting Battery Data..."
-        progressHUD?.show(in: self.view, animated: true)
-        self.peripheral.delegate = self
         
         self.peripheral.writeValue(BATTERYCMD!, for: self.writeCharacteristic, type: .withResponse)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
-        }
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -88,15 +70,13 @@ class BatteryViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func resendCMD() {
-        self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
+    override func resendCMD() {
+        super.resendCMD()
         self.peripheral.writeValue(BATTERYCMD!, for: self.writeCharacteristic, type: .withResponse)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
-        }
     }
     
-    func update() {
+    override func update() {
+        super.update()
         let value = Int(self.battery.batteryValue)
         self.electricLabel.text = String(Int(value)) + "%"
         let h = self.bgView.frame.height
@@ -161,60 +141,12 @@ class BatteryViewController: UIViewController {
         })
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}
-
-
-extension BatteryViewController: CBPeripheralDelegate {
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        print("did discover services")
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        print("did discover characteristics for service")
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-        print("didWriteValueForCharacteristic")
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
-        print("did update notification state for characteristic")
-        if (error != nil) {
-            print("error")
-        }
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        print("did update value for characteristic")
-        guard characteristic.uuid == BTReadUUID else { return }
-        let bytesArray:[UInt8] = [UInt8](characteristic.value!)
-        
-        tmpBuffer += bytesArray
-        if tmpBuffer.count > 1024 {
-            //Something Wrong
-            self.resendCMD()
-        }
-        
-        var new = self.deviceDescriptor.setDeviceDescriptor(array: Array(tmpBuffer))
-        if new > 0 {
-            //print(tmpBuffer)
-            tmpBuffer = Array(tmpBuffer[new..<tmpBuffer.count])
-            //print(tmpBuffer)
-        }
+    override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        super.peripheral(peripheral, didUpdateValueFor: characteristic, error: error)
         
         //Skip 2nd Stage Try to Get 3rd Stage After 1st Stage
         guard self.deviceDescriptor.rptDescLeng > 0 else { return }
-        new = self.battery.setBattery(array: Array(tmpBuffer))
+        let new = self.battery.setBattery(array: Array(tmpBuffer))
         if new > 0 {
             //print("tmpBuffer before:\(tmpBuffer)")
             tmpBuffer = Array(tmpBuffer[new..<tmpBuffer.count])
@@ -225,9 +157,17 @@ extension BatteryViewController: CBPeripheralDelegate {
                 Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(self.update), userInfo: nil, repeats: true)
                 self.progressHUD?.dismiss()
             }
-            
         }
-        
     }
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
 }
 
