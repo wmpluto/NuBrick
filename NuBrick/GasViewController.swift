@@ -62,6 +62,8 @@ class GasViewController: SensorViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        M = GASM
+        super.addTable(point: CGPoint(x: 0, y: lineChartView.frame.maxY))
         self.peripheral.writeValue(GASCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
 
@@ -82,6 +84,17 @@ class GasViewController: SensorViewController {
         self.lineChartView.notifyDataSetChanged()
         self.lineChartView.moveViewToX(Double(self.chartNum))
         self.chartNum = self.chartNum + 1
+        
+        var tmp:[SStatus] = []
+        tmp.append(SStatus(content: "GasSensor", getting: self.gas.gasValue))
+        tmp.append(SStatus(content: "OverFlag", getting: self.gas.flag))
+        self.sstatuses = tmp
+        
+        var cache: [SControl] = []
+        cache.append(SControl(content: "SleepPeriod", setting: TIDDATA(value: 0, min: 0, max: 1024), getting: self.gas.sleepPeriod))
+        cache.append(SControl(content: "GasLevel", setting: TIDDATA(value: 0, min: 0, max: 100), getting: self.gas.gasAlarmValue))
+        self.scontrols = cache
+        self.tableView?.reloadData()
     }
     
     override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {

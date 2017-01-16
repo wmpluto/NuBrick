@@ -91,8 +91,8 @@ let TEMPHUMM       = [
 ]
 
 let GASM           = [
-    "SleepPeriod":    "@mg10",
-    "GasLevel":       "@mg11"
+    "SleepPeriod":    "@mg11%04d\r",
+    "GasLevel":       "@mg12%04d\r"
 ]
 
 let KEYM           = [
