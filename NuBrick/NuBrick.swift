@@ -55,13 +55,13 @@ let BATTERYM       = [
 ]
 
 let BUZZERM        = [
-    "SleepPeriod":    "@mz10",
-    "Volume":         "@mz11",
-    "Tone":           "@mz12",
-    "Song":           "@mz13",
-    "Period":         "@mz14",
-    "Duty":           "@mz15",
-    "Latency":        "@mz16"
+    "SleepPeriod":    "@mz11%04d\r",
+    "Volume":         "@mz12%02d\r",
+    "Tone":           "@mz13%04d\r",
+    "Song":           "@mz14%02d\r",
+    "Period":         "@mz15%04d\r",
+    "Duty":           "@mz16%02d\r",
+    "Latency":        "@mz17%02d\r"
 ]
 
 let LEDM           = [

@@ -71,6 +71,8 @@ class BuzzerViewController: SensorViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        M = BUZZERM
+        super.addTable(point: CGPoint(x: 0, y: imageView.frame.maxY))
         self.peripheral.writeValue(BUZZERCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
 
@@ -92,6 +94,21 @@ class BuzzerViewController: SensorViewController {
             self.imageView.image = UIImage(named: "speak")
             self.label.text = String(self.buzzer.volume) + "%"
         }
+        
+        var tmp:[SStatus] = []
+        tmp.append(SStatus(content: "ExecuteFlag", getting: self.buzzer.startFlag))
+        self.sstatuses = tmp
+        
+        var cache: [SControl] = []
+        cache.append(SControl(content: "SleepPeriod", setting: TIDDATA(value: 0, min: 0, max: 2048), getting: self.buzzer.sleepPeriod))
+        cache.append(SControl(content: "Volume", setting: TIDDATA(value: 0, min: 0, max: 100), getting: self.buzzer.sleepPeriod))
+        cache.append(SControl(content: "Tone", setting: TIDDATA(value: 0, min: 0, max: 5000), getting: self.buzzer.sleepPeriod))
+        cache.append(SControl(content: "Song", setting: TIDDATA(value: 0, min: 0, max: 2), getting: self.buzzer.sleepPeriod))
+        cache.append(SControl(content: "Period", setting: TIDDATA(value: 0, min: 0, max: 2048), getting: self.buzzer.sleepPeriod))
+        cache.append(SControl(content: "Duty", setting: TIDDATA(value: 0, min: 0, max: 100), getting: self.buzzer.sleepPeriod))
+        cache.append(SControl(content: "Latency", setting: TIDDATA(value: 0, min: 0, max: 60), getting: self.buzzer.sleepPeriod))
+        self.scontrols = cache
+        self.tableView?.reloadData()
     }
     
     override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
