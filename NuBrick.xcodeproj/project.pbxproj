@@ -24,6 +24,7 @@
 		287918221E02678D0091C740 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287918211E02678D0091C740 /* Util.swift */; };
 		287918241E027F710091C740 /* DetectBluetoothTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287918231E027F710091C740 /* DetectBluetoothTableViewController.swift */; };
 		2892DF181E03943900D76231 /* AllSensorsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2892DF171E03943900D76231 /* AllSensorsTableViewController.swift */; };
+		28ABBEBE1E2DC3B00048F0B0 /* BaiduMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28ABBEBD1E2DC3B00048F0B0 /* BaiduMapViewController.swift */; };
 		28BA2C1B1DFFDEB7007C8ADA /* NuBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BA2C1A1DFFDEB7007C8ADA /* NuBrick.swift */; };
 		3330BFB665C85FAA15CBB422 /* Pods_NuBrick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA07D273A2AAD25E01BFC59 /* Pods_NuBrick.framework */; };
 		B6042A131E2BB03E00FA1C26 /* ControlTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6042A111E2BB03E00FA1C26 /* ControlTableViewCell.swift */; };
@@ -72,6 +73,7 @@
 		287918211E02678D0091C740 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		287918231E027F710091C740 /* DetectBluetoothTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectBluetoothTableViewController.swift; sourceTree = "<group>"; };
 		2892DF171E03943900D76231 /* AllSensorsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllSensorsTableViewController.swift; sourceTree = "<group>"; };
+		28ABBEBD1E2DC3B00048F0B0 /* BaiduMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaiduMapViewController.swift; sourceTree = "<group>"; };
 		28BA2C1A1DFFDEB7007C8ADA /* NuBrick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NuBrick.swift; path = NuBrick/NuBrick.swift; sourceTree = "<group>"; };
 		304F5E8CB4781BD0790000E7 /* Pods-NuBrick.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NuBrick.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NuBrick/Pods-NuBrick.debug.xcconfig"; sourceTree = "<group>"; };
 		3EA07D273A2AAD25E01BFC59 /* Pods_NuBrick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NuBrick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -163,6 +165,7 @@
 				2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */,
 				2821BF311E2332080077861A /* BatteryViewController.swift */,
 				2821BF3F1E2335E80077861A /* BuzzerViewController.swift */,
+				28ABBEBD1E2DC3B00048F0B0 /* BaiduMapViewController.swift */,
 				287918231E027F710091C740 /* DetectBluetoothTableViewController.swift */,
 				2821BF351E23327A0077861A /* GasViewController.swift */,
 				2821BF371E2332950077861A /* IRViewController.swift */,
@@ -331,6 +334,7 @@
 				B6EE2E601E2B19540090F260 /* ConnectedSensorCell.swift in Sources */,
 				2879181E1E0264EA0091C740 /* BaseNavigationControllerViewController.swift in Sources */,
 				287918221E02678D0091C740 /* Util.swift in Sources */,
+				28ABBEBE1E2DC3B00048F0B0 /* BaiduMapViewController.swift in Sources */,
 				280092601DFF90F100EC0C7E /* AppDelegate.swift in Sources */,
 				2892DF181E03943900D76231 /* AllSensorsTableViewController.swift in Sources */,
 				28BA2C1B1DFFDEB7007C8ADA /* NuBrick.swift in Sources */,

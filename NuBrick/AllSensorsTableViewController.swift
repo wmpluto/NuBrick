@@ -32,6 +32,7 @@ class AllSensorsTableViewController: UITableViewController {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         //self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.navigationItem.title = "NuBrick"
+        addSettingButton()
         self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     
@@ -57,6 +58,21 @@ class AllSensorsTableViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func addSettingButton() {
+        let btn1 = UIButton(type: .custom)
+        btn1.setImage(UIImage(named: "rssi_yellow"), for: .normal)
+        //btn1.titleLabel?.text = "Setting"
+        btn1.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        btn1.addTarget(self, action: #selector(self.jumpSetting), for: .touchUpInside)
+        let item1 = UIBarButtonItem(customView: btn1)
+        
+        self.navigationItem.setRightBarButtonItems([item1], animated: true)
+    }
+    
+    func jumpSetting() {
+        self.performSegue(withIdentifier: "toSettingView", sender: self)
     }
     
     func resendCMD() {
