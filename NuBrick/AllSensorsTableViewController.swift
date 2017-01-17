@@ -220,6 +220,7 @@ class AllSensorsTableViewController: UITableViewController {
             vc.peripheral  = self.peripheral
             vc.writeCharacteristic = self.writeCharacteristic
             vc.readCharacteristic = self.readCharacteristic
+            vc.sensor = "Battery"
         } else if let vc = segue.destination as? BuzzerViewController {
             vc.peripheral  = self.peripheral
             vc.writeCharacteristic = self.writeCharacteristic
