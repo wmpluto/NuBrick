@@ -98,14 +98,19 @@ class DetectBluetoothTableViewController: UITableViewController {
     }
     
     private func getRSSILevel(rssi: NSNumber) -> String {
-        if rssi.doubleValue > -50.0 {
-            return "rssi_green"
-        }
-        else if rssi.doubleValue > -70.0 {
-            return "rssi_yellow"
-        }
-        else {
-            return "rssi_red"
+        let movingAverage = rssi.doubleValue
+        if movingAverage < -80.0 {
+            return "ble-0"
+        } else if movingAverage < -70.0 {
+            return "ble-1"
+        } else if movingAverage < -60.0 {
+            return "ble-2"
+        } else if movingAverage < -50.0 {
+            return "ble-3"
+        } else if movingAverage < -40.0 {
+            return "ble-4"
+        } else {
+            return "ble-5"
         }
     }
     
@@ -133,10 +138,13 @@ class DetectBluetoothTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BLEPeripheral", for: indexPath)
         let blePeripheral:BLEPeripheral = peripherals[indexPath.row]
 
-        cell.textLabel?.text = blePeripheral.name
-        cell.detailTextLabel?.text = blePeripheral.uuid
-        cell.imageView?.image = UIImage(named: getRSSILevel(rssi: blePeripheral.rssi!))
-
+        let rssi = cell.viewWithTag(1) as! UIImageView
+        rssi.image = UIImage(named: getRSSILevel(rssi: blePeripheral.rssi!))
+        let name = cell.viewWithTag(2) as! UILabel
+        name.text = blePeripheral.name
+        let uuid = cell.viewWithTag(3) as! UILabel
+        uuid.text = blePeripheral.uuid
+        
         return cell
     }
     
