@@ -52,6 +52,7 @@ class AllSensorsTableViewController: UITableViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //self.peripheral.delegate = nil
+        self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
         progressHUD?.dismiss()
     }
 
@@ -272,10 +273,12 @@ class AllSensorsTableViewController: UITableViewController {
             vc.writeCharacteristic = self.writeCharacteristic
             vc.readCharacteristic = self.readCharacteristic
             vc.sensor = "Temp&Humi"
+        } else if let vc = segue.destination as? SettingTableViewController {
+            vc.peripheral  = self.peripheral
+            vc.writeCharacteristic = self.writeCharacteristic
+            vc.readCharacteristic = self.readCharacteristic
         }
     }
-    
-
 }
 
 extension AllSensorsTableViewController: CBPeripheralDelegate {
