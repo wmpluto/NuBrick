@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "portsettingf1.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Buzzer-512x512.png",
       "scale" : "2x"
     },
     {

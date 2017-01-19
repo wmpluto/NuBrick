@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "temperaturef1.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "Temperature-512x512.png",
       "scale" : "2x"
     },
     {
