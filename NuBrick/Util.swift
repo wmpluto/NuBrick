@@ -14,6 +14,16 @@ let nuvotonRedColor = UIColor(red: 218.0/255.0, green: 0, blue: 36.0/255.0, alph
 
 // NOTIFICATIONS
 let HexiwearDidSignOut = "HexiwearDidSignOut"
+let applicationTitle = "NuBrick"
+
+func showSimpleAlertWithTitle(title: String!, message: String, viewController: UIViewController, OKhandler: ((UIAlertAction?) -> Void)? = nil) {
+    DispatchQueue.main.async() {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .cancel, handler: OKhandler)
+        alert.addAction(action)
+        viewController.present(alert, animated: true, completion: nil)
+    }
+}
 
 // TopMostViewController extensions
 extension UIViewController {
