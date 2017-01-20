@@ -32,6 +32,9 @@
 		B60FADA41E29E58400EC2986 /* SensorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60FADA31E29E58400EC2986 /* SensorViewController.swift */; };
 		B638C6A31E2BCE8700ECF583 /* StatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B638C6A11E2BCE8700ECF583 /* StatusTableViewCell.swift */; };
 		B638C6A41E2BCE8700ECF583 /* StatusTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B638C6A21E2BCE8700ECF583 /* StatusTableViewCell.xib */; };
+		B665E5C91E324F6600E3097E /* DeviceLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B665E5C71E324F6600E3097E /* DeviceLinkCell.swift */; };
+		B665E5CA1E324F6600E3097E /* DeviceLinkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B665E5C81E324F6600E3097E /* DeviceLinkCell.xib */; };
+		B665E5CC1E32584400E3097E /* DeviceLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B665E5CB1E32584400E3097E /* DeviceLinkViewController.swift */; };
 		B6EE2E601E2B19540090F260 /* ConnectedSensorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EE2E5F1E2B19540090F260 /* ConnectedSensorCell.swift */; };
 		B6EE2E621E2B1FEF0090F260 /* ConnectedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EE2E611E2B1FEF0090F260 /* ConnectedInputCell.swift */; };
 		B6EE2E641E2B200A0090F260 /* ConnectedOutputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EE2E631E2B200A0090F260 /* ConnectedOutputCell.swift */; };
@@ -68,6 +71,9 @@
 		B60FADA31E29E58400EC2986 /* SensorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorViewController.swift; sourceTree = "<group>"; };
 		B638C6A11E2BCE8700ECF583 /* StatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusTableViewCell.swift; sourceTree = "<group>"; };
 		B638C6A21E2BCE8700ECF583 /* StatusTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusTableViewCell.xib; sourceTree = "<group>"; };
+		B665E5C71E324F6600E3097E /* DeviceLinkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceLinkCell.swift; sourceTree = "<group>"; };
+		B665E5C81E324F6600E3097E /* DeviceLinkCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeviceLinkCell.xib; sourceTree = "<group>"; };
+		B665E5CB1E32584400E3097E /* DeviceLinkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceLinkViewController.swift; sourceTree = "<group>"; };
 		B6EE2E5F1E2B19540090F260 /* ConnectedSensorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectedSensorCell.swift; sourceTree = "<group>"; };
 		B6EE2E611E2B1FEF0090F260 /* ConnectedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectedInputCell.swift; sourceTree = "<group>"; };
 		B6EE2E631E2B200A0090F260 /* ConnectedOutputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectedOutputCell.swift; sourceTree = "<group>"; };
@@ -137,6 +143,8 @@
 				B6EE2E5F1E2B19540090F260 /* ConnectedSensorCell.swift */,
 				B6042A111E2BB03E00FA1C26 /* ControlTableViewCell.swift */,
 				B6042A121E2BB03E00FA1C26 /* ControlTableViewCell.xib */,
+				B665E5C71E324F6600E3097E /* DeviceLinkCell.swift */,
+				B665E5C81E324F6600E3097E /* DeviceLinkCell.xib */,
 				B638C6A11E2BCE8700ECF583 /* StatusTableViewCell.swift */,
 				B638C6A21E2BCE8700ECF583 /* StatusTableViewCell.xib */,
 			);
@@ -148,16 +156,17 @@
 			children = (
 				2821BF331E23325D0077861A /* AHRSViewController.swift */,
 				2892DF171E03943900D76231 /* AllSensorsTableViewController.swift */,
-				28C5A4DC1E30AD0200D87C0B /* SettingTableViewController.swift */,
 				2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */,
 				2821BF311E2332080077861A /* BatteryViewController.swift */,
 				2821BF3F1E2335E80077861A /* BuzzerViewController.swift */,
 				287918231E027F710091C740 /* DetectBluetoothTableViewController.swift */,
+				B665E5CB1E32584400E3097E /* DeviceLinkViewController.swift */,
 				2821BF351E23327A0077861A /* GasViewController.swift */,
 				2821BF371E2332950077861A /* IRViewController.swift */,
 				2821BF391E2332D30077861A /* KeyViewController.swift */,
 				2821BF3B1E2332EA0077861A /* LedViewController.swift */,
 				B60FADA31E29E58400EC2986 /* SensorViewController.swift */,
+				28C5A4DC1E30AD0200D87C0B /* SettingTableViewController.swift */,
 				2821BF3D1E2332FC0077861A /* SonarViewController.swift */,
 				2851F7831E1503CB00CEAA06 /* TemperatureViewController.swift */,
 				287918211E02678D0091C740 /* Util.swift */,
@@ -249,6 +258,7 @@
 				2800926A1DFF90F100EC0C7E /* LaunchScreen.storyboard in Resources */,
 				B638C6A41E2BCE8700ECF583 /* StatusTableViewCell.xib in Resources */,
 				B6042A141E2BB03F00FA1C26 /* ControlTableViewCell.xib in Resources */,
+				B665E5CA1E324F6600E3097E /* DeviceLinkCell.xib in Resources */,
 				280092671DFF90F100EC0C7E /* Assets.xcassets in Resources */,
 				280092651DFF90F100EC0C7E /* Main.storyboard in Resources */,
 			);
@@ -316,12 +326,14 @@
 				2821BF321E2332080077861A /* BatteryViewController.swift in Sources */,
 				2821BF381E2332950077861A /* IRViewController.swift in Sources */,
 				B6042A131E2BB03E00FA1C26 /* ControlTableViewCell.swift in Sources */,
+				B665E5C91E324F6600E3097E /* DeviceLinkCell.swift in Sources */,
 				B6EE2E641E2B200A0090F260 /* ConnectedOutputCell.swift in Sources */,
 				B6EE2E601E2B19540090F260 /* ConnectedSensorCell.swift in Sources */,
 				2879181E1E0264EA0091C740 /* BaseNavigationControllerViewController.swift in Sources */,
 				287918221E02678D0091C740 /* Util.swift in Sources */,
 				280092601DFF90F100EC0C7E /* AppDelegate.swift in Sources */,
 				2892DF181E03943900D76231 /* AllSensorsTableViewController.swift in Sources */,
+				B665E5CC1E32584400E3097E /* DeviceLinkViewController.swift in Sources */,
 				28BA2C1B1DFFDEB7007C8ADA /* NuBrick.swift in Sources */,
 				2821BF401E2335E80077861A /* BuzzerViewController.swift in Sources */,
 				B6EE2E621E2B1FEF0090F260 /* ConnectedInputCell.swift in Sources */,

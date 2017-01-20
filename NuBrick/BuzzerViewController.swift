@@ -92,7 +92,7 @@ class BuzzerViewController: SensorViewController {
             self.imageView.image = UIImage(named: "mute")
             self.label.text = ""
         } else {
-            self.imageView.image = UIImage(named: "speak")
+            self.imageView.image = UIImage(named: "buzzer")
             self.label.text = String(self.buzzer.volume) + "%"
         }
         

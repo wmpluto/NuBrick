@@ -36,14 +36,18 @@ class SensorViewController: UIViewController, ControlCellDelegate {
 
         // Do any additional setup after loading the view.
         print("@\(self.sensor)")
-        self.progressHUD?.textLabel.text = "Getting \(sensor) Data..."
-        self.progressHUD?.show(in: self.view, animated: true)
-        self.peripheral.delegate = self
         
+        self.automaticallyAdjustsScrollViewInsets = false
+        self.peripheral.delegate = self
         //self.peripheral.writeValue(LEDCMD!, for: self.writeCharacteristic, type: .withResponse)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
             self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.progressHUD?.textLabel.text = "Getting \(sensor) Data..."
+        self.progressHUD?.show(in: self.view, animated: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

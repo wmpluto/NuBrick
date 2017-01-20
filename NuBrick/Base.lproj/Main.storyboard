@@ -280,10 +280,10 @@
             </objects>
             <point key="canvasLocation" x="2532" y="-1055"/>
         </scene>
-        <!--View Controller-->
+        <!--Device Link View Controller-->
         <scene sceneID="av9-g1-31S">
             <objects>
-                <viewController id="Oyl-7H-Ecb" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Oyl-7H-Ecb" customClass="DeviceLinkViewController" customModule="NuBrick" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Wwq-UE-e4s"/>
                         <viewControllerLayoutGuide type="bottom" id="Tlv-Hp-7gP"/>
@@ -291,12 +291,50 @@
                     <view key="view" contentMode="scaleToFill" id="h4I-NT-moy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Dvf-Pr-BmD">
+                                <rect key="frame" x="16" y="130" width="343" height="529"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Oyl-7H-Ecb" id="cW7-0W-btt"/>
+                                    <outlet property="delegate" destination="Oyl-7H-Ecb" id="fw5-9y-fLM"/>
+                                </connections>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sensor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zO4-rb-bm3">
+                                <rect key="frame" x="40" y="101" width="54" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarm Output" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZV-uy-Rk8">
+                                <rect key="frame" x="195" y="101" width="140" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="140" id="DgX-55-pSt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="leadingMargin" secondItem="Dvf-Pr-BmD" secondAttribute="leading" id="5dc-WS-TnA"/>
+                            <constraint firstItem="Tlv-Hp-7gP" firstAttribute="top" secondItem="Dvf-Pr-BmD" secondAttribute="bottom" constant="8" id="Dah-5Y-Jdf"/>
+                            <constraint firstItem="zO4-rb-bm3" firstAttribute="top" secondItem="Wwq-UE-e4s" secondAttribute="bottom" constant="37" id="FAK-dG-qBz"/>
+                            <constraint firstItem="eZV-uy-Rk8" firstAttribute="top" secondItem="Wwq-UE-e4s" secondAttribute="bottom" constant="37" id="QhY-Y1-KHY"/>
+                            <constraint firstAttribute="trailing" secondItem="eZV-uy-Rk8" secondAttribute="trailing" constant="40" id="R9l-I0-uEQ"/>
+                            <constraint firstItem="Dvf-Pr-BmD" firstAttribute="top" secondItem="eZV-uy-Rk8" secondAttribute="bottom" constant="8" id="UeB-UY-xTq"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Dvf-Pr-BmD" secondAttribute="trailing" id="XMH-xJ-OtU"/>
+                            <constraint firstItem="zO4-rb-bm3" firstAttribute="leading" secondItem="h4I-NT-moy" secondAttribute="leadingMargin" constant="24" id="aXr-K5-uFM"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="Dvf-Pr-BmD" id="bUW-lY-puw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vL2-Eq-tsO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3324" y="-1389"/>
+            <point key="canvasLocation" x="3324" y="-1389.3553223388308"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Tlw-ra-8a1">
@@ -993,7 +1031,7 @@
         <image name="key" width="256" height="256"/>
         <image name="led-show" width="800" height="800"/>
         <image name="man" width="1575" height="1575"/>
-        <image name="mute" width="300" height="300"/>
+        <image name="mute" width="256" height="256"/>
         <image name="rotation" width="250" height="250"/>
         <image name="rssi_green" width="128" height="128"/>
         <image name="sonar-show" width="400" height="215"/>

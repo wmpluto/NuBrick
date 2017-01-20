@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "speaker.jpg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "ledoff.png",
       "scale" : "2x"
     },
     {
