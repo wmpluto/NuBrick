@@ -109,6 +109,17 @@ let IRM            = [
     "Latency":        "@ml17%02d\r"
 ]
 
+//6 Default Scenarios
+let AHRS_SCENARIO = "@mz400\r@mz431\r@mz440\r@mz450\r@mz460\r@mz470\r@mz481\r@ml400\r@ml431\r@ml440\r@ml450\r@ml460\r\r@ml470\r@ml481\r"
+let BATTERY_SCENARIO = "@mz401\r@mz430\r@mz440\r@mz450\r@mz460\r@mz470\r@mz481\r@ml401\r@ml430\r@ml440\r@ml450\r@ml460\r\r@ml470\r@ml481\r"
+let GAS_SCENARIO = "@mz400\r@mz430\r@mz440\r@mz450\r@mz461\r@mz470\r@mz481\r@ml400\r@ml430\r@ml440\r@ml450\r@ml461\r\r@ml470\r@ml481\r"
+let SONAR_SCENARIO = "@mz400\r@mz430\r@mz441\r@mz450\r@mz460\r@mz470\r@mz481\r@ml400\r@ml430\r@ml441\r@ml450\r@ml460\r\r@ml470\r@ml481\r"
+let TEMP_SCENARIO = "@mz400\r@mz430\r@mz440\r@mz450\r@mz460\r@mz470\r@mz481\r@ml400\r@ml430\r@ml440\r@ml450\r@ml460\r@ml470\r@ml481\r"
+
+let Default_Scenarios = [BATTERY_SCENARIO, SONAR_SCENARIO, GAS_SCENARIO, TEMP_SCENARIO, AHRS_SCENARIO].map{$0.data(using: .ascii)}
+
+//let BATTERY_SCENARIO = "@mz401\r@ml401\r"
+
 // Communication Start Flag
 let StartFlag:UInt8    = 0x55
 
