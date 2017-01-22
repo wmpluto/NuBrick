@@ -11,6 +11,7 @@
 		280092651DFF90F100EC0C7E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 280092631DFF90F100EC0C7E /* Main.storyboard */; };
 		280092671DFF90F100EC0C7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 280092661DFF90F100EC0C7E /* Assets.xcassets */; };
 		2800926A1DFF90F100EC0C7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 280092681DFF90F100EC0C7E /* LaunchScreen.storyboard */; };
+		2800B4BE1E3460BF00B41540 /* DefaultPreferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2800B4BD1E3460BF00B41540 /* DefaultPreferences.plist */; };
 		2821BF321E2332080077861A /* BatteryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2821BF311E2332080077861A /* BatteryViewController.swift */; };
 		2821BF341E23325D0077861A /* AHRSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2821BF331E23325D0077861A /* AHRSViewController.swift */; };
 		2821BF361E23327A0077861A /* GasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2821BF351E23327A0077861A /* GasViewController.swift */; };
@@ -48,6 +49,7 @@
 		280092691DFF90F100EC0C7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2800926B1DFF90F100EC0C7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		280092741DFF946E00EC0C7E /* NuBrick-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NuBrick-Bridging-Header.h"; sourceTree = "<group>"; };
+		2800B4BD1E3460BF00B41540 /* DefaultPreferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultPreferences.plist; sourceTree = "<group>"; };
 		2821BF311E2332080077861A /* BatteryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryViewController.swift; sourceTree = "<group>"; };
 		2821BF331E23325D0077861A /* AHRSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AHRSViewController.swift; sourceTree = "<group>"; };
 		2821BF351E23327A0077861A /* GasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GasViewController.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				280092661DFF90F100EC0C7E /* Assets.xcassets */,
 				280092681DFF90F100EC0C7E /* LaunchScreen.storyboard */,
 				2800926B1DFF90F100EC0C7E /* Info.plist */,
+				2800B4BD1E3460BF00B41540 /* DefaultPreferences.plist */,
 			);
 			path = NuBrick;
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 			files = (
 				2800926A1DFF90F100EC0C7E /* LaunchScreen.storyboard in Resources */,
 				B638C6A41E2BCE8700ECF583 /* StatusTableViewCell.xib in Resources */,
+				2800B4BE1E3460BF00B41540 /* DefaultPreferences.plist in Resources */,
 				B6042A141E2BB03F00FA1C26 /* ControlTableViewCell.xib in Resources */,
 				B665E5CA1E324F6600E3097E /* DeviceLinkCell.xib in Resources */,
 				280092671DFF90F100EC0C7E /* Assets.xcassets in Resources */,

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        self.setAppUserDefault(name: "DefaultPreferences", type: "plist")
         return true
     }
 
@@ -41,6 +43,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    func setAppUserDefault(name: String, type: String) {
+        let defaultPrefsFile = Bundle.main.url(forResource: name, withExtension: type)
+        let defaultPrefs = NSDictionary(contentsOf: defaultPrefsFile!)
+        UserDefaults.standard.register(defaults: defaultPrefs as! [String : Any])
+    }
 
 }
 

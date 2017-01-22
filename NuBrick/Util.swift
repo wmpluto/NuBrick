@@ -13,8 +13,11 @@ import MapKit
 let nuvotonRedColor = UIColor(red: 218.0/255.0, green: 0, blue: 36.0/255.0, alpha: 1.0)
 
 // NOTIFICATIONS
-let HexiwearDidSignOut = "HexiwearDidSignOut"
 let applicationTitle = "NuBrick"
+
+let EnableCamera = "EnableCamera"
+let EnableTorch = "EnableTorch"
+let EnableRecord = "EnableRecord"
 
 func showSimpleAlertWithTitle(title: String!, message: String, viewController: UIViewController, OKhandler: ((UIAlertAction?) -> Void)? = nil) {
     DispatchQueue.main.async() {
