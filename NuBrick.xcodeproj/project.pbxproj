@@ -12,6 +12,7 @@
 		280092671DFF90F100EC0C7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 280092661DFF90F100EC0C7E /* Assets.xcassets */; };
 		2800926A1DFF90F100EC0C7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 280092681DFF90F100EC0C7E /* LaunchScreen.storyboard */; };
 		2800B4BE1E3460BF00B41540 /* DefaultPreferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2800B4BD1E3460BF00B41540 /* DefaultPreferences.plist */; };
+		2800B4C31E348D2500B41540 /* PhotographWhenAlarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2800B4C21E348D2500B41540 /* PhotographWhenAlarm.swift */; };
 		2821BF321E2332080077861A /* BatteryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2821BF311E2332080077861A /* BatteryViewController.swift */; };
 		2821BF341E23325D0077861A /* AHRSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2821BF331E23325D0077861A /* AHRSViewController.swift */; };
 		2821BF361E23327A0077861A /* GasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2821BF351E23327A0077861A /* GasViewController.swift */; };
@@ -50,6 +51,7 @@
 		2800926B1DFF90F100EC0C7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		280092741DFF946E00EC0C7E /* NuBrick-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NuBrick-Bridging-Header.h"; sourceTree = "<group>"; };
 		2800B4BD1E3460BF00B41540 /* DefaultPreferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultPreferences.plist; sourceTree = "<group>"; };
+		2800B4C21E348D2500B41540 /* PhotographWhenAlarm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotographWhenAlarm.swift; sourceTree = "<group>"; };
 		2821BF311E2332080077861A /* BatteryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryViewController.swift; sourceTree = "<group>"; };
 		2821BF331E23325D0077861A /* AHRSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AHRSViewController.swift; sourceTree = "<group>"; };
 		2821BF351E23327A0077861A /* GasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GasViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 			children = (
 				280092741DFF946E00EC0C7E /* NuBrick-Bridging-Header.h */,
 				2800925F1DFF90F100EC0C7E /* AppDelegate.swift */,
+				2800B4C11E348CC900B41540 /* Classes */,
 				280092711DFF936E00EC0C7E /* Model */,
 				280092721DFF938100EC0C7E /* View */,
 				280092731DFF938800EC0C7E /* Controller */,
@@ -175,6 +178,14 @@
 				287918211E02678D0091C740 /* Util.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		2800B4C11E348CC900B41540 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2800B4C21E348D2500B41540 /* PhotographWhenAlarm.swift */,
+			);
+			name = Classes;
 			sourceTree = "<group>";
 		};
 		30D700A9BE2285A7878548F4 /* Frameworks */ = {
@@ -344,6 +355,7 @@
 				2851F7841E1503CB00CEAA06 /* TemperatureViewController.swift in Sources */,
 				2821BF341E23325D0077861A /* AHRSViewController.swift in Sources */,
 				28C5A4DD1E30AD0200D87C0B /* SettingTableViewController.swift in Sources */,
+				2800B4C31E348D2500B41540 /* PhotographWhenAlarm.swift in Sources */,
 				2821BF3A1E2332D30077861A /* KeyViewController.swift in Sources */,
 				B60FADA41E29E58400EC2986 /* SensorViewController.swift in Sources */,
 				287918241E027F710091C740 /* DetectBluetoothTableViewController.swift in Sources */,

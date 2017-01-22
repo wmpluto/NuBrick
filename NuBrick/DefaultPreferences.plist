@@ -6,7 +6,9 @@
 	<false/>
 	<key>EnableTorch</key>
 	<false/>
-	<key>EnableRecord</key>
+	<key>EnableMusic</key>
+	<false/>
+	<key>CameraOn</key>
 	<false/>
 	<key>Language</key>
 	<string>en</string>

@@ -37,6 +37,9 @@
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y4A-ua-iL9">
                                                     <rect key="frame" x="318" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="photoSwitch:" destination="nWW-Ir-LON" eventType="valueChanged" id="MHQ-94-p0z"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -62,6 +65,9 @@
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XTJ-2n-Ij0">
                                                     <rect key="frame" x="318" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="torchSwitch:" destination="nWW-Ir-LON" eventType="valueChanged" id="bK2-kT-aT4"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -87,6 +93,9 @@
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sxc-s3-h5C">
                                                     <rect key="frame" x="318" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="musicSwitch:" destination="nWW-Ir-LON" eventType="valueChanged" id="TCC-V7-rkH"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -273,6 +282,9 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="musicAlarm" destination="sxc-s3-h5C" id="8H3-AS-BJs"/>
+                        <outlet property="photoAlarm" destination="Y4A-ua-iL9" id="Fpg-1y-Z3B"/>
+                        <outlet property="torchAlarm" destination="XTJ-2n-Ij0" id="GTP-N6-gen"/>
                         <segue destination="Oyl-7H-Ecb" kind="show" identifier="toCustomView" id="4yc-lY-W06"/>
                     </connections>
                 </tableViewController>

@@ -8,6 +8,8 @@
 
 import UIKit
 import Foundation
+import Photos
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         self.setAppUserDefault(name: "DefaultPreferences", type: "plist")
+        self.Authorize()
         return true
     }
 
@@ -47,6 +50,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let defaultPrefsFile = Bundle.main.url(forResource: name, withExtension: type)
         let defaultPrefs = NSDictionary(contentsOf: defaultPrefsFile!)
         UserDefaults.standard.register(defaults: defaultPrefs as! [String : Any])
+        UserDefaults.standard.set(false, forKey: CameraOn)
+        UserDefaults.standard.synchronize()
+    }
+    
+    func Authorize() {
+        switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
+        case .authorized:
+            break
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo, completionHandler: nil)
+            break
+        default:
+            break
+        }
+        
+        switch PHPhotoLibrary.authorizationStatus() {
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization({_ in })
+            break
+        default:
+            break
+        }
     }
 
 }

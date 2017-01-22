@@ -12,6 +12,10 @@ import JGProgressHUD
 
 class SettingTableViewController: UITableViewController {
     
+    @IBOutlet weak var photoAlarm: UISwitch!
+    @IBOutlet weak var torchAlarm: UISwitch!
+    @IBOutlet weak var musicAlarm: UISwitch!
+    
     let progressHUD = JGProgressHUD(style: .dark)
     
     var peripheral: CBPeripheral!
@@ -29,6 +33,9 @@ class SettingTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         self.peripheral.delegate = self
+        musicAlarm.setOn(UserDefaults.standard.bool(forKey: EnableMusic), animated: true)
+        torchAlarm.setOn(UserDefaults.standard.bool(forKey: EnableTorch), animated: true)
+        photoAlarm.setOn(UserDefaults.standard.bool(forKey: EnableCamera), animated: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,6 +43,23 @@ class SettingTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func musicSwitch(_ sender: UISwitch) {
+        UserDefaults.standard.set(sender.isOn, forKey: EnableMusic)
+        UserDefaults.standard.set(false, forKey: MusicOn)
+        UserDefaults.standard.synchronize()
+    }
+    
+    @IBAction func torchSwitch(_ sender: UISwitch) {
+        UserDefaults.standard.set(sender.isOn, forKey: EnableTorch)
+        UserDefaults.standard.set(false, forKey: TorchOn)
+        UserDefaults.standard.synchronize()
+    }
+    
+    @IBAction func photoSwitch(_ sender: UISwitch) {
+        UserDefaults.standard.set(sender.isOn, forKey: EnableCamera)
+        UserDefaults.standard.set(false, forKey: CameraOn)
+        UserDefaults.standard.synchronize()
+    }
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

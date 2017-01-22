@@ -9,7 +9,8 @@
 import UIKit
 import CoreBluetooth
 import JGProgressHUD
-
+import AVFoundation
+import Photos
 
 class AllSensorsTableViewController: UITableViewController {
     var peripheral: CBPeripheral!
@@ -34,6 +35,7 @@ class AllSensorsTableViewController: UITableViewController {
         self.navigationItem.title = "NuBrick"
         self.addSettingButton(name: "setting")
         self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
+        photoAlarm.createAlarm()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,6 +85,19 @@ class AllSensorsTableViewController: UITableViewController {
     
     func jumpSetting() {
         self.performSegue(withIdentifier: "toSettingView", sender: self)
+    }
+   
+    func alarm() {
+        let flag: Bool = sensors.reduce(false, {$0 || $1.alarm})
+        if flag && !(UserDefaults.standard.bool(forKey: CameraOn) as Bool!) && (UserDefaults.standard.bool(forKey: EnableCamera) as Bool!){
+            UserDefaults.standard.set(true, forKey: CameraOn)
+            UserDefaults.standard.synchronize()
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(NoRespondTime), execute: {
+                UserDefaults.standard.set(false, forKey: CameraOn)
+                UserDefaults.standard.synchronize()
+            })
+            photoAlarm.startAlarm(delay: 3)
+        }
     }
 
     // MARK: - Table view data source
@@ -142,6 +157,7 @@ class AllSensorsTableViewController: UITableViewController {
         } else if indexPath.section == 1 {
             s = outputs[indexPath.row]
         }
+        
         print("Did SelectRowAt\(s.name)")
         
         progressHUD?.textLabel.text = "Showing \(s.name)"
@@ -350,6 +366,7 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
         DispatchQueue.main.async {
             print("update it")
             self.progressHUD?.dismiss()
+            self.alarm()
             self.tableView.reloadData()
         }
     }
