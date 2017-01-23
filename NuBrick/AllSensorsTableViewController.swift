@@ -25,6 +25,7 @@ class AllSensorsTableViewController: UITableViewController {
     var inputs:[Sensor] = []
 
     let progressHUD = JGProgressHUD(style: .dark)
+    let torch = Torch()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,7 +97,17 @@ class AllSensorsTableViewController: UITableViewController {
                 UserDefaults.standard.set(false, forKey: CameraOn)
                 UserDefaults.standard.synchronize()
             })
-            photoAlarm.startAlarm(delay: 3)
+            photoAlarm.startAlarm(delay: 1)
+        }
+        
+        if flag && !(UserDefaults.standard.bool(forKey: TorchOn) as Bool!) && (UserDefaults.standard.bool(forKey: EnableTorch) as Bool!){
+            UserDefaults.standard.set(true, forKey: TorchOn)
+            UserDefaults.standard.synchronize()
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(NoRespondTime), execute: {
+                UserDefaults.standard.set(false, forKey: TorchOn)
+                UserDefaults.standard.synchronize()
+            })
+            torch.startAlarm(delay: 3)
         }
     }
 

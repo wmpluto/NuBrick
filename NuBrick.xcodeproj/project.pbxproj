@@ -21,6 +21,7 @@
 		2821BF3C1E2332EA0077861A /* LedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2821BF3B1E2332EA0077861A /* LedViewController.swift */; };
 		2821BF3E1E2332FC0077861A /* SonarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2821BF3D1E2332FC0077861A /* SonarViewController.swift */; };
 		2821BF401E2335E80077861A /* BuzzerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2821BF3F1E2335E80077861A /* BuzzerViewController.swift */; };
+		282F2BBA1E35A110000D5875 /* Torch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282F2BB91E35A110000D5875 /* Torch.swift */; };
 		2851F7841E1503CB00CEAA06 /* TemperatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2851F7831E1503CB00CEAA06 /* TemperatureViewController.swift */; };
 		2879181E1E0264EA0091C740 /* BaseNavigationControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */; };
 		287918221E02678D0091C740 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287918211E02678D0091C740 /* Util.swift */; };
@@ -60,6 +61,7 @@
 		2821BF3B1E2332EA0077861A /* LedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LedViewController.swift; sourceTree = "<group>"; };
 		2821BF3D1E2332FC0077861A /* SonarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SonarViewController.swift; sourceTree = "<group>"; };
 		2821BF3F1E2335E80077861A /* BuzzerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuzzerViewController.swift; sourceTree = "<group>"; };
+		282F2BB91E35A110000D5875 /* Torch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Torch.swift; sourceTree = "<group>"; };
 		2851F7831E1503CB00CEAA06 /* TemperatureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemperatureViewController.swift; sourceTree = "<group>"; };
 		2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNavigationControllerViewController.swift; sourceTree = "<group>"; };
 		287918211E02678D0091C740 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				2800B4C21E348D2500B41540 /* PhotographWhenAlarm.swift */,
+				282F2BB91E35A110000D5875 /* Torch.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				28BA2C1B1DFFDEB7007C8ADA /* NuBrick.swift in Sources */,
 				2821BF401E2335E80077861A /* BuzzerViewController.swift in Sources */,
 				B6EE2E621E2B1FEF0090F260 /* ConnectedInputCell.swift in Sources */,
+				282F2BBA1E35A110000D5875 /* Torch.swift in Sources */,
 				2851F7841E1503CB00CEAA06 /* TemperatureViewController.swift in Sources */,
 				2821BF341E23325D0077861A /* AHRSViewController.swift in Sources */,
 				28C5A4DD1E30AD0200D87C0B /* SettingTableViewController.swift in Sources */,

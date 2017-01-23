@@ -51,6 +51,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let defaultPrefs = NSDictionary(contentsOf: defaultPrefsFile!)
         UserDefaults.standard.register(defaults: defaultPrefs as! [String : Any])
         UserDefaults.standard.set(false, forKey: CameraOn)
+        UserDefaults.standard.set(false, forKey: TorchOn)
+        UserDefaults.standard.set(false, forKey: MusicOn)
         UserDefaults.standard.synchronize()
     }
     
