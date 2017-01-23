@@ -359,17 +359,44 @@
                     <view key="view" contentMode="scaleToFill" id="hqy-ji-ztq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gzh-dd-gmW">
+                                <rect key="frame" x="16" y="72" width="343" height="575"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <mutableString key="text">新唐概述
+
+新唐科技源自我们对未来的期望－「以崭新思维开创新盛世」。
+
+新唐科技成立的宗旨是为半导体产业带来创新的解决方案。公司成立于2008年，同年7月受让分割华邦电子逻辑IC事业单位正式展开营运，并于2010年在台湾证券交易所正式上市挂牌。新唐科技专注于开发模拟/混合讯号，微控制器及计算机云端相关应用IC产品，相关产品在工业电子、消费电子及计算机市场皆具领先地位；此外，新唐科技拥有一座可提供客制化模拟、电源管理及微控制器产品制程之晶圆厂，除负责生产自有IC产品外，另提供部份产能作为晶圆代工服务。新唐科技以灵活之技术、先进之设计能力及数字模拟整合技术能力提供客户高性价比之产品。
+
+新唐科技重视与客户及合作伙伴的长期关系，致力于产品、制程及服务的不断创新。新唐科技在美国、中国大陆、以色列、印度等地均设有据点，以强化地区性客户支持服务与全球运筹管理。
+
+新唐(Nuvoton) 命名
+
+新唐科技(Nuvoton Technology Corporation)的英文名：Nuvoton 是「Nuvo」与「Ton」两个字的组合。「Nuvo」在法文发音中与新(Nouveau)发音相近；「Ton」在英文发音中与唐朝的唐(Tang)发音相近，而唐朝为中国史上最兴盛的朝代之一，唐朝在国际文化交流、经济贸易、科技创新上皆有辉煌的成就，使它成为世界的中心。
+
+新唐科技将秉持卓越发展之创新精神、紧密结合之客户关系，以及汇集凝聚全球人才，致力于实践新唐愿景 — Joy of innovation，同时也象征了新唐科技欲在IC产业开创全新大唐盛世的精神。</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="leadingMargin" secondItem="Gzh-dd-gmW" secondAttribute="leading" id="8BU-EU-Qiw"/>
+                            <constraint firstItem="Gzh-dd-gmW" firstAttribute="top" secondItem="cdg-SI-ej6" secondAttribute="bottom" constant="8" id="PSR-kc-z2E"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Gzh-dd-gmW" secondAttribute="trailing" id="TEz-FZ-H8S"/>
+                            <constraint firstItem="Til-vA-Bjr" firstAttribute="top" secondItem="Gzh-dd-gmW" secondAttribute="bottom" constant="20" id="gRu-gO-HdP"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U0q-nd-ctD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4618" y="-1389"/>
+            <point key="canvasLocation" x="4616.8000000000002" y="-1389.3553223388308"/>
         </scene>
-        <!--View Controller-->
+        <!--Nu Brick Map View Controller-->
         <scene sceneID="NS4-vi-fgw">
             <objects>
-                <viewController id="3xw-60-Qr7" sceneMemberID="viewController">
+                <viewController id="3xw-60-Qr7" customClass="NuBrickMapViewController" customModule="NuBrick" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vwM-6R-9AY"/>
                         <viewControllerLayoutGuide type="bottom" id="j0f-Ge-1io"/>
@@ -377,12 +404,26 @@
                     <view key="view" contentMode="scaleToFill" id="oGR-2W-uGo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="OMF-Se-T1E">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="OMF-Se-T1E" secondAttribute="trailing" constant="-16" id="Rag-P8-MTV"/>
+                            <constraint firstItem="OMF-Se-T1E" firstAttribute="top" secondItem="vwM-6R-9AY" secondAttribute="bottom" id="oON-jP-ueA"/>
+                            <constraint firstItem="OMF-Se-T1E" firstAttribute="leading" secondItem="oGR-2W-uGo" secondAttribute="leadingMargin" constant="-16" id="qG1-xo-Kjc"/>
+                            <constraint firstItem="j0f-Ge-1io" firstAttribute="top" secondItem="OMF-Se-T1E" secondAttribute="bottom" id="vcX-PB-GGz"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="map" destination="OMF-Se-T1E" id="aIO-Z7-vBu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SJ2-yi-Ylv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3980" y="-1389"/>
+            <point key="canvasLocation" x="3980" y="-1389.3553223388308"/>
         </scene>
         <!--Detect Bluetooth Table View Controller-->
         <scene sceneID="tne-QT-ifu">

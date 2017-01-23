@@ -32,6 +32,7 @@
 		28C759C11E2F4815007E7C61 /* Pods_NuBrick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C759C01E2F4815007E7C61 /* Pods_NuBrick.framework */; };
 		28CA8AA01E35D8710019DB58 /* MusicPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CA8A9F1E35D8710019DB58 /* MusicPlay.swift */; };
 		28CA8AA21E35D87F0019DB58 /* BEEP.WAV in Resources */ = {isa = PBXBuildFile; fileRef = 28CA8AA11E35D87F0019DB58 /* BEEP.WAV */; };
+		28CA8AA41E36192E0019DB58 /* NuBrickMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CA8AA31E36192E0019DB58 /* NuBrickMapViewController.swift */; };
 		B6042A131E2BB03E00FA1C26 /* ControlTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6042A111E2BB03E00FA1C26 /* ControlTableViewCell.swift */; };
 		B6042A141E2BB03F00FA1C26 /* ControlTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6042A121E2BB03E00FA1C26 /* ControlTableViewCell.xib */; };
 		B60FADA41E29E58400EC2986 /* SensorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60FADA31E29E58400EC2986 /* SensorViewController.swift */; };
@@ -74,6 +75,7 @@
 		28C759C01E2F4815007E7C61 /* Pods_NuBrick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_NuBrick.framework; path = "Pods/../build/Debug-iphoneos/Pods_NuBrick.framework"; sourceTree = "<group>"; };
 		28CA8A9F1E35D8710019DB58 /* MusicPlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlay.swift; sourceTree = "<group>"; };
 		28CA8AA11E35D87F0019DB58 /* BEEP.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = BEEP.WAV; sourceTree = "<group>"; };
+		28CA8AA31E36192E0019DB58 /* NuBrickMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NuBrickMapViewController.swift; sourceTree = "<group>"; };
 		304F5E8CB4781BD0790000E7 /* Pods-NuBrick.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NuBrick.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NuBrick/Pods-NuBrick.debug.xcconfig"; sourceTree = "<group>"; };
 		3EA07D273A2AAD25E01BFC59 /* Pods_NuBrick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NuBrick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6042A111E2BB03E00FA1C26 /* ControlTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlTableViewCell.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				2821BF371E2332950077861A /* IRViewController.swift */,
 				2821BF391E2332D30077861A /* KeyViewController.swift */,
 				2821BF3B1E2332EA0077861A /* LedViewController.swift */,
+				28CA8AA31E36192E0019DB58 /* NuBrickMapViewController.swift */,
 				B60FADA31E29E58400EC2986 /* SensorViewController.swift */,
 				28C5A4DC1E30AD0200D87C0B /* SettingTableViewController.swift */,
 				2821BF3D1E2332FC0077861A /* SonarViewController.swift */,
@@ -348,6 +351,7 @@
 				2821BF3C1E2332EA0077861A /* LedViewController.swift in Sources */,
 				2821BF3E1E2332FC0077861A /* SonarViewController.swift in Sources */,
 				B638C6A31E2BCE8700ECF583 /* StatusTableViewCell.swift in Sources */,
+				28CA8AA41E36192E0019DB58 /* NuBrickMapViewController.swift in Sources */,
 				2821BF321E2332080077861A /* BatteryViewController.swift in Sources */,
 				2821BF381E2332950077861A /* IRViewController.swift in Sources */,
 				B6042A131E2BB03E00FA1C26 /* ControlTableViewCell.swift in Sources */,

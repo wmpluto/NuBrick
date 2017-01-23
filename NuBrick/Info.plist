@@ -32,6 +32,10 @@
 	<string>NuBrick Need Camera when Alarm</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>NuBrick Need to Save Photos After Alarm</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Show NuBrick&apos;s Location</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Show NuBrick&apos;s Location</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
