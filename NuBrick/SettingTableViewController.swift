@@ -136,16 +136,19 @@ class SettingTableViewController: UITableViewController {
     }
     */
 
-    /*
+   
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if  let vc = segue.destination as? DeviceLinkViewController {
+            vc.peripheral  = self.peripheral
+            vc.writeCharacteristic = self.writeCharacteristic
+            vc.readCharacteristic = self.readCharacteristic
+        }
     }
-    */
-
 }
 
 

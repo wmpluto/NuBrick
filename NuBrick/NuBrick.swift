@@ -48,6 +48,9 @@ let GASCMD         = "@tg".data(using: .ascii)
 let KEYCMD         = "@tk".data(using: .ascii)
 let IRCMD          = "@ti".data(using: .ascii)
 
+// Device Link Command
+let DLCMD          = "@td".data(using: .ascii)
+
 // Device Modify Command
 let BATTERYM       = [
     "SleepPeriod":    "@mb11%04d\r",
@@ -117,6 +120,7 @@ let SONAR_SCENARIO = "@mz400\r@mz430\r@mz441\r@mz450\r@mz460\r@mz470\r@mz481\r@m
 let TEMP_SCENARIO = "@mz400\r@mz430\r@mz440\r@mz450\r@mz460\r@mz470\r@mz481\r@ml400\r@ml430\r@ml440\r@ml450\r@ml460\r@ml470\r@ml481\r"
 
 let Default_Scenarios = [BATTERY_SCENARIO, SONAR_SCENARIO, GAS_SCENARIO, TEMP_SCENARIO, AHRS_SCENARIO].map{$0.data(using: .ascii)}
+let Custome_Scenario_Senors = ["battery", "", "", "ahrs", "sonar", "temp", "gas"]
 
 //let BATTERY_SCENARIO = "@mz401\r@ml401\r"
 
@@ -521,6 +525,46 @@ struct TIDDATA {
     var value:          Int = 0
     var min:            Int = 0
     var max:            Int = 0
+}
+
+// Device Descriptor, the data in 1st stage
+struct DeviceLinkDescriptor {
+    var devDescLeng:  UInt16 = 8
+    var sensorNum:    UInt16 = 8
+    var connected:    UInt16 = 0
+    var dataLeng:     UInt16 = 6
+    
+    mutating func setDeviceLinkDescriptor(array:[UInt8]) -> Int {
+        guard array.count > 2 else {return 0}
+        var i = 0
+        
+        while i < array.count {
+            //Try to Get 1st Stage
+            guard array.count - i > 10 else {return 0}
+            if(array[i] == StartFlag && array[i+1] == StartFlag) {
+                //Get 1st Stage
+                i += 2
+                self.devDescLeng = bytesToWord(head: array[i++], tail: array[i++])
+                self.sensorNum = bytesToWord(head: array[i++], tail: array[i++])
+                self.connected = bytesToWord(head: array[i++], tail: array[i++])
+                self.dataLeng = bytesToWord(head: array[i++], tail: array[i++])
+                
+                if self.devDescLeng != 8 || self.dataLeng != 6 {
+                    continue
+                }
+                
+                if i < array.count {
+                    print("There is 1st stage: \n\(self)")
+                    return i
+                } else {
+                    return 0
+                }
+            }
+            i+=1
+        }
+        
+        return 0
+    }
 }
 
 struct SControl {
