@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import Foundation
 import CoreBluetooth
 import JGProgressHUD
 
 struct DeviceLink {
-    var name: String
-    var buzzerLink: Bool
-    var ledLink: Bool
+    var name: String = ""
+    var buzzerLink: Bool = false
+    var ledLink: Bool = false
 }
 
 struct Link {
@@ -88,7 +89,8 @@ class DeviceLinkViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+        print(deviceLinks)
+        self.peripheral.writeValue(modifyCMD(data: deviceLinks).data(using: .ascii)!, for: self.writeCharacteristic, type: .withResponse)
     }
     
     override func didReceiveMemoryWarning() {
@@ -114,6 +116,19 @@ class DeviceLinkViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.6) {
             self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
         }
+    }
+    
+    func modifyCMD(data: [DeviceLink]) -> String {
+        var tb = ""
+        var tl = ""
+        for index in 0..<data.count {
+            let mb = String(format: "@mz4%d%d\r", index, data[index].buzzerLink ? 1 : 0)
+            tb.append(mb)
+            let ml = String(format: "@ml4%d%d\r", index, data[index].ledLink ? 1 : 0)
+            tl.append(ml)
+        }
+        print(tb + tl)
+        return tb + tl
     }
     
     func update() {
@@ -148,7 +163,7 @@ extension DeviceLinkViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let device = deviceLinks[indexPath.row]
-        if device.name.characters.count == 0 {
+        if device.name == "" {
             return 0
         }
         return 60
@@ -158,22 +173,13 @@ extension DeviceLinkViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "devicelink", for: indexPath) as? DeviceLinkCell
         let device = deviceLinks[indexPath.row]
         
-        if device.name.characters.count == 0 {
+        if device.name == "" {
             cell?.isHidden = true
             return cell!
         }
         
-        cell?.view?.image = UIImage(named: device.name)
-        if device.buzzerLink {
-            cell?.checkBuzzer.setImage(UIImage(named: "buzzer"), for: .normal)
-        } else {
-            cell?.checkBuzzer.setImage(UIImage(named: "mute"), for: .normal)
-        }
-        if device.ledLink {
-            cell?.checkLed.setImage(UIImage(named: "led"), for: .normal)
-        } else {
-            cell?.checkLed.setImage(UIImage(named: "led-off"), for: .normal)
-        }
+        cell?.delegate = self
+        cell?.cellData(data: device)
         
         return cell!
     }
@@ -246,3 +252,22 @@ extension DeviceLinkViewController: CBPeripheralDelegate {
     }
 }
 
+extension DeviceLinkViewController: LinkChangeDelegate {
+    func buzzerLinkChange(status: Bool, device: String) {
+        for index in 0..<deviceLinks.count {
+            if device == deviceLinks[index].name {
+                deviceLinks[index].buzzerLink = status
+                break
+            }
+        }
+    }
+    
+    func ledLinkChange(status: Bool, device: String) {
+        for index in 0..<deviceLinks.count {
+            if device == deviceLinks[index].name {
+                deviceLinks[index].ledLink = status
+                break
+            }
+        }
+    }
+}
