@@ -30,6 +30,8 @@
 		28BA2C1B1DFFDEB7007C8ADA /* NuBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BA2C1A1DFFDEB7007C8ADA /* NuBrick.swift */; };
 		28C5A4DD1E30AD0200D87C0B /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C5A4DC1E30AD0200D87C0B /* SettingTableViewController.swift */; };
 		28C759C11E2F4815007E7C61 /* Pods_NuBrick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C759C01E2F4815007E7C61 /* Pods_NuBrick.framework */; };
+		28CA8AA01E35D8710019DB58 /* MusicPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CA8A9F1E35D8710019DB58 /* MusicPlay.swift */; };
+		28CA8AA21E35D87F0019DB58 /* BEEP.WAV in Resources */ = {isa = PBXBuildFile; fileRef = 28CA8AA11E35D87F0019DB58 /* BEEP.WAV */; };
 		B6042A131E2BB03E00FA1C26 /* ControlTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6042A111E2BB03E00FA1C26 /* ControlTableViewCell.swift */; };
 		B6042A141E2BB03F00FA1C26 /* ControlTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6042A121E2BB03E00FA1C26 /* ControlTableViewCell.xib */; };
 		B60FADA41E29E58400EC2986 /* SensorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60FADA31E29E58400EC2986 /* SensorViewController.swift */; };
@@ -70,6 +72,8 @@
 		28BA2C1A1DFFDEB7007C8ADA /* NuBrick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NuBrick.swift; path = NuBrick/NuBrick.swift; sourceTree = "<group>"; };
 		28C5A4DC1E30AD0200D87C0B /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		28C759C01E2F4815007E7C61 /* Pods_NuBrick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_NuBrick.framework; path = "Pods/../build/Debug-iphoneos/Pods_NuBrick.framework"; sourceTree = "<group>"; };
+		28CA8A9F1E35D8710019DB58 /* MusicPlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlay.swift; sourceTree = "<group>"; };
+		28CA8AA11E35D87F0019DB58 /* BEEP.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = BEEP.WAV; sourceTree = "<group>"; };
 		304F5E8CB4781BD0790000E7 /* Pods-NuBrick.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NuBrick.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NuBrick/Pods-NuBrick.debug.xcconfig"; sourceTree = "<group>"; };
 		3EA07D273A2AAD25E01BFC59 /* Pods_NuBrick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NuBrick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6042A111E2BB03E00FA1C26 /* ControlTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlTableViewCell.swift; sourceTree = "<group>"; };
@@ -129,6 +133,7 @@
 				280092661DFF90F100EC0C7E /* Assets.xcassets */,
 				280092681DFF90F100EC0C7E /* LaunchScreen.storyboard */,
 				2800926B1DFF90F100EC0C7E /* Info.plist */,
+				28CA8AA11E35D87F0019DB58 /* BEEP.WAV */,
 				2800B4BD1E3460BF00B41540 /* DefaultPreferences.plist */,
 			);
 			path = NuBrick;
@@ -187,6 +192,7 @@
 			children = (
 				2800B4C21E348D2500B41540 /* PhotographWhenAlarm.swift */,
 				282F2BB91E35A110000D5875 /* Torch.swift */,
+				28CA8A9F1E35D8710019DB58 /* MusicPlay.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -272,6 +278,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28CA8AA21E35D87F0019DB58 /* BEEP.WAV in Resources */,
 				2800926A1DFF90F100EC0C7E /* LaunchScreen.storyboard in Resources */,
 				B638C6A41E2BCE8700ECF583 /* StatusTableViewCell.xib in Resources */,
 				2800B4BE1E3460BF00B41540 /* DefaultPreferences.plist in Resources */,
@@ -359,6 +366,7 @@
 				2851F7841E1503CB00CEAA06 /* TemperatureViewController.swift in Sources */,
 				2821BF341E23325D0077861A /* AHRSViewController.swift in Sources */,
 				28C5A4DD1E30AD0200D87C0B /* SettingTableViewController.swift in Sources */,
+				28CA8AA01E35D8710019DB58 /* MusicPlay.swift in Sources */,
 				2800B4C31E348D2500B41540 /* PhotographWhenAlarm.swift in Sources */,
 				2821BF3A1E2332D30077861A /* KeyViewController.swift in Sources */,
 				B60FADA41E29E58400EC2986 /* SensorViewController.swift in Sources */,

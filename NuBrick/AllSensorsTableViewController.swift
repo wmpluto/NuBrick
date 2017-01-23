@@ -26,6 +26,7 @@ class AllSensorsTableViewController: UITableViewController {
 
     let progressHUD = JGProgressHUD(style: .dark)
     let torch = Torch()
+    let music = MusicPlay(forResource: "BEEP", withExtension: "WAV")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +91,18 @@ class AllSensorsTableViewController: UITableViewController {
    
     func alarm() {
         let flag: Bool = sensors.reduce(false, {$0 || $1.alarm})
+        
+        if flag && !(UserDefaults.standard.bool(forKey: MusicOn) as Bool!) && (UserDefaults.standard.bool(forKey: EnableMusic) as Bool!){
+            UserDefaults.standard.set(true, forKey: MusicOn)
+            UserDefaults.standard.synchronize()
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(NoRespondTime), execute: {
+                UserDefaults.standard.set(false, forKey: MusicOn)
+                UserDefaults.standard.synchronize()
+            })
+            music.startAlarm(delay: 1)
+        }
+        
+        
         if flag && !(UserDefaults.standard.bool(forKey: CameraOn) as Bool!) && (UserDefaults.standard.bool(forKey: EnableCamera) as Bool!){
             UserDefaults.standard.set(true, forKey: CameraOn)
             UserDefaults.standard.synchronize()
