@@ -21,7 +21,7 @@ let EnableMusic = "EnableMusic"
 let CameraOn = "CameraOn"
 let MusicOn = "MusicOn"
 let TorchOn = "TorchOn"
-let NoRespondTime = 5*60
+let NoRespondTime = 30
 
 func showSimpleAlertWithTitle(title: String!, message: String, viewController: UIViewController, OKhandler: ((UIAlertAction?) -> Void)? = nil) {
     DispatchQueue.main.async() {

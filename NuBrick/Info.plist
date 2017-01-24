@@ -20,6 +20,14 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>NuBrick Need Camera when Alarm</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Show NuBrick's Location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Show NuBrick's Location</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>NuBrick Need to Save Photos After Alarm</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -28,19 +36,9 @@
 	<array>
 		<string>armv7</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>NuBrick Need Camera when Alarm</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>NuBrick Need to Save Photos After Alarm</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Show NuBrick&apos;s Location</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Show NuBrick&apos;s Location</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 </dict>
 </plist>
