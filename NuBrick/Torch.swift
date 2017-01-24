@@ -34,11 +34,13 @@ class Torch: NSObject {
         queue.asyncAfter(deadline: .now() + .seconds(delay), execute: {
             self.short()
             self.short()
+            self.short()
+            self.long()
+            self.long()
             self.long()
             self.short()
             self.short()
             self.short()
-            self.long()
         })
     }
     
