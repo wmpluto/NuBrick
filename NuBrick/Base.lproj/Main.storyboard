@@ -363,7 +363,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gzh-dd-gmW">
                                 <rect key="frame" x="16" y="72" width="343" height="575"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <mutableString key="text">新唐概述
+                                <string key="text">新唐概述
 
 新唐科技源自我们对未来的期望－「以崭新思维开创新盛世」。
 
@@ -375,7 +375,7 @@
 
 新唐科技(Nuvoton Technology Corporation)的英文名：Nuvoton 是「Nuvo」与「Ton」两个字的组合。「Nuvo」在法文发音中与新(Nouveau)发音相近；「Ton」在英文发音中与唐朝的唐(Tang)发音相近，而唐朝为中国史上最兴盛的朝代之一，唐朝在国际文化交流、经济贸易、科技创新上皆有辉煌的成就，使它成为世界的中心。
 
-新唐科技将秉持卓越发展之创新精神、紧密结合之客户关系，以及汇集凝聚全球人才，致力于实践新唐愿景 — Joy of innovation，同时也象征了新唐科技欲在IC产业开创全新大唐盛世的精神。</mutableString>
+新唐科技将秉持卓越发展之创新精神、紧密结合之客户关系，以及汇集凝聚全球人才，致力于实践新唐愿景 — Joy of innovation，同时也象征了新唐科技欲在IC产业开创全新大唐盛世的精神。</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -405,7 +405,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="OMF-Se-T1E">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" showsBuildings="NO" showsCompass="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OMF-Se-T1E">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </mapView>
                         </subviews>

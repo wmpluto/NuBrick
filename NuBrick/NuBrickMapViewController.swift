@@ -17,22 +17,30 @@ class NuBrickMapViewController: UIViewController, CLLocationManagerDelegate, MKM
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.locationManager.requestAlwaysAuthorization()
-        
+
         // For use in foreground
-        self.locationManager.requestWhenInUseAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.startUpdatingLocation()
-        }
+
+        self.locationManager.requestAlwaysAuthorization()
         
         map.delegate = self
         map.mapType = .standard
         map.isZoomEnabled = true
         map.isScrollEnabled = true
+        
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedAlways:
+                locationManager.delegate = self
+                locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                locationManager.startUpdatingLocation()
+                //let newRegion = MKCoordinateRegion(center:(locationManager.location?.coordinate)! , span: MKCoordinateSpanMake(0.02, 0.02))
+                //map.setRegion(newRegion, animated: true)
+            break
+        default:
+            self.locationManager.requestAlwaysAuthorization()
+            break
+        }
+ 
+        /*
         let spanX = 0.007
         let spanY = 0.007
         
@@ -41,6 +49,7 @@ class NuBrickMapViewController: UIViewController, CLLocationManagerDelegate, MKM
         if let coor = map.userLocation.location?.coordinate{
             map.setCenter(coor, animated: true)
         }
+ */
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,18 +65,22 @@ class NuBrickMapViewController: UIViewController, CLLocationManagerDelegate, MKM
         // Dispose of any resources that can be recreated.
     }
     
-    func centerMap(_ center:CLLocationCoordinate2D){
-        let spanX = 0.007
-        let spanY = 0.007
-        
-        let newRegion = MKCoordinateRegion(center:center , span: MKCoordinateSpanMake(spanX, spanY))
-        map.setRegion(newRegion, animated: true)
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        print(status)
+        switch status {
+        case .authorizedAlways:
+            locationManager.startUpdatingLocation()
+            break
+        default:
+            self.locationManager.requestAlwaysAuthorization()
+            break
+        }
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        
-        centerMap(locValue)
+        let newRegion = MKCoordinateRegion(center: locValue, span: MKCoordinateSpanMake(0.02, 0.02))
+        map.setRegion(newRegion, animated: true)
     }
     /*
     // MARK: - Navigation

@@ -193,9 +193,9 @@
 		2800B4C11E348CC900B41540 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				28CA8A9F1E35D8710019DB58 /* MusicPlay.swift */,
 				2800B4C21E348D2500B41540 /* PhotographWhenAlarm.swift */,
 				282F2BB91E35A110000D5875 /* Torch.swift */,
-				28CA8A9F1E35D8710019DB58 /* MusicPlay.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
