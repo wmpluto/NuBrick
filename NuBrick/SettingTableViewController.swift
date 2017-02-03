@@ -58,6 +58,23 @@ class SettingTableViewController: UITableViewController {
         self.progressHUD?.textLabel.text = "Loading ..."
         self.progressHUD?.show(in: self.view, animated: true)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        var dl = ""
+        var flag = batteryAlarm.isOn ? 1 : 0
+        dl = dl + String(format: BATTERY_SCENARIO_CMDS, flag, flag)
+        flag = vibrationAlarm.isOn ? 1 : 0
+        dl = dl + String(format: AHRS_SCENARIO_CMDS, flag, flag)
+        flag = distanceAlarm.isOn ? 1 : 0
+        dl = dl + String(format: SONAR_SCENARIO_CMDS, flag, flag)
+        flag = tempratureAlarm.isOn ? 1 : 0
+        dl = dl + String(format: TEMP_SCENARIO_CMDS, flag, flag)
+        flag = gasAlarm.isOn ? 1 : 0
+        dl = dl + String(format: GAS_SCENARIO_CMDS, flag, flag)
+        print(dl)
+        self.peripheral.writeValue(dl.data(using: .ascii)!, for: self.writeCharacteristic, type: .withResponse)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -125,16 +142,7 @@ class SettingTableViewController: UITableViewController {
         case 0:
             break
         case 1:
-            if indexPath.row < 5 {
-                //default
-                self.progressHUD?.textLabel.text = "Apply the Scenario"
-                self.progressHUD?.show(in: self.view, animated: true)
-                //Send Command
-                self.peripheral.writeValue(Default_Scenarios[indexPath.row]!, for: self.writeCharacteristic, type: .withResponse)
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-                    self.progressHUD?.dismiss()
-                }
-            } else {
+            if indexPath.row == 5 {
                 //custom
                 self.performSegue(withIdentifier: "toCustomView", sender: self)
             }
