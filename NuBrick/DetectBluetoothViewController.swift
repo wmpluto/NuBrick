@@ -1,5 +1,5 @@
 //
-//  DetectBluetoothTableViewController.swift
+//  DetectBluetoothViewController.swift
 //  NuBrick
 //
 //  Created by mwang on 15/12/2016.
@@ -18,8 +18,9 @@ struct BLEPeripheral {
 }
 
 
-class DetectBluetoothTableViewController: UITableViewController {
+class DetectBluetoothViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var tableView: UITableView!
     // Blutetooth
     var centralManager: CBCentralManager!
     var peripherals: [BLEPeripheral] = []
@@ -78,7 +79,7 @@ class DetectBluetoothTableViewController: UITableViewController {
 
     private func setupRefresh() {
         self.refreshCont = UIRefreshControl()
-        self.refreshCont.addTarget(self, action: #selector(DetectBluetoothTableViewController.refreshBLE), for: UIControlEvents.valueChanged)
+        self.refreshCont.addTarget(self, action: #selector(DetectBluetoothViewController.refreshBLE), for: UIControlEvents.valueChanged)
         self.tableView.addSubview(refreshCont)
     }
     
@@ -129,21 +130,21 @@ class DetectBluetoothTableViewController: UITableViewController {
     }
     // MARK: - Table view data source
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Peripherals Nearby"
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return peripherals.count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BLEPeripheral", for: indexPath)
         let blePeripheral:BLEPeripheral = peripherals[indexPath.row]
 
@@ -157,7 +158,7 @@ class DetectBluetoothTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Did SelectRowAt")
         let blePeripheral:BLEPeripheral = peripherals[indexPath.row]
         
@@ -197,7 +198,7 @@ class DetectBluetoothTableViewController: UITableViewController {
 
 }
 
-extension DetectBluetoothTableViewController: CBCentralManagerDelegate {
+extension DetectBluetoothViewController: CBCentralManagerDelegate {
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         print("CentralManagerDidUpdateState")
@@ -261,7 +262,7 @@ extension DetectBluetoothTableViewController: CBCentralManagerDelegate {
     }
 }
 
-extension DetectBluetoothTableViewController: CBPeripheralDelegate {
+extension DetectBluetoothViewController: CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         for s in peripheral.services! {
             print("scan service", s.uuid.uuidString)

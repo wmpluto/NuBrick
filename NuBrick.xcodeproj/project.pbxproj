@@ -25,7 +25,7 @@
 		2851F7841E1503CB00CEAA06 /* TemperatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2851F7831E1503CB00CEAA06 /* TemperatureViewController.swift */; };
 		2879181E1E0264EA0091C740 /* BaseNavigationControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */; };
 		287918221E02678D0091C740 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287918211E02678D0091C740 /* Util.swift */; };
-		287918241E027F710091C740 /* DetectBluetoothTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287918231E027F710091C740 /* DetectBluetoothTableViewController.swift */; };
+		287918241E027F710091C740 /* DetectBluetoothViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287918231E027F710091C740 /* DetectBluetoothViewController.swift */; };
 		2892DF181E03943900D76231 /* AllSensorsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2892DF171E03943900D76231 /* AllSensorsTableViewController.swift */; };
 		28BA2C1B1DFFDEB7007C8ADA /* NuBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BA2C1A1DFFDEB7007C8ADA /* NuBrick.swift */; };
 		28C5A4DD1E30AD0200D87C0B /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C5A4DC1E30AD0200D87C0B /* SettingTableViewController.swift */; };
@@ -70,7 +70,7 @@
 		2851F7831E1503CB00CEAA06 /* TemperatureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemperatureViewController.swift; sourceTree = "<group>"; };
 		2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNavigationControllerViewController.swift; sourceTree = "<group>"; };
 		287918211E02678D0091C740 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		287918231E027F710091C740 /* DetectBluetoothTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectBluetoothTableViewController.swift; sourceTree = "<group>"; };
+		287918231E027F710091C740 /* DetectBluetoothViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectBluetoothViewController.swift; sourceTree = "<group>"; };
 		2892DF171E03943900D76231 /* AllSensorsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllSensorsTableViewController.swift; sourceTree = "<group>"; };
 		28BA2C1A1DFFDEB7007C8ADA /* NuBrick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NuBrick.swift; path = NuBrick/NuBrick.swift; sourceTree = "<group>"; };
 		28C5A4DC1E30AD0200D87C0B /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
@@ -180,7 +180,7 @@
 				2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */,
 				2821BF311E2332080077861A /* BatteryViewController.swift */,
 				2821BF3F1E2335E80077861A /* BuzzerViewController.swift */,
-				287918231E027F710091C740 /* DetectBluetoothTableViewController.swift */,
+				287918231E027F710091C740 /* DetectBluetoothViewController.swift */,
 				B665E5CB1E32584400E3097E /* DeviceLinkViewController.swift */,
 				2821BF351E23327A0077861A /* GasViewController.swift */,
 				2821BF371E2332950077861A /* IRViewController.swift */,
@@ -382,7 +382,7 @@
 				2821BF3A1E2332D30077861A /* KeyViewController.swift in Sources */,
 				28F6B8C21E441CFA00BF7889 /* AboutViewController.swift in Sources */,
 				B60FADA41E29E58400EC2986 /* SensorViewController.swift in Sources */,
-				287918241E027F710091C740 /* DetectBluetoothTableViewController.swift in Sources */,
+				287918241E027F710091C740 /* DetectBluetoothViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
