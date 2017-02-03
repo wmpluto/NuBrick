@@ -122,6 +122,12 @@ let TEMP_SCENARIO = "@mz400\r@mz430\r@mz440\r@mz450\r@mz460\r@mz470\r@mz481\r@ml
 let Default_Scenarios = [BATTERY_SCENARIO, SONAR_SCENARIO, GAS_SCENARIO, TEMP_SCENARIO, AHRS_SCENARIO].map{$0.data(using: .ascii)}
 let Custome_Scenario_Senors = ["battery", "", "", "ahrs", "sonar", "temp", "gas"]
 
+let BATTERY_SCENARIO_CMDS = "@mz40%d\r@ml40%d\r"
+let AHRS_SCENARIO_CMDS = "@mz43%d\r@ml43%d\r"
+let SONAR_SCENARIO_CMDS = "@mz44%d\r@ml44%d\r"
+let TEMP_SCENARIO_CMDS = "@mz45%d\r@ml45%d\r"
+let GAS_SCENARIO_CMDS = "@mz46%d\r@ml46%d\r"
+let Default_Scenarios_CMDS = [BATTERY_SCENARIO_CMDS, "", "", AHRS_SCENARIO_CMDS, SONAR_SCENARIO_CMDS, TEMP_SCENARIO_CMDS, GAS_SCENARIO_CMDS]
 //let BATTERY_SCENARIO = "@mz401\r@ml401\r"
 
 // Communication Start Flag
