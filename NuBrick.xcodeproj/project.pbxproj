@@ -33,6 +33,8 @@
 		28CA8AA01E35D8710019DB58 /* MusicPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CA8A9F1E35D8710019DB58 /* MusicPlay.swift */; };
 		28CA8AA21E35D87F0019DB58 /* BEEP.WAV in Resources */ = {isa = PBXBuildFile; fileRef = 28CA8AA11E35D87F0019DB58 /* BEEP.WAV */; };
 		28CA8AA41E36192E0019DB58 /* NuBrickMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CA8AA31E36192E0019DB58 /* NuBrickMapViewController.swift */; };
+		28F6B8C21E441CFA00BF7889 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F6B8C11E441CFA00BF7889 /* AboutViewController.swift */; };
+		28F6B8C41E4422B700BF7889 /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = 28F6B8C31E4422B700BF7889 /* About.html */; };
 		B6042A131E2BB03E00FA1C26 /* ControlTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6042A111E2BB03E00FA1C26 /* ControlTableViewCell.swift */; };
 		B6042A141E2BB03F00FA1C26 /* ControlTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6042A121E2BB03E00FA1C26 /* ControlTableViewCell.xib */; };
 		B60FADA41E29E58400EC2986 /* SensorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60FADA31E29E58400EC2986 /* SensorViewController.swift */; };
@@ -76,6 +78,8 @@
 		28CA8A9F1E35D8710019DB58 /* MusicPlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlay.swift; sourceTree = "<group>"; };
 		28CA8AA11E35D87F0019DB58 /* BEEP.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = BEEP.WAV; sourceTree = "<group>"; };
 		28CA8AA31E36192E0019DB58 /* NuBrickMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NuBrickMapViewController.swift; sourceTree = "<group>"; };
+		28F6B8C11E441CFA00BF7889 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		28F6B8C31E4422B700BF7889 /* About.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = About.html; sourceTree = "<group>"; };
 		304F5E8CB4781BD0790000E7 /* Pods-NuBrick.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NuBrick.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NuBrick/Pods-NuBrick.debug.xcconfig"; sourceTree = "<group>"; };
 		3EA07D273A2AAD25E01BFC59 /* Pods_NuBrick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NuBrick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6042A111E2BB03E00FA1C26 /* ControlTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlTableViewCell.swift; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 				280092661DFF90F100EC0C7E /* Assets.xcassets */,
 				280092681DFF90F100EC0C7E /* LaunchScreen.storyboard */,
 				2800926B1DFF90F100EC0C7E /* Info.plist */,
+				28F6B8C31E4422B700BF7889 /* About.html */,
 				28CA8AA11E35D87F0019DB58 /* BEEP.WAV */,
 				2800B4BD1E3460BF00B41540 /* DefaultPreferences.plist */,
 			);
@@ -169,6 +174,7 @@
 		280092731DFF938800EC0C7E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				28F6B8C11E441CFA00BF7889 /* AboutViewController.swift */,
 				2821BF331E23325D0077861A /* AHRSViewController.swift */,
 				2892DF171E03943900D76231 /* AllSensorsTableViewController.swift */,
 				2879181D1E0264EA0091C740 /* BaseNavigationControllerViewController.swift */,
@@ -287,6 +293,7 @@
 				2800B4BE1E3460BF00B41540 /* DefaultPreferences.plist in Resources */,
 				B6042A141E2BB03F00FA1C26 /* ControlTableViewCell.xib in Resources */,
 				B665E5CA1E324F6600E3097E /* DeviceLinkCell.xib in Resources */,
+				28F6B8C41E4422B700BF7889 /* About.html in Resources */,
 				280092671DFF90F100EC0C7E /* Assets.xcassets in Resources */,
 				280092651DFF90F100EC0C7E /* Main.storyboard in Resources */,
 			);
@@ -373,6 +380,7 @@
 				28CA8AA01E35D8710019DB58 /* MusicPlay.swift in Sources */,
 				2800B4C31E348D2500B41540 /* PhotographWhenAlarm.swift in Sources */,
 				2821BF3A1E2332D30077861A /* KeyViewController.swift in Sources */,
+				28F6B8C21E441CFA00BF7889 /* AboutViewController.swift in Sources */,
 				B60FADA41E29E58400EC2986 /* SensorViewController.swift in Sources */,
 				287918241E027F710091C740 /* DetectBluetoothTableViewController.swift in Sources */,
 			);
