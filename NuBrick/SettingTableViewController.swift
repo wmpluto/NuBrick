@@ -16,6 +16,12 @@ class SettingTableViewController: UITableViewController {
     @IBOutlet weak var torchAlarm: UISwitch!
     @IBOutlet weak var musicAlarm: UISwitch!
     
+    @IBOutlet weak var batteryAlarm: UISwitch!
+    @IBOutlet weak var distanceAlarm: UISwitch!
+    @IBOutlet weak var gasAlarm: UISwitch!
+    @IBOutlet weak var tempratureAlarm: UISwitch!
+    @IBOutlet weak var vibrationAlarm: UISwitch!
+    
     let progressHUD = JGProgressHUD(style: .dark)
     
     var peripheral: CBPeripheral!
@@ -23,6 +29,9 @@ class SettingTableViewController: UITableViewController {
     var readCharacteristic: CBCharacteristic!
     
     var tmpBuffer:[UInt8] = []
+    var deviceLinkDescriptor = DeviceLinkDescriptor()
+    var link = Link()
+    var deviceLinks: [DeviceLink] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,10 +41,22 @@ class SettingTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        self.peripheral.delegate = self
+        
         musicAlarm.setOn(UserDefaults.standard.bool(forKey: EnableMusic), animated: true)
         torchAlarm.setOn(UserDefaults.standard.bool(forKey: EnableTorch), animated: true)
         photoAlarm.setOn(UserDefaults.standard.bool(forKey: EnableCamera), animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.peripheral.delegate = self
+        
+        self.peripheral.writeValue(DLCMD!, for: self.writeCharacteristic, type: .withResponse)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.6) {
+            self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
+        }
+
+        self.progressHUD?.textLabel.text = "Loading ..."
+        self.progressHUD?.show(in: self.view, animated: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,6 +80,43 @@ class SettingTableViewController: UITableViewController {
         UserDefaults.standard.set(sender.isOn, forKey: EnableCamera)
         UserDefaults.standard.set(false, forKey: CameraOn)
         UserDefaults.standard.synchronize()
+    }
+    
+    
+    func resendCMD() {
+        print("Something Wrong Resend CMD")
+        self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
+        self.peripheral.writeValue(DLCMD!, for: self.writeCharacteristic, type: .withResponse)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.6) {
+            self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
+        }
+    }
+    
+    func update() {
+        self.analysisStatus()
+        //self.tableView.reloadData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
+            self.progressHUD?.dismiss()
+        })
+    }
+    
+    func analysisStatus() {
+        var flag = uintToBool(origin: self.link.buzzerLinkStatus, i: 0) ||
+            uintToBool(origin: self.link.ledLinkStatus, i: 0)
+        batteryAlarm.setOn(flag, animated: true)
+        flag = uintToBool(origin: self.link.buzzerLinkStatus, i: 3) ||
+            uintToBool(origin: self.link.ledLinkStatus, i: 3)
+        vibrationAlarm.setOn(flag, animated: true)
+        flag = uintToBool(origin: self.link.buzzerLinkStatus, i: 4) ||
+            uintToBool(origin: self.link.ledLinkStatus, i: 4)
+        distanceAlarm.setOn(flag, animated: true)
+        flag = uintToBool(origin: self.link.buzzerLinkStatus, i: 5) ||
+            uintToBool(origin: self.link.ledLinkStatus, i: 5)
+        tempratureAlarm.setOn(flag, animated: true)
+        flag = uintToBool(origin: self.link.buzzerLinkStatus, i: 6) ||
+            uintToBool(origin: self.link.ledLinkStatus, i: 6)
+        gasAlarm.setOn(flag, animated: true)
     }
     // MARK: - Table view data source
 
@@ -152,30 +210,32 @@ class SettingTableViewController: UITableViewController {
 }
 
 
+
 extension SettingTableViewController: CBPeripheralDelegate {
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        print("did discover services")
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        print("did discover characteristics for service")
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-        print("didWriteValueForCharacteristic")
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
-        print("did update notification state for characteristic")
-        if (error != nil) {
-            print("error")
-        }
-    }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         print("did update value for characteristic")
         guard characteristic.uuid == BTReadUUID else { return }
         let bytesArray:[UInt8] = [UInt8](characteristic.value!)
         print(bytesArray)
+        tmpBuffer += bytesArray
+        if tmpBuffer.count > 1024 {
+            //Something Wrong
+            self.resendCMD()
+        }
+        // Stage 1
+        var new = self.deviceLinkDescriptor.setDeviceLinkDescriptor(array: Array(tmpBuffer))
+        if new > 0 {
+            //print(tmpBuffer)
+            tmpBuffer = Array(tmpBuffer[new..<tmpBuffer.count])
+            //print(tmpBuffer)
+        }
+        guard self.deviceLinkDescriptor.connected > 0 else { return }
+        new = self.link.setLink(array: Array(tmpBuffer))
+        if new > 0 {
+            //print(tmpBuffer)
+            tmpBuffer = Array(tmpBuffer[new..<tmpBuffer.count])
+            self.update()
+        }
     }
 }
