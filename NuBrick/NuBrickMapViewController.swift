@@ -20,15 +20,16 @@ class NuBrickMapViewController: UIViewController, CLLocationManagerDelegate, MKM
 
         // For use in foreground
 
-        self.locationManager.requestAlwaysAuthorization()
+        //self.locationManager.requestWhenInUseAuthorization()
         
         map.delegate = self
         map.mapType = .standard
         map.isZoomEnabled = true
         map.isScrollEnabled = true
+        map.showsUserLocation = true;
         
         switch CLLocationManager.authorizationStatus() {
-        case .authorizedAlways:
+        case .authorizedWhenInUse:
                 locationManager.delegate = self
                 locationManager.desiredAccuracy = kCLLocationAccuracyBest
                 locationManager.startUpdatingLocation()
@@ -54,33 +55,25 @@ class NuBrickMapViewController: UIViewController, CLLocationManagerDelegate, MKM
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        map.showsUserLocation = true;
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        map.showsUserLocation = false
+        //map.showsUserLocation = false
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        print(status)
-        switch status {
-        case .authorizedAlways:
-            locationManager.startUpdatingLocation()
-            break
-        default:
-            self.locationManager.requestAlwaysAuthorization()
-            break
-        }
-    }
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         let newRegion = MKCoordinateRegion(center: locValue, span: MKCoordinateSpanMake(0.02, 0.02))
         map.setRegion(newRegion, animated: true)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        print(status)
     }
     /*
     // MARK: - Navigation

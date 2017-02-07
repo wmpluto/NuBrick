@@ -10,11 +10,14 @@ import UIKit
 import Foundation
 import Photos
 import AVFoundation
+import CoreLocation
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let locationManager = CLLocationManager()
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -72,6 +75,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             PHPhotoLibrary.requestAuthorization({_ in })
             break
         default:
+            break
+        }
+        
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedWhenInUse:
+            break
+        default:
+            self.locationManager.requestWhenInUseAuthorization()
             break
         }
     }

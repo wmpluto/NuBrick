@@ -430,7 +430,7 @@
         <!--Nu Brick Map View Controller-->
         <scene sceneID="NS4-vi-fgw">
             <objects>
-                <viewController id="3xw-60-Qr7" customClass="NuBrickMapViewController" customModule="NuBrick" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="3xw-60-Qr7" customClass="NuBrickMapViewController" customModule="NuBrick" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vwM-6R-9AY"/>
                         <viewControllerLayoutGuide type="bottom" id="j0f-Ge-1io"/>

@@ -74,6 +74,7 @@ class SettingTableViewController: UITableViewController {
         dl = dl + String(format: GAS_SCENARIO_CMDS, flag, flag)
         print(dl)
         self.peripheral.writeValue(dl.data(using: .ascii)!, for: self.writeCharacteristic, type: .withResponse)
+        self.peripheral.delegate = nil
     }
 
     override func didReceiveMemoryWarning() {
