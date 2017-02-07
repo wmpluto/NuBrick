@@ -149,7 +149,7 @@ class SettingTableViewController: UITableViewController {
             }
             break
         case 2:
-            if indexPath.row == 1 {
+            if indexPath.row == 0 {
                 print("reconncet ble")
                 _ = self.navigationController?.popToRootViewController(animated: true)
             }
