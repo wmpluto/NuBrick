@@ -116,6 +116,7 @@ class AHRSViewController: SensorViewController {
     */
     override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         super.peripheral(peripheral, didUpdateValueFor: characteristic, error: error)
+        
         //Skip 2nd Stage Try to Get 3rd Stage After 1st Stage
         guard self.deviceDescriptor.rptDescLeng > 0 else { return }
         let new = self.ahrs.setAHRS(array: Array(tmpBuffer))

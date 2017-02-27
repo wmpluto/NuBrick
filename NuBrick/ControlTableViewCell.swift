@@ -39,6 +39,7 @@ class ControlTableViewCell: UITableViewCell {
         self.valueLabel.text = String(data.getting)
         self.slide.maximumValue = Float(data.setting.max)
         self.slide.minimumValue = Float(data.setting.min)
+        self.slide.value = Float(data.getting)
     }
     
     @IBAction func valueChanged(_ sender: UISlider) {

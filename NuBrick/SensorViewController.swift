@@ -31,6 +31,8 @@ class SensorViewController: UIViewController, ControlCellDelegate {
     var modifyCmds: [String: Int] = [:]
     var M : [String: String] = [:]
     
+    var deadTime = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -46,6 +48,7 @@ class SensorViewController: UIViewController, ControlCellDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        deadTime = 0;
         self.progressHUD?.textLabel.text = "Getting \(sensor) Data..."
         self.progressHUD?.show(in: self.view, animated: true)
     }
@@ -84,6 +87,10 @@ class SensorViewController: UIViewController, ControlCellDelegate {
             Timer.scheduledTimer(timeInterval: 3, target:self, selector: #selector(self.sendModifyCMD), userInfo: nil, repeats: false)
         }
         modifyCmds[slide] = value
+        deadTime = 1
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
+            self.deadTime = 0
+        }
     }
     
     func sendModifyCMD() {
@@ -103,7 +110,6 @@ class SensorViewController: UIViewController, ControlCellDelegate {
     
     func update() {
         print("Update Sensor Status")
-        
     }
 
     /*
@@ -155,6 +161,7 @@ extension SensorViewController: CBPeripheralDelegate {
             tmpBuffer = Array(tmpBuffer[new..<tmpBuffer.count])
             //print(tmpBuffer)
         }
+        guard self.deadTime == 0 else { print("dead time");tmpBuffer = [];return }
     }
 }
 

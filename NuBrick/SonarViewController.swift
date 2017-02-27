@@ -109,7 +109,8 @@ class SonarViewController: SensorViewController {
             tmpBuffer = Array(tmpBuffer[new..<tmpBuffer.count])
             //print("tmpBuffer after:\(tmpBuffer)")
             self.progressHUD?.dismiss()
-            Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(self.update), userInfo: nil, repeats: true)
+            //Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(self.update), userInfo: nil, repeats: true)
+            self.update()
         }
     }
 

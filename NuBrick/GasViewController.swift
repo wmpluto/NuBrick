@@ -112,9 +112,10 @@ class GasViewController: SensorViewController {
                 self.set_a.setColor(UIColor.red)
                 
                 self.lineChartView.data = LineChartData(dataSets: [self.set_a])
-                Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(self.update), userInfo: nil, repeats: true)
+                //Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(self.update), userInfo: nil, repeats: true)
                 self.progressHUD?.dismiss()
             }
+            self.update()
         }
         
     }
