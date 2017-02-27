@@ -65,8 +65,8 @@ let BUZZERM        = [
     "Period":         "@mz15%04d\r",
     "Duty":           "@mz16%02d\r",
     "Latency":        "@mz17%02d\r",
-    "StartFlag":      "@mz30%02d\r",
-    "StopFlag":       "@mz31%02d\r",
+    "StartFlag":      "@mz31%02d\r",
+    "StopFlag":       "@mz32%02d\r",
 ]
 
 let LEDM           = [
@@ -77,8 +77,8 @@ let LEDM           = [
     "Period":         "@ml15%04d\r",
     "Duty":           "@ml16%02d\r",
     "Latency":        "@ml17%02d\r",
-    "StartFlag":      "@ml30%02d\r",
-    "StopFlag":       "@ml31%02d\r",
+    "StartFlag":      "@ml31%02d\r",
+    "StopFlag":       "@ml32%02d\r",
 ]
 
 let AHRSM          =  [
