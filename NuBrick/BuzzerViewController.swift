@@ -102,12 +102,12 @@ class BuzzerViewController: SensorViewController {
         
         var cache: [SControl] = []
         cache.append(SControl(content: "SleepPeriod", setting: TIDDATA(value: 0, min: 0, max: 2048), getting: self.buzzer.sleepPeriod))
-        cache.append(SControl(content: "Volume", setting: TIDDATA(value: 0, min: 0, max: 100), getting: self.buzzer.sleepPeriod))
-        cache.append(SControl(content: "Tone", setting: TIDDATA(value: 0, min: 0, max: 5000), getting: self.buzzer.sleepPeriod))
-        cache.append(SControl(content: "Song", setting: TIDDATA(value: 0, min: 0, max: 2), getting: self.buzzer.sleepPeriod))
-        cache.append(SControl(content: "Period", setting: TIDDATA(value: 0, min: 0, max: 2048), getting: self.buzzer.sleepPeriod))
-        cache.append(SControl(content: "Duty", setting: TIDDATA(value: 0, min: 0, max: 100), getting: self.buzzer.sleepPeriod))
-        cache.append(SControl(content: "Latency", setting: TIDDATA(value: 0, min: 0, max: 60), getting: self.buzzer.sleepPeriod))
+        cache.append(SControl(content: "Volume", setting: TIDDATA(value: 0, min: 0, max: 100), getting: self.buzzer.volume))
+        cache.append(SControl(content: "Tone", setting: TIDDATA(value: 0, min: 0, max: 5000), getting: self.buzzer.tone))
+        cache.append(SControl(content: "Song", setting: TIDDATA(value: 0, min: 0, max: 2), getting: self.buzzer.song))
+        cache.append(SControl(content: "Period", setting: TIDDATA(value: 0, min: 0, max: 2048), getting: self.buzzer.period))
+        cache.append(SControl(content: "Duty", setting: TIDDATA(value: 0, min: 0, max: 100), getting: self.buzzer.duty))
+        cache.append(SControl(content: "Latency", setting: TIDDATA(value: 0, min: 0, max: 60), getting: self.buzzer.latency))
         self.scontrols = cache
         self.tableView?.reloadData()
     }

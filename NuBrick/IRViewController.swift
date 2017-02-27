@@ -88,10 +88,11 @@ class IRViewController: SensorViewController {
         cache.append(SControl(content: "SleepPeriod", setting: TIDDATA(value: 0, min: 0, max: 2048), getting: self.ir.sleepPeriod))
         cache.append(SControl(content: "LearnedData", setting: TIDDATA(value: 0, min: 0, max: 6), getting: self.ir.learnedData))
         cache.append(SControl(content: "UsingDataType", setting: TIDDATA(value: 0, min: 0, max: 1), getting: self.ir.useDataType))
-        cache.append(SControl(content: "SendOriginalNumber", setting: TIDDATA(value: 0, min: 0, max: 1), getting: self.ir.sendIRFlag))
-        cache.append(SControl(content: "Period", setting: TIDDATA(value: 0, min: 0, max: 2048), getting: self.ir.sleepPeriod))
-        cache.append(SControl(content: "Duty", setting: TIDDATA(value: 0, min: 0, max: 2048), getting: self.ir.sleepPeriod))
-        cache.append(SControl(content: "Latency", setting: TIDDATA(value: 0, min: 0, max: 2048), getting: self.ir.sleepPeriod))
+        cache.append(SControl(content: "NumberofOriginalData", setting: TIDDATA(value: 0, min: 0, max: 2), getting: self.ir.originalDataNum))
+        cache.append(SControl(content: "NumberofLearnedData", setting: TIDDATA(value: 0, min: 0, max: 2048), getting: self.ir.learnedDataNum))
+        cache.append(SControl(content: "ReceiveData", setting: TIDDATA(value: 0, min: 0, max: 6), getting: self.ir.receiveData))
+        cache.append(SControl(content: "SendIRFlag", setting: TIDDATA(value: 0, min: 0, max: 1), getting: self.ir.sendIRFlag))
+        cache.append(SControl(content: "LearnIRFlag", setting: TIDDATA(value: 0, min: 0, max: 1), getting: self.ir.learnIRFlag))
         self.scontrols = cache
         self.tableView?.reloadData()
     }
