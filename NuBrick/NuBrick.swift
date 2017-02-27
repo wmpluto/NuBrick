@@ -64,7 +64,9 @@ let BUZZERM        = [
     "Song":           "@mz14%02d\r",
     "Period":         "@mz15%04d\r",
     "Duty":           "@mz16%02d\r",
-    "Latency":        "@mz17%02d\r"
+    "Latency":        "@mz17%02d\r",
+    "StartFlag":      "@mz30%02d\r",
+    "StopFlag":       "@mz31%02d\r",
 ]
 
 let LEDM           = [
@@ -74,7 +76,9 @@ let LEDM           = [
     "Blink":          "@ml14%02d\r",
     "Period":         "@ml15%04d\r",
     "Duty":           "@ml16%02d\r",
-    "Latency":        "@ml17%02d\r"
+    "Latency":        "@ml17%02d\r",
+    "StartFlag":      "@ml30%02d\r",
+    "StopFlag":       "@ml31%02d\r",
 ]
 
 let AHRSM          =  [
@@ -103,13 +107,14 @@ let KEYM           = [
 ]
 
 let IRM            = [
-    "SleepPeriod":    "@ml11%04d\r",
-    "LearnedData":    "@ml12%02d\r",
-    "UsingDataType":  "@ml13%02d\r",
-    "SendOriginalNumber":"@ml14%02d\r",
-    "Period":         "@ml15%02d\r",
-    "Duty":           "@ml16%02d\r",
-    "Latency":        "@ml17%02d\r"
+    "SleepPeriod":            "@ml11%04d\r",
+    "LearnedData":            "@ml12%02d\r",
+    "UsingDataType":          "@ml13%02d\r",
+    "NumberofOriginalData":   "@ml14%02d\r",
+    "NumberofLearnedData":    "@ml15%02d\r",
+    "ReceiveData":            "@ml16%02d\r",
+    "SendIRFlag":             "@ml17%02d\r",
+    "LearnIRFlag":            "@ml18%02d\r"
 ]
 
 //6 Default Scenarios

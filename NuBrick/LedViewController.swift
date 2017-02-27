@@ -107,6 +107,8 @@ class LedViewController: SensorViewController {
         cache.append(SControl(content: "Period", setting: TIDDATA(value: 0, min: 0, max: 2048), getting: self.led.period))
         cache.append(SControl(content: "Duty", setting: TIDDATA(value: 0, min: 0, max: 100), getting: self.led.duty))
         cache.append(SControl(content: "Latency", setting: TIDDATA(value: 0, min: 0, max: 60), getting: self.led.latency))
+        cache.append(SControl(content: "StartFlag", setting: TIDDATA(value: 0, min: 0, max: 1), getting: self.led.startFlag))
+        cache.append(SControl(content: "StopFlag", setting: TIDDATA(value: 0, min: 0, max: 1), getting: self.led.stopFlag))
         self.scontrols = cache
         self.tableView?.reloadData()
     }

@@ -108,6 +108,8 @@ class BuzzerViewController: SensorViewController {
         cache.append(SControl(content: "Period", setting: TIDDATA(value: 0, min: 0, max: 2048), getting: self.buzzer.period))
         cache.append(SControl(content: "Duty", setting: TIDDATA(value: 0, min: 0, max: 100), getting: self.buzzer.duty))
         cache.append(SControl(content: "Latency", setting: TIDDATA(value: 0, min: 0, max: 60), getting: self.buzzer.latency))
+        cache.append(SControl(content: "StartFlag", setting: TIDDATA(value: 0, min: 0, max: 1), getting: self.buzzer.startFlag))
+        cache.append(SControl(content: "StopFlag", setting: TIDDATA(value: 0, min: 0, max: 1), getting: self.buzzer.stopFlag))
         self.scontrols = cache
         self.tableView?.reloadData()
     }
