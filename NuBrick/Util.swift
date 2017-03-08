@@ -66,31 +66,3 @@ extension UINavigationController {
         return self.visibleViewController!.topMostViewController()
     }
 }
-
-
-
-// Global misc functions
-
-func isValidEmailAddress(email: String) -> Bool {
-    let regExPattern = "[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}"
-    do {
-        let regEx = try NSRegularExpression(pattern: regExPattern, options: .caseInsensitive)
-        let regExMatches = regEx.numberOfMatches(in: email, options: [], range: NSMakeRange(0, email.characters.count))
-        return regExMatches == 0 ? false : true
-    }
-    catch {
-        return false
-    }
-}
-
-func getPrivateDocumentsDirectory() -> String? {
-    
-    let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-    if paths.count == 0 { print("No private directory"); return nil }
-    var documentsDirectory = paths[0]
-    documentsDirectory = (documentsDirectory as NSString).appendingPathComponent("Private Documents")
-    if let _ = try? FileManager.default.createDirectory(atPath: documentsDirectory, withIntermediateDirectories: true, attributes: nil) {
-        return documentsDirectory
-    }
-    return nil
-}

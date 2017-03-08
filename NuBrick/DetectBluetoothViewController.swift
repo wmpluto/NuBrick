@@ -237,7 +237,7 @@ extension DetectBluetoothViewController: CBCentralManagerDelegate {
         }
         
         if navigationController?.topMostViewController() != self {
-            showSimpleAlertWithTitle(title: applicationTitle, message: "NuBrick disconnected!", viewController: self, OKhandler: { _ in
+            showSimpleAlertWithTitle(title: applicationTitle, message: "NuBrick Disconnected!", viewController: self, OKhandler: { _ in
                 _ = self.navigationController?.popToViewController(self, animated: true)
             })
         }
