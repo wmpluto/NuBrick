@@ -1,12 +1,13 @@
 //
 //  DeviceLinkCell.swift
 //  NuBrick
-//
+//  传感器与输出单元(LED & Buzzer)绑定 Cell 类型
 //  Created by Eve on 20/1/2017.
 //  Copyright © 2017 nuvoton. All rights reserved.
 //
 
 import UIKit
+
 
 protocol LinkChangeDelegate {
     func buzzerLinkChange(status: Bool, device: String)

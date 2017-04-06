@@ -1,7 +1,7 @@
 //
 //  PhotographWhenAlarm.swift
 //  NuBrick
-//
+//  报警时进行拍照
 //  Created by mwang on 22/01/2017.
 //  Copyright © 2017 nuvoton. All rights reserved.
 //
@@ -9,6 +9,7 @@
 import UIKit
 import Photos
 import AVFoundation
+
 
 let photoAlarm = PhotographWhenAlarm()
 
@@ -40,6 +41,7 @@ class PhotographWhenAlarm: NSObject, AVCapturePhotoCaptureDelegate {
         }
     }
     
+    // Start alarm after delay time
     func startAlarm(delay: Int) {
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay), execute: {
             let settingsForMonitoring = AVCapturePhotoSettings()
@@ -50,6 +52,7 @@ class PhotographWhenAlarm: NSObject, AVCapturePhotoCaptureDelegate {
         })
     }
     
+    // Store captured photo after alarm
     func capture(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
         if let photoSampleBuffer = photoSampleBuffer {
             let photoData = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: photoSampleBuffer, previewPhotoSampleBuffer: previewPhotoSampleBuffer)

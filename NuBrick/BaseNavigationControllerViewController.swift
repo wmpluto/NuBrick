@@ -1,15 +1,17 @@
 //
 //  BaseNavigationControllerViewController.swift
 //  NuBrick
-//
+//  Navigation 默认设置
 //  Created by mwang on 15/12/2016.
 //  Copyright © 2016 nuvoton. All rights reserved.
 //
 
 import UIKit
 
+
 class BaseNavigationControllerViewController: UINavigationController {
 
+    // Not used now
     override func viewDidLoad() {
         super.viewDidLoad()
 

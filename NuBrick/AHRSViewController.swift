@@ -1,7 +1,7 @@
 //
 //  AHRSViewController.swift
 //  NuBrick
-//
+//  AHRS 界面
 //  Created by mwang on 09/01/2017.
 //  Copyright © 2017 nuvoton. All rights reserved.
 //
@@ -10,6 +10,8 @@ import UIKit
 import CoreBluetooth
 import JGProgressHUD
 
+
+// AHRS 3rd stage data structure
 struct AHRS {
     var length:         UInt16 = 10
     var sleepPeriod:    UInt16 = 0
@@ -36,7 +38,7 @@ struct AHRS {
                 }
                 
                 if i < array.count {
-                    print("There is 3rd stage: \n\(self)")
+                    // print("There is 3rd stage: \n\(self)")
                     return i
                 } else {
                     return 0
@@ -49,7 +51,7 @@ struct AHRS {
     }
 }
 
-
+// AHRS View Controller
 class AHRSViewController: SensorViewController {
     
     @IBOutlet weak var rotationIMG: UIImageView!
@@ -60,8 +62,11 @@ class AHRSViewController: SensorViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         M = AHRSM
+        // Add a table for parameter
         super.addTable(point: CGPoint(x: 0, y: rotationIMG.frame.maxY))
+        // Send AHRSCMD
         self.peripheral.writeValue(AHRSCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
 
@@ -75,12 +80,14 @@ class AHRSViewController: SensorViewController {
         self.peripheral.writeValue(AHRSCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     
+    // Update the table & img
     override func update() {
         if self.ahrs.flag == 1 {
             basic1.toValue = 135 / 360 * M_PI * 2
         } else {
             basic1.toValue = 0 * M_PI * 2
         }
+        
         basic1.repeatCount = 1
         basic1.duration = 1.0
         basic1.autoreverses = false
@@ -105,15 +112,7 @@ class AHRSViewController: SensorViewController {
         self.tableView?.reloadData()
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    // Receive ble data
     override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         super.peripheral(peripheral, didUpdateValueFor: characteristic, error: error)
         

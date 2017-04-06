@@ -1,7 +1,7 @@
 //
 //  BatteryViewController.swift
 //  NuBrick
-//
+//  电池界面
 //  Created by mwang on 09/01/2017.
 //  Copyright © 2017 nuvoton. All rights reserved.
 //
@@ -10,6 +10,8 @@ import UIKit
 import CoreBluetooth
 import JGProgressHUD
 
+
+// Battery 3rd stage data structure
 struct Battery {
     var length:        UInt16 = 11
     var sleepPeriod:   UInt16 = 0
@@ -49,8 +51,8 @@ struct Battery {
     }
 }
 
+// Battery View Controller
 class BatteryViewController: SensorViewController {
-    
     
     @IBOutlet weak var rotationIMG: UIImageView!
     @IBOutlet weak var bgView: UIView!
@@ -62,7 +64,9 @@ class BatteryViewController: SensorViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         M = BATTERYM
+        // Add a table for parameter
         super.addTable(point: CGPoint(x: 0, y: bgView.frame.maxY))
+        // Send Battery CMD
         self.peripheral.writeValue(BATTERYCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
 
@@ -76,6 +80,7 @@ class BatteryViewController: SensorViewController {
         self.peripheral.writeValue(BATTERYCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     
+    // Update the table & img
     override func update() {
         super.update()
         let value = Int(self.battery.batteryValue)
@@ -102,6 +107,7 @@ class BatteryViewController: SensorViewController {
         self.tableView?.reloadData()
     }
     
+    // the wave effect for battery status
     func waveEffect(value: Int) {
         
         let basic = CABasicAnimation(keyPath: "transform.rotation")
@@ -152,7 +158,8 @@ class BatteryViewController: SensorViewController {
             self.waveImageView.frame.origin.x = 0;
         })
     }
-
+    
+    // Receive ble data
     override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         super.peripheral(peripheral, didUpdateValueFor: characteristic, error: error)
         
@@ -172,15 +179,5 @@ class BatteryViewController: SensorViewController {
             self.update()
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 

@@ -1,7 +1,7 @@
 //
 //  SensorViewController.swift
 //  NuBrick
-//
+//  传感器界面父类，所有传感器界面都继承此类以实现表格的添加处理和蓝牙部分数据的处理
 //  Created by Eve on 14/1/2017.
 //  Copyright © 2017 nuvoton. All rights reserved.
 //
@@ -41,7 +41,7 @@ class SensorViewController: UIViewController, ControlCellDelegate {
         
         self.automaticallyAdjustsScrollViewInsets = false
         self.peripheral.delegate = self
-        //self.peripheral.writeValue(LEDCMD!, for: self.writeCharacteristic, type: .withResponse)
+        // Start streaming
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
             self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
         }
@@ -55,6 +55,7 @@ class SensorViewController: UIViewController, ControlCellDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        // Pause streaming befor view disappear
         self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     
@@ -63,6 +64,7 @@ class SensorViewController: UIViewController, ControlCellDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    // Add a table for 'Control Cell' & 'Status Cell'
     func addTable(point: CGPoint) {
         self.tableView = UITableView(frame: CGRect(x: 10, y: point.y, width: self.view.frame.width - 20, height: self.view.frame.height - 15 - point.y))
         self.tableView?.delegate = self
@@ -74,7 +76,7 @@ class SensorViewController: UIViewController, ControlCellDelegate {
     }
     
     func resendCMD() {
-        print("Something Wrong Resend CMD")
+        //print("Something Wrong Resend CMD")
         self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
         //self.peripheral.writeValue(LEDCMD!, for: self.writeCharacteristic, type: .withResponse)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.6) {
@@ -82,6 +84,7 @@ class SensorViewController: UIViewController, ControlCellDelegate {
         }
     }
     
+    // Send CMDs after the slide value update
     func slideUpdate(value: Int, slide: String) {
         if modifyCmds.count == 0 {
             Timer.scheduledTimer(timeInterval: 3, target:self, selector: #selector(self.sendModifyCMD), userInfo: nil, repeats: false)
@@ -93,6 +96,7 @@ class SensorViewController: UIViewController, ControlCellDelegate {
         }
     }
     
+    // Convert the CMD arrary to CMD string, then send it out
     func sendModifyCMD() {
         var tmp: String = ""
         let keys = Array(modifyCmds.keys)
@@ -108,22 +112,13 @@ class SensorViewController: UIViewController, ControlCellDelegate {
         modifyCmds = [:]
     }
     
+    // Update function
     func update() {
-        print("Update Sensor Status")
+        //print("Update Sensor Status")
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
+// CB Peripheral Delegate for ble
 extension SensorViewController: CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         print("did discover services")
@@ -144,6 +139,7 @@ extension SensorViewController: CBPeripheralDelegate {
         }
     }
     
+    // Receive ble data
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         print("did update value for characteristic")
         guard characteristic.uuid == BTReadUUID else { return }
@@ -208,41 +204,7 @@ extension SensorViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        // Nothing to do here
     }
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
 }
 

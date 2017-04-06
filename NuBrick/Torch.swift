@@ -1,13 +1,14 @@
 //
 //  Torch.swift
 //  Torch
-//
+//  报警时打开闪光灯
 //  Created by mwang on 23/01/2017.
 //  Copyright © 2017 nuvoton. All rights reserved.
 //
 
 import UIKit
 import AVFoundation
+
 
 class Torch: NSObject {
     let queue = DispatchQueue(label: "torch.queue")
@@ -30,8 +31,10 @@ class Torch: NSObject {
         }
     }
     
+    // Start alarm after delay time
     func startAlarm(delay: Int) {
         queue.asyncAfter(deadline: .now() + .seconds(delay), execute: {
+            // the SOS signal: three short, three long, and three more short
             self.short()
             self.short()
             self.short()
@@ -44,6 +47,7 @@ class Torch: NSObject {
         })
     }
     
+    // Long interval
     private func long() {
         self.turn(status: true)
         Thread.sleep(forTimeInterval: 2)
@@ -51,6 +55,7 @@ class Torch: NSObject {
         Thread.sleep(forTimeInterval: 0.5)
     }
     
+    // Short interval
     private func short() {
         self.turn(status: true)
         Thread.sleep(forTimeInterval: 1)

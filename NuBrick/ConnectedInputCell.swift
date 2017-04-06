@@ -1,12 +1,13 @@
 //
 //  ConnectedInputCell.swift
 //  NuBrick
-//
+//  首页输入模块对应的 Cell 类型
 //  Created by Eve on 15/1/2017.
 //  Copyright © 2017 nuvoton. All rights reserved.
 //
 
 import UIKit
+
 
 class ConnectedInputCell: UITableViewCell {
 

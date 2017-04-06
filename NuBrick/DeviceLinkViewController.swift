@@ -1,7 +1,7 @@
 //
 //  DeviceLinkViewController.swift
 //  NuBrick
-//
+//  报警设备绑定页面
 //  Created by Eve on 20/1/2017.
 //  Copyright © 2017 nuvoton. All rights reserved.
 //
@@ -11,12 +11,14 @@ import Foundation
 import CoreBluetooth
 import JGProgressHUD
 
+// Device link data structure
 struct DeviceLink {
     var name: String = ""
     var buzzerLink: Bool = false
     var ledLink: Bool = false
 }
 
+// Link status 3rd data structure
 struct Link {
     var length:          UInt16 = 6
     var buzzerLinkStatus:     UInt16 = 0
@@ -52,11 +54,11 @@ struct Link {
     }
 }
 
+// Device Link View Controller
 class DeviceLinkViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     let progressHUD = JGProgressHUD(style: .dark)
-    
     
     var peripheral: CBPeripheral!
     var writeCharacteristic: CBCharacteristic!
@@ -75,7 +77,7 @@ class DeviceLinkViewController: UIViewController {
         tableView?.register(UINib(nibName: "DeviceLinkCell", bundle: nil), forCellReuseIdentifier: "devicelink")
         
         deviceLinks = Custome_Scenario_Senors.map({DeviceLink(name: $0, buzzerLink: false, ledLink: false)})
-        
+        // Request device link status
         self.peripheral.writeValue(DLCMD!, for: self.writeCharacteristic, type: .withResponse)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.6) {
             self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
@@ -89,7 +91,8 @@ class DeviceLinkViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print(deviceLinks)
+        //print(deviceLinks)
+        // Send the modified device link to NuBrick
         self.peripheral.writeValue(modifyCMD(data: deviceLinks).data(using: .ascii)!, for: self.writeCharacteristic, type: .withResponse)
     }
     
@@ -97,18 +100,7 @@ class DeviceLinkViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
     func resendCMD() {
         print("Something Wrong Resend CMD")
         self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
@@ -118,6 +110,7 @@ class DeviceLinkViewController: UIViewController {
         }
     }
     
+    // Convert the data structure to cmd
     func modifyCMD(data: [DeviceLink]) -> String {
         var tb = ""
         var tl = ""
@@ -127,10 +120,11 @@ class DeviceLinkViewController: UIViewController {
             let ml = String(format: "@ml4%d%d\r", index, data[index].ledLink ? 1 : 0)
             tl.append(ml)
         }
-        print(tb + tl)
+        //print(tb + tl)
         return tb + tl
     }
     
+    // Update the table
     func update() {
         self.analysisStatus()
         self.tableView.reloadData()
@@ -140,6 +134,7 @@ class DeviceLinkViewController: UIViewController {
         })
     }
     
+    // Analysis the data from NuBrick
     func analysisStatus() {
         for index in 0..<deviceLinks.count {
             deviceLinks[index].buzzerLink = uintToBool(origin: self.link.buzzerLinkStatus, i: index)
@@ -187,40 +182,6 @@ extension DeviceLinkViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
 }
 
 extension DeviceLinkViewController: CBPeripheralDelegate {
@@ -252,6 +213,7 @@ extension DeviceLinkViewController: CBPeripheralDelegate {
     }
 }
 
+// Link Change Delegate
 extension DeviceLinkViewController: LinkChangeDelegate {
     func buzzerLinkChange(status: Bool, device: String) {
         for index in 0..<deviceLinks.count {

@@ -1,7 +1,7 @@
 //
 //  IRViewController.swift
 //  NuBrick
-//
+//  红外界面
 //  Created by mwang on 09/01/2017.
 //  Copyright © 2017 nuvoton. All rights reserved.
 //
@@ -9,6 +9,8 @@
 import UIKit
 import CoreBluetooth
 
+
+// IR data structure
 struct IR {
     var length:          UInt16 = 15
     var sleepPeriod:     UInt16 = 0
@@ -56,6 +58,7 @@ struct IR {
     }
 }
 
+// IR View Controller
 class IRViewController: SensorViewController {
     
     var ir = IR()
@@ -64,7 +67,9 @@ class IRViewController: SensorViewController {
         super.viewDidLoad()
         
         M = IRM
+        // Add a table for parameter
         super.addTable(point: CGPoint(x: 0, y: 65))
+        // Send IRCMD
         self.peripheral.writeValue(IRCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     
@@ -78,6 +83,7 @@ class IRViewController: SensorViewController {
         self.peripheral.writeValue(IRCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     
+    // Update table
     override func update() {
         super.update()
         var tmp:[SStatus] = []
@@ -96,15 +102,8 @@ class IRViewController: SensorViewController {
         self.scontrols = cache
         self.tableView?.reloadData()
     }
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+
+    // Receive ble data
     override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         super.peripheral(peripheral, didUpdateValueFor: characteristic, error: error)
         

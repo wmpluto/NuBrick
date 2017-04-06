@@ -1,7 +1,7 @@
 //
 //  KeyViewController.swift
 //  NuBrick
-//
+//  按键界面
 //  Created by mwang on 09/01/2017.
 //  Copyright © 2017 nuvoton. All rights reserved.
 //
@@ -9,6 +9,8 @@
 import UIKit
 import CoreBluetooth
 
+
+// Key data structure
 struct Key {
     var length:          UInt16 = 7
     var sleepPeriod:     UInt16 = 0
@@ -44,7 +46,7 @@ struct Key {
     }
 }
 
-
+// Key View Controller
 class KeyViewController: SensorViewController {
     
     var key = Key()
@@ -53,7 +55,9 @@ class KeyViewController: SensorViewController {
         super.viewDidLoad()
 
         M = KEYM
+        // Add a table for parameter
         super.addTable(point: CGPoint(x: 0, y: 65))
+        // Send KEYCMD
         self.peripheral.writeValue(KEYCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
 
@@ -67,6 +71,7 @@ class KeyViewController: SensorViewController {
         self.peripheral.writeValue(KEYCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     
+    // Update table
     override func update() {
         super.update()
         var tmp:[SStatus] = []
@@ -78,15 +83,8 @@ class KeyViewController: SensorViewController {
         self.scontrols = cache
         self.tableView?.reloadData()
     }
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+ 
+    // Receive ble data
     override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         super.peripheral(peripheral, didUpdateValueFor: characteristic, error: error)
         
@@ -103,6 +101,4 @@ class KeyViewController: SensorViewController {
             self.update()
         }
     }
-    
-    
 }

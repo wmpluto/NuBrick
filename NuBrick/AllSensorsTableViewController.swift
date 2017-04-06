@@ -1,7 +1,7 @@
 //
 //  AllSensorsTableViewController.swift
 //  NuBrick
-//
+//  显示当前已连接的传感器界面
 //  Created by mwang on 16/12/2016.
 //  Copyright © 2016 nuvoton. All rights reserved.
 //
@@ -11,6 +11,7 @@ import CoreBluetooth
 import JGProgressHUD
 import AVFoundation
 import Photos
+
 
 class AllSensorsTableViewController: UITableViewController {
     var peripheral: CBPeripheral!
@@ -36,7 +37,9 @@ class AllSensorsTableViewController: UITableViewController {
         //self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.navigationItem.title = "NuBrick"
         self.addSettingButton(name: "setting")
+        // Send SPCMD
         self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
+        // Photo alarm only support under this view
         photoAlarm.createAlarm()
     }
     
@@ -47,7 +50,9 @@ class AllSensorsTableViewController: UITableViewController {
         progressHUD?.show(in: self.view, animated: true)
         
         self.peripheral.delegate = self
+        // Send TXCMD to request data from NuBrick
         self.peripheral.writeValue(TXCMD!, for: self.writeCharacteristic, type: .withResponse)
+        // Wait 1s, then start streaming
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
             self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
         }
@@ -56,6 +61,7 @@ class AllSensorsTableViewController: UITableViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //self.peripheral.delegate = nil
+        // Send SPCMD before this view disappear
         self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
         progressHUD?.dismiss()
     }
@@ -66,6 +72,7 @@ class AllSensorsTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // Resend CMD
     func resendCMD() {
         print("Something Wrong Resend CMD")
         self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
@@ -75,6 +82,7 @@ class AllSensorsTableViewController: UITableViewController {
         }
     }
     
+    // Add a button on navigation bar
     func addSettingButton(name: String) {
         let btn1 = UIButton(type: .custom)
         btn1.setImage(UIImage(named: name), for: .normal)
@@ -85,13 +93,16 @@ class AllSensorsTableViewController: UITableViewController {
         self.navigationItem.setRightBarButtonItems([item1], animated: true)
     }
     
+    // Jump to the setting view
     func jumpSetting() {
         self.performSegue(withIdentifier: "toSettingView", sender: self)
     }
    
+    // Alarm function
     func alarm() {
         let flag: Bool = sensors.reduce(false, {$0 || $1.alarm})
         
+        // Music alarm function
         if flag && !(UserDefaults.standard.bool(forKey: MusicOn) as Bool!) && (UserDefaults.standard.bool(forKey: EnableMusic) as Bool!){
             UserDefaults.standard.set(true, forKey: MusicOn)
             UserDefaults.standard.synchronize()
@@ -102,7 +113,7 @@ class AllSensorsTableViewController: UITableViewController {
             music.startAlarm(delay: 1)
         }
         
-        
+        // Photo alarm function
         if flag && !(UserDefaults.standard.bool(forKey: CameraOn) as Bool!) && (UserDefaults.standard.bool(forKey: EnableCamera) as Bool!){
             UserDefaults.standard.set(true, forKey: CameraOn)
             UserDefaults.standard.synchronize()
@@ -113,6 +124,7 @@ class AllSensorsTableViewController: UITableViewController {
             photoAlarm.startAlarm(delay: 1)
         }
         
+        // Torch alarm function
         if flag && !(UserDefaults.standard.bool(forKey: TorchOn) as Bool!) && (UserDefaults.standard.bool(forKey: EnableTorch) as Bool!){
             UserDefaults.standard.set(true, forKey: TorchOn)
             UserDefaults.standard.synchronize()
@@ -182,14 +194,14 @@ class AllSensorsTableViewController: UITableViewController {
             s = outputs[indexPath.row]
         }
         
-        print("Did SelectRowAt\(s.name)")
+        //print("Did SelectRowAt\(s.name)")
         
         progressHUD?.textLabel.text = "Showing \(s.name)"
         progressHUD?.show(in: self.view, animated: true)
         
         self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-            // Your code with delay
+            // Jump to the sensor view
             switch s.name {
             case "ahrs":
                 self.performSegue(withIdentifier: "toAHRSView", sender: self)
@@ -226,48 +238,13 @@ class AllSensorsTableViewController: UITableViewController {
             }
         }
     }
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        // Pass the ble object to the new view controller.
         if  let vc = segue.destination as? AHRSViewController {
             vc.peripheral  = self.peripheral
             vc.writeCharacteristic = self.writeCharacteristic
@@ -341,6 +318,7 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
         }
     }
     
+    // Receive ble data
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         print("did update value for characteristic")
         guard characteristic.uuid == BTReadUUID else { return }
@@ -352,6 +330,7 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
             self.resendCMD()
         }
         
+        // Process the 1st stage data
         var new = self.indexReport.setIndexReport(array: Array(tmpBuffer))
         if new > 0 {
             print(tmpBuffer)
@@ -359,6 +338,7 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
             tmpBuffer = Array(tmpBuffer[new..<tmpBuffer.count])
         }
         
+        // Process the 2nd stage data
         guard self.indexData.start > 0 else { return }
         new = self.indexData.setIndexData(array: Array(tmpBuffer))
         if new > 0 {
@@ -368,6 +348,7 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
     }
     
     func updateTable() {
+        // Use tmp to store the sensor current status
         var tmp:[Sensor] = []
         tmp.append(Sensor(name: "battery", status: self.indexData.batteryStatus, alarm: self.indexData.batteryAlarm, connected: self.indexReport.devConnected))
         tmp.append(Sensor(name: "ahrs", status: self.indexData.ahrsStatus, alarm: self.indexData.ahrsAlarm, connected: self.indexReport.devConnected))
@@ -375,20 +356,26 @@ extension AllSensorsTableViewController: CBPeripheralDelegate {
         tmp.append(Sensor(name: "temp", status: self.indexData.tempStatus, alarm: self.indexData.tempAlarm, connected: self.indexReport.devConnected))
         tmp.append(Sensor(name: "humidity", status: self.indexData.humidityStatus, alarm: self.indexData.humidityAlarm, connected: self.indexReport.devConnected))
         tmp.append(Sensor(name: "gas", status: self.indexData.gasStatus, alarm: self.indexData.gasAlarm, connected: self.indexReport.devConnected))
+        // Pass the tmp to self.sensors
         self.sensors = tmp.filter({$0.connected})
         
         tmp = []
+        // Use tmp to store the output module current status
         tmp.append(Sensor(name: "buzzer", status: self.indexData.buzzerStatus, alarm: 0, connected: self.indexReport.devConnected))
         tmp.append(Sensor(name: "led", status: self.indexData.ledStatus, alarm: 0, connected: self.indexReport.devConnected))
+        
         self.outputs = tmp.filter({$0.connected})
         
         tmp = []
+        // Use tmp to store the input module current status
         tmp.append(Sensor(name: "ir", status: 0, alarm: 0, connected: self.indexReport.devConnected))
         tmp.append(Sensor(name: "key", status: 0, alarm: 0, connected: self.indexReport.devConnected))
+
         self.inputs = tmp.filter({$0.connected})
         
+        // Update the tableview & alarm status
         DispatchQueue.main.async {
-            print("update it")
+            //print("update it")
             self.progressHUD?.dismiss()
             self.alarm()
             self.tableView.reloadData()

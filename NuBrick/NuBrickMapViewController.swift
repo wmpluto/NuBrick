@@ -1,7 +1,7 @@
 //
 //  NuBrickMapViewController.swift
 //  NuBrick
-//
+//  地图显示界面
 //  Created by mwang on 17/01/2017.
 //  Copyright © 2017 nuvoton. All rights reserved.
 //
@@ -10,6 +10,8 @@ import UIKit
 import MapKit
 import CoreLocation
 
+
+// NuBrick Map View Controller
 class NuBrickMapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
     @IBOutlet weak var map: MKMapView!
@@ -19,9 +21,6 @@ class NuBrickMapViewController: UIViewController, CLLocationManagerDelegate, MKM
         super.viewDidLoad()
 
         // For use in foreground
-
-        //self.locationManager.requestWhenInUseAuthorization()
-        
         map.delegate = self
         map.mapType = .standard
         map.isZoomEnabled = true
@@ -40,17 +39,6 @@ class NuBrickMapViewController: UIViewController, CLLocationManagerDelegate, MKM
             self.locationManager.requestAlwaysAuthorization()
             break
         }
- 
-        /*
-        let spanX = 0.007
-        let spanY = 0.007
-        
-        let newRegion = MKCoordinateRegion(center:(locationManager.location?.coordinate)! , span: MKCoordinateSpanMake(spanX, spanY))
-        map.setRegion(newRegion, animated: true)
-        if let coor = map.userLocation.location?.coordinate{
-            map.setCenter(coor, animated: true)
-        }
- */
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,6 +54,7 @@ class NuBrickMapViewController: UIViewController, CLLocationManagerDelegate, MKM
         // Dispose of any resources that can be recreated.
     }
     
+    // Location Setting
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         let newRegion = MKCoordinateRegion(center: locValue, span: MKCoordinateSpanMake(0.02, 0.02))
@@ -75,14 +64,4 @@ class NuBrickMapViewController: UIViewController, CLLocationManagerDelegate, MKM
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         print(status)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

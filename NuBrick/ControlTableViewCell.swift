@@ -1,12 +1,13 @@
 //
 //  ControlTableViewCell.swift
 //  NuBrick
-//
+//  各模块参数控制 Cell 类型
 //  Created by Eve on 15/1/2017.
 //  Copyright © 2017 nuvoton. All rights reserved.
 //
 
 import UIKit
+
 
 protocol ControlCellDelegate {
     func slideUpdate(value: Int, slide: String)

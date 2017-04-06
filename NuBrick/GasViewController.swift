@@ -1,7 +1,7 @@
 //
 //  GasViewController.swift
 //  NuBrick
-//
+//  瓦斯界面
 //  Created by mwang on 09/01/2017.
 //  Copyright © 2017 nuvoton. All rights reserved.
 //
@@ -11,6 +11,7 @@ import CoreBluetooth
 import JGProgressHUD
 import Charts
 
+// Gas data structure
 struct Gas {
     var length:        UInt16 = 11
     var sleepPeriod:   UInt16 = 0
@@ -50,6 +51,7 @@ struct Gas {
     }
 }
 
+// Gas View Controller
 class GasViewController: SensorViewController {
     
     @IBOutlet weak var lineChartView: LineChartView!
@@ -63,7 +65,9 @@ class GasViewController: SensorViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         M = GASM
+        // Add a table for parameter
         super.addTable(point: CGPoint(x: 0, y: lineChartView.frame.maxY))
+        // Send GASCMD
         self.peripheral.writeValue(GASCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
 
@@ -77,6 +81,7 @@ class GasViewController: SensorViewController {
         self.peripheral.writeValue(GASCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     
+    // Update table & chart
     override func update() {
         super.update()
         self.lineChartView.data?.addEntry(ChartDataEntry(x: Double(self.chartNum), y: Double(self.gas.gasValue)), dataSetIndex: 0)
@@ -97,6 +102,7 @@ class GasViewController: SensorViewController {
         self.tableView?.reloadData()
     }
     
+    // Receive ble data
     override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         super.peripheral(peripheral, didUpdateValueFor: characteristic, error: error)
         //Skip 2nd Stage Try to Get 3rd Stage After 1st Stage
@@ -119,16 +125,6 @@ class GasViewController: SensorViewController {
         }
         
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
     

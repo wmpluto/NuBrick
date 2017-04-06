@@ -1,7 +1,7 @@
 //
 //  TemperatureViewController.swift
 //  NuBrick
-//
+//  温湿度界面
 //  Created by mwang on 29/12/2016.
 //  Copyright © 2016 nuvoton. All rights reserved.
 //
@@ -11,6 +11,8 @@ import Charts
 import CoreBluetooth
 import JGProgressHUD
 
+
+// Temperature & Humidity data structure
 struct TempHumi {
     var length:               UInt16 = 16
     var sleepPeriod:          UInt16 = 0
@@ -56,7 +58,7 @@ struct TempHumi {
     }
 }
 
-
+// Temperature View Controller
 class TemperatureViewController: SensorViewController {
     @IBOutlet weak var lineChartView: LineChartView!
     
@@ -70,7 +72,9 @@ class TemperatureViewController: SensorViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         M = TEMPHUMM
+        // Add a table for parameter
         super.addTable(point: CGPoint(x: 0, y: lineChartView.frame.maxY))
+        // Send TEMPHUMCMD
         self.peripheral.writeValue(TEMPHUMCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     
@@ -88,6 +92,7 @@ class TemperatureViewController: SensorViewController {
         self.peripheral.writeValue(TEMPHUMCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     
+    // Update chart & table
     override func update() {
         super.update()
         self.lineChartView.data?.addEntry(ChartDataEntry(x: Double(self.chartNum), y: Double(self.tempHumi.tempValue)), dataSetIndex: 0)
@@ -112,6 +117,7 @@ class TemperatureViewController: SensorViewController {
         self.tableView?.reloadData()
     }
     
+    // Receive ble data
     override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         super.peripheral(peripheral, didUpdateValueFor: characteristic, error: error)
         //Skip 2nd Stage Try to Get 3rd Stage After 1st Stage

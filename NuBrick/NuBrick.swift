@@ -1,7 +1,7 @@
 //
 //  NuBrick.swift
 //  NuBrick
-//
+//  NuBrick 相关常量, 协议相关常量及部分全局函数
 //  Created by mwang on 13/12/2016.
 //  Copyright © 2016 nuvoton. All rights reserved.
 //
@@ -578,6 +578,7 @@ struct DeviceLinkDescriptor {
     }
 }
 
+// Slide for controling
 struct SControl {
     var content: String = ""
     var setting = TIDDATA()
@@ -596,6 +597,7 @@ struct SControl {
     }
 }
 
+// Slide for showing status
 struct SStatus {
     var content: String = ""
     var getting: Int = 0
@@ -611,10 +613,12 @@ struct SStatus {
     }
 }
 
+// Convert 2 uint8 to 1 uint16
 func bytesToWord(head:UInt8, tail:UInt8) -> UInt16 {
     return UInt16(tail) << 8 | UInt16(head)
 }
 
+//
 func uintToBool(origin: UInt16, i: Int) -> Bool {
     if (origin & UInt16(1 << i)) > 0 {
         return true
@@ -622,17 +626,17 @@ func uintToBool(origin: UInt16, i: Int) -> Bool {
     return false
 }
 
+// 
 func invertInt(origin: Int) -> Int {
     let head = origin & 0x00ff
     let tail = origin >> 8
     return Int(head | tail)
 }
 
+// Increment
 prefix operator ++
 postfix operator ++
 
-
-// Increment
 prefix func ++( x: inout Int) -> Int {
     x += 1
     return x

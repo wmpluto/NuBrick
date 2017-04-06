@@ -1,7 +1,7 @@
 //
 //  DetectBluetoothViewController.swift
 //  NuBrick
-//
+//  蓝牙扫描界面
 //  Created by mwang on 15/12/2016.
 //  Copyright © 2016 nuvoton. All rights reserved.
 //
@@ -10,6 +10,8 @@ import UIKit
 import CoreBluetooth
 import JGProgressHUD
 
+
+// Ble data structure
 struct BLEPeripheral {
     let peripheral: CBPeripheral
     let name: String
@@ -17,7 +19,7 @@ struct BLEPeripheral {
     let rssi: NSNumber?
 }
 
-
+// Detect Bluetooth View Controller
 class DetectBluetoothViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
@@ -38,20 +40,18 @@ class DetectBluetoothViewController: UIViewController, UITableViewDelegate, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         title = "Detect Bluetooth"
         
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.black]
+        // Add the pull down refresh button
         self.setupRefresh()
+        // Init CBCentralManager
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        // Clear the ble peripheral if selectedPeripheral not nil
         if self.selectedPeripheral != nil {
             centralManager.cancelPeripheralConnection(selectedPeripheral)
             selectedPeripheral.delegate = nil
@@ -77,18 +77,21 @@ class DetectBluetoothViewController: UIViewController, UITableViewDelegate, UITa
         // Dispose of any resources that can be recreated.
     }
 
+    // Add the pull down refresh button
     private func setupRefresh() {
         self.refreshCont = UIRefreshControl()
         self.refreshCont.addTarget(self, action: #selector(DetectBluetoothViewController.refreshBLE), for: UIControlEvents.valueChanged)
         self.tableView.addSubview(refreshCont)
     }
     
+    // Refresh the ble
     @objc private func refreshBLE() {
         print("refresh")
         self.scanPeripherals()
         self.refreshCont.endRefreshing()
     }
     
+    // Scan the ble peripherals and show them on table
     private func scanPeripherals() {
         peripherals = centralManager
             .retrieveConnectedPeripherals(withServices: [BTDeviceNameUUID])
@@ -107,6 +110,7 @@ class DetectBluetoothViewController: UIViewController, UITableViewDelegate, UITa
         }
     }
     
+    // Set RSS icon
     private func getRSSILevel(rssi: NSNumber) -> String {
         let movingAverage = rssi.doubleValue
         if movingAverage < -80.0 {
@@ -124,8 +128,9 @@ class DetectBluetoothViewController: UIViewController, UITableViewDelegate, UITa
         }
     }
     
+    // Not needed now
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        print("test kvo")
+        // print("test kvo")
         
     }
     // MARK: - Table view data source
@@ -171,7 +176,6 @@ class DetectBluetoothViewController: UIViewController, UITableViewDelegate, UITa
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
                 self.progressHUD?.dismiss()
             }
-
         }
         centralManager.connect(selectedPeripheral, options: nil)
     }
@@ -194,12 +198,10 @@ class DetectBluetoothViewController: UIViewController, UITableViewDelegate, UITa
             }
         }
     }
-    
-
 }
 
 extension DetectBluetoothViewController: CBCentralManagerDelegate {
-    
+    // Ble did update state
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         print("CentralManagerDidUpdateState")
         switch central.state {
@@ -216,6 +218,7 @@ extension DetectBluetoothViewController: CBCentralManagerDelegate {
         }
     }
     
+    // Ble Connect Status
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print("DidConnectPeripheral")
         central.stopScan()
@@ -247,6 +250,7 @@ extension DetectBluetoothViewController: CBCentralManagerDelegate {
         print("DidFailToConnect")
     }
     
+    // Discover ble peripheral
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         
         for p in peripherals {
@@ -263,6 +267,7 @@ extension DetectBluetoothViewController: CBCentralManagerDelegate {
 }
 
 extension DetectBluetoothViewController: CBPeripheralDelegate {
+    // Get ble services id
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         for s in peripheral.services! {
             print("scan service", s.uuid.uuidString)
@@ -270,6 +275,7 @@ extension DetectBluetoothViewController: CBPeripheralDelegate {
         }
     }
     
+    // Get ble characteristics id
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         for c in service.characteristics! {
             if c.uuid == BTWriteUUID {
@@ -308,6 +314,7 @@ extension DetectBluetoothViewController: CBPeripheralDelegate {
         }
     }
     
+    // Receive ble data
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         print("----didUpdateValueForCharacteristic---")
         guard characteristic.uuid == BTReadUUID else { return }
@@ -321,8 +328,9 @@ extension DetectBluetoothViewController: CBPeripheralDelegate {
             self.progressHUD?.dismiss()
         }
         
+        // Jump to next view after get hook cmd
         if(String(bytes: tmpBuffer, encoding: .ascii)?.contains(rHOOKCMD))! {
-            print("get hook cmd")
+            //print("get hook cmd")
             progressHUD?.textLabel.text = "Connecting to \(DeviceName)"
             self.selectedPeripheral.writeValue(FBCMD!, for: self.writeCharacteristic, type: .withResponse)
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {

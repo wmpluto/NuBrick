@@ -1,7 +1,7 @@
 //
 //  Util.swift
 //  NuBrick
-//
+//  部分函数
 //  Created by mwang on 15/12/2016.
 //  Copyright © 2016 nuvoton. All rights reserved.
 //

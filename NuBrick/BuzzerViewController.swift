@@ -1,7 +1,7 @@
 //
 //  BuzzerViewController.swift
 //  NuBrick
-//
+//  蜂鸣器界面
 //  Created by mwang on 09/01/2017.
 //  Copyright © 2017 nuvoton. All rights reserved.
 //
@@ -10,6 +10,8 @@ import UIKit
 import CoreBluetooth
 import JGProgressHUD
 
+
+// Buzzer 3rd stage data structure
 struct Buzzer {
     var length:        UInt16 = 19
     var sleepPeriod:   UInt16 = 0
@@ -61,6 +63,7 @@ struct Buzzer {
     }
 }
 
+// Buzzer View Controller
 class BuzzerViewController: SensorViewController {
 
     @IBOutlet weak var label: UILabel!
@@ -72,7 +75,9 @@ class BuzzerViewController: SensorViewController {
         super.viewDidLoad()
         
         M = BUZZERM
+        // Add a table for parameter
         super.addTable(point: CGPoint(x: 0, y: imageView.frame.maxY))
+        // Send BUZZERCMD
         self.peripheral.writeValue(BUZZERCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
 
@@ -86,6 +91,7 @@ class BuzzerViewController: SensorViewController {
         self.peripheral.writeValue(BUZZERCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     
+    // Update the table & img
     override func update() {
         super.update()
         if self.buzzer.startFlag == 0 {
@@ -114,6 +120,7 @@ class BuzzerViewController: SensorViewController {
         self.tableView?.reloadData()
     }
     
+    // Receive ble data
     override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         super.peripheral(peripheral, didUpdateValueFor: characteristic, error: error)
 
@@ -131,14 +138,4 @@ class BuzzerViewController: SensorViewController {
             self.update()
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

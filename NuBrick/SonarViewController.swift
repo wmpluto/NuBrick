@@ -1,7 +1,7 @@
 //
 //  SonarViewController.swift
 //  NuBrick
-//
+//  声纳界面
 //  Created by mwang on 09/01/2017.
 //  Copyright © 2017 nuvoton. All rights reserved.
 //
@@ -9,6 +9,8 @@
 import UIKit
 import CoreBluetooth
 
+
+// Sonar structure
 struct Sonar {
     var length:          UInt16 = 11
     var sleepPeriod:     UInt16 = 0
@@ -48,6 +50,7 @@ struct Sonar {
     }
 }
 
+// Sonar View Controller
 class SonarViewController: SensorViewController {
    
     @IBOutlet weak var imageView: UIImageView!
@@ -57,7 +60,9 @@ class SonarViewController: SensorViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         M = SONARM
+        // Add a table for parameter
         super.addTable(point: CGPoint(x: 0, y: imageView.frame.maxY))
+        // Send SONARCMD
         self.peripheral.writeValue(SONARCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     
@@ -71,6 +76,7 @@ class SonarViewController: SensorViewController {
         self.peripheral.writeValue(SONARCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     
+    // Update img & table
     override func update() {
         self.valueLabel.text = String(self.sonar.sonarValue)
         if self.sonar.flag > 0 {
@@ -90,15 +96,8 @@ class SonarViewController: SensorViewController {
         self.scontrols = cache
         self.tableView?.reloadData()
     }
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+ 
+    // Receive ble data
     override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         super.peripheral(peripheral, didUpdateValueFor: characteristic, error: error)
         //Skip 2nd Stage Try to Get 3rd Stage After 1st Stage

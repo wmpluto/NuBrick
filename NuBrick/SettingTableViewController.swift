@@ -10,6 +10,8 @@ import UIKit
 import CoreBluetooth
 import JGProgressHUD
 
+
+// Setting Table View Controller
 class SettingTableViewController: UITableViewController {
     
     @IBOutlet weak var photoAlarm: UISwitch!
@@ -35,13 +37,8 @@ class SettingTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
+        // Load the last alarm setting
         musicAlarm.setOn(UserDefaults.standard.bool(forKey: EnableMusic), animated: true)
         torchAlarm.setOn(UserDefaults.standard.bool(forKey: EnableTorch), animated: true)
         photoAlarm.setOn(UserDefaults.standard.bool(forKey: EnableCamera), animated: true)
@@ -50,6 +47,7 @@ class SettingTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.peripheral.delegate = self
         
+        // Get device link status from NuBrick
         self.peripheral.writeValue(DLCMD!, for: self.writeCharacteristic, type: .withResponse)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.6) {
             self.peripheral.writeValue(SSCMD!, for: self.writeCharacteristic, type: .withResponse)
@@ -59,6 +57,7 @@ class SettingTableViewController: UITableViewController {
         self.progressHUD?.show(in: self.view, animated: true)
     }
     
+    // Send the scenarios setting to NuBrick before view disappear
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         var dl = ""
@@ -100,7 +99,6 @@ class SettingTableViewController: UITableViewController {
         UserDefaults.standard.synchronize()
     }
     
-    
     func resendCMD() {
         print("Something Wrong Resend CMD")
         self.peripheral.writeValue(SPCMD!, for: self.writeCharacteristic, type: .withResponse)
@@ -110,6 +108,7 @@ class SettingTableViewController: UITableViewController {
         }
     }
     
+    // Update the switch button
     func update() {
         self.analysisStatus()
         //self.tableView.reloadData()
@@ -119,6 +118,7 @@ class SettingTableViewController: UITableViewController {
         })
     }
     
+    // Show the alarm setting on switch button
     func analysisStatus() {
         var flag = uintToBool(origin: self.link.buzzerLinkStatus, i: 0) ||
             uintToBool(origin: self.link.ledLinkStatus, i: 0)
@@ -136,6 +136,7 @@ class SettingTableViewController: UITableViewController {
             uintToBool(origin: self.link.ledLinkStatus, i: 6)
         gasAlarm.setOn(flag, animated: true)
     }
+    
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -158,51 +159,6 @@ class SettingTableViewController: UITableViewController {
             break
         }
     }
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
    
     // MARK: - Navigation
 
@@ -218,10 +174,8 @@ class SettingTableViewController: UITableViewController {
     }
 }
 
-
-
 extension SettingTableViewController: CBPeripheralDelegate {
-    
+    // Receive ble data
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         print("did update value for characteristic")
         guard characteristic.uuid == BTReadUUID else { return }

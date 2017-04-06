@@ -1,7 +1,7 @@
 //
 //  LedViewController.swift
 //  NuBrick
-//
+//  LED界面
 //  Created by mwang on 09/01/2017.
 //  Copyright © 2017 nuvoton. All rights reserved.
 //
@@ -11,6 +11,7 @@ import CoreBluetooth
 import JGProgressHUD
 
 
+// LED data structure
 struct LED {
     var length:        UInt16 = 19
     var sleepPeriod:   UInt16 = 0
@@ -62,6 +63,7 @@ struct LED {
     }
 }
 
+// Led View Controller
 class LedViewController: SensorViewController {
     
     @IBOutlet weak var label: UILabel!
@@ -72,7 +74,9 @@ class LedViewController: SensorViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         M = LEDM
+        // Add a table for parameter
         super.addTable(point: CGPoint(x: 0, y: imageView.frame.maxY))
+        // Send LEDCMD
         self.peripheral.writeValue(LEDCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
 
@@ -86,6 +90,7 @@ class LedViewController: SensorViewController {
         self.peripheral.writeValue(LEDCMD!, for: self.writeCharacteristic, type: .withResponse)
     }
     
+    // Update table
     override func update() {
         super.update()
         if self.led.startFlag == 1 {
@@ -113,6 +118,7 @@ class LedViewController: SensorViewController {
         self.tableView?.reloadData()
     }
     
+    // Receive ble data
     override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         super.peripheral(peripheral, didUpdateValueFor: characteristic, error: error)
         //Skip 2nd Stage Try to Get 3rd Stage After 1st Stage
@@ -129,14 +135,4 @@ class LedViewController: SensorViewController {
             self.update()
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

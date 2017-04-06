@@ -1,12 +1,13 @@
 //
 //  ConnectedSensorCell.swift
 //  NuBrick
-//
+//  首页传感器模块对应的 Cell 类型
 //  Created by Eve on 15/1/2017.
 //  Copyright © 2017 nuvoton. All rights reserved.
 //
 
 import UIKit
+
 
 class ConnectedSensorCell: UITableViewCell {
     @IBOutlet weak var sensorImage: UIImageView!
